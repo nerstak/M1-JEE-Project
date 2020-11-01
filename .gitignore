@@ -151,3 +151,14 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/java,java-web,intellij
+.direnv/flake-profile
+.direnv/flake-profile.rc
+.settings/org.eclipse.jdt.apt.core.prefs
+.settings/org.eclipse.jdt.core.prefs
+.settings/org.eclipse.m2e.core.prefs
+.vscode/tasks.json
+.vscode/temp.sql
+.project
+.classpath
+M1-JEE-Project.iml
+nb-configuration.xml
