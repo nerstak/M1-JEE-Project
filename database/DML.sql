@@ -1,0 +1,1 @@
+INSERT INTO supervisor(first_name, last_name, mail) VALUES ('Jean','Pierre','a@a.a');
