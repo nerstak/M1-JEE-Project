@@ -12,7 +12,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static utils.Constants.WELCOME_PAGE;
+import static utils.Constants.LOGIN_PAGE;
 
 @WebServlet(name = "Controller")
 public class Controller extends HttpServlet {
@@ -28,6 +28,7 @@ public class Controller extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Quick and dirty connection test
+        /*
         try {
             ResultSet rs = stmt.executeQuery("SELECT first_name FROM supervisor WHERE id = 1");
             if(rs.next()) {
@@ -35,9 +36,9 @@ public class Controller extends HttpServlet {
             }
         } catch (SQLException e) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
-        }
+        }*/
 
-        request.getRequestDispatcher(WELCOME_PAGE).forward(request, response);
+        request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
     }
 
     /**
@@ -64,11 +65,11 @@ public class Controller extends HttpServlet {
         dbUser = properties.getProperty("DB.USER");
         dbPwd = properties.getProperty("DB.PWD");
 
-        try {
+        /*try {
             conn = DriverManager.getConnection(dbUrl,dbUser,dbPwd);
             stmt = conn.createStatement();
         } catch (SQLException e) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
-        }
+        }*/
     }
 }
