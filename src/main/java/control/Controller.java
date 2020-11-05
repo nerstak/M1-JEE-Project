@@ -1,5 +1,7 @@
 package control;
 
+import model.Tutor;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +14,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static utils.Constants.LOGIN_PAGE;
+import static utils.Constants.*;
 
 @WebServlet(name = "Controller")
 public class Controller extends HttpServlet {
@@ -25,20 +27,21 @@ public class Controller extends HttpServlet {
 
     private Connection conn;
     private Statement stmt;
+    private ResultSet rs;
+    private PreparedStatement ps;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Quick and dirty connection test
-        /*
-        try {
-            ResultSet rs = stmt.executeQuery("SELECT first_name FROM supervisor WHERE id = 1");
-            if(rs.next()) {
-                request.setAttribute("name", rs.getString("first_name"));
-            }
-        } catch (SQLException e) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
-        }*/
+        if(request.getParameter("login") == null) {
+            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
+        } else {
+            Tutor tutor = new Tutor();
+            tutor.setEmail(request.getParameter("login"));
+            tutor.setPwd(request.getParameter("pwd"));
 
-        request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
+            if(checkCredentials(tutor)) {
+                request.getRequestDispatcher(HOMEPAGE_PAGE).forward(request, response);
+            }
+        }
     }
 
     /**
@@ -65,11 +68,28 @@ public class Controller extends HttpServlet {
         dbUser = properties.getProperty("DB.USER");
         dbPwd = properties.getProperty("DB.PWD");
 
-        /*try {
+        try {
             conn = DriverManager.getConnection(dbUrl,dbUser,dbPwd);
             stmt = conn.createStatement();
         } catch (SQLException e) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
-        }*/
+        }
+    }
+
+    private boolean checkCredentials(Tutor tutor) {
+        try {
+            ps = conn.prepareStatement(TUTOR_PASSWORD);
+            ps.setString(1,tutor.getEmail());
+            rs = ps.executeQuery();
+
+            if(rs.next()) {
+                if(tutor.getPwd().equals(rs.getString("Pwd"))) {
+                    return true;
+                }
+            }
+        } catch (SQLException throwables) {
+            return false;
+        }
+        return false;
     }
 }
