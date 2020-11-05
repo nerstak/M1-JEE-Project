@@ -1,14 +1,19 @@
+-- You need to be connected to st2eedb to execute this part
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE "Tutor" (
-  "TutorId" UUID PRIMARY KEY,
+  "TutorId" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
   "Name" varchar,
   "Firstname" varchar,
-  "Pwd" varchar
+  "Pwd" varchar,
+  "Email" varchar
 );
 
 CREATE TABLE "Student" (
-  "StudentId" UUID PRIMARY KEY,
+  "StudentId" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
   "Name" varchar,
   "Firstname" varchar,
+  "Email" varchar,
   "Group" varchar,
   "LinkedInProfile" varchar,
   "TutorId" UUID
@@ -25,7 +30,7 @@ CREATE TABLE "StudentToSkills" (
 );
 
 CREATE TABLE "Internship" (
-  "InternshipId" UUID PRIMARY KEY,
+  "InternshipId" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
   "Description" text,
   "WebSurvey" boolean,
   "MidInternInfo" boolean,
@@ -37,27 +42,27 @@ CREATE TABLE "Internship" (
 );
 
 CREATE TABLE "Company" (
-  "CompanyId" UUID PRIMARY KEY,
+  "CompanyId" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
   "Name" varchar,
   "address" varchar
 );
 
 CREATE TABLE "Marks" (
-  "MarksId" UUID PRIMARY KEY,
+  "MarksId" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
   "Tech" integer,
   "Communication" integer,
   "InternshipId" UUID
 );
 
 CREATE TABLE "Comments" (
-  "CommentsId" UUID PRIMARY KEY,
+  "CommentsId" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
   "StudentComm" boolean,
   "SupervisorComm" boolean,
   "InternshipId" UUID
 );
 
 CREATE TABLE "FinalReport" (
-  "FinalReportId" UUID PRIMARY KEY,
+  "FinalReportId" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
   "Title" varchar,
   "Report" boolean,
   "InternshipId" UUID

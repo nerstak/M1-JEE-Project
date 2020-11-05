@@ -1,1 +1,3 @@
-INSERT INTO supervisor(first_name, last_name, mail) VALUES ('Jean','Pierre','a@a.a');
+INSERT INTO "Tutor"("Firstname", "Name", "Email") VALUES
+    ('Jean','Pierre','jean.pierre@efrei.net'),
+    ('Lucie','Sky','lucie.sky@efrei.net') ;                                                      ;
