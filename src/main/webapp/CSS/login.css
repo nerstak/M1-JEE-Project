@@ -1,37 +1,17 @@
-/*.login{*/
-/*    display: flex;*/
-/*    flex-wrap: nowrap;*/
-/*    width: 100%;*/
-/*    min-height: 100%;*/
-/*}*/
-
-/*.login-left{*/
-/*    flex: 60%;*/
-/*    background: url("../Image/bg_login.jpg");*/
-/*    background-repeat: no-repeat;*/
-/*    background-position: 60%;*/
-/*    background-size: contain;*/
-/*}*/
-
-/*.login-right{*/
-/*    flex: 40%;*/
-/*    position: relative;*/
-/*}*/
-
 :root{
     --color-main : #2F80ED;
     --color-textmain-lighttheme : rgba(0,0,0, 0.87);
     --color-textmedium-lighttheme : rgba(0,0,0, 0.6);
     --color-textdisable-lighttheme : rgba(0,0,0, 0.3);
 }
-
+/*Main*/
 .login{
     display: flex;
     flex-wrap: nowrap;
     width: 100%;
     min-height: 100%;
 }
-
+/*Login left*/
 .login-left{
     flex: 60%;
     background: url("../Image/bg_login.jpg");
@@ -40,13 +20,15 @@
     background-position: 60%;
 }
 
+/*Login right*/
+
 .login-right{
     flex: 40%;
     position: relative;
 }
 
 .login-right-form-wrapper{
-    padding-top: 10%;
+    padding-top: 15%;
     padding-left: 10%;
 }
 
@@ -61,12 +43,10 @@
 
 .login-right-form-wrapper form input[type="text"], .login-right-form-wrapper form input[type="password"]{
     display: block;
-    margin-bottom: 16px;
     padding: 4px;
-    height: 40px;
-    width: 30%;
+    width: 40%;
     border: var(--color-textdisable-lighttheme) 2px solid;
-    border-radius: 8px;
+    border-radius: 0 8px 8px 0;
 }
 
 .login-right-form-wrapper form input:focus{
@@ -74,16 +54,15 @@
     outline:none;
 }
 
-
-
 .login-right-form-wrapper form input[type="submit"]{
     padding: 8px;
     border : 2px solid var(--color-main);
     background: transparent;
     border-radius: 8px;
-    height: 48px;
+    height: 40px;
     width: 128px;
     font-size: 20px;
+    line-height: 16px;
 }
 
 .login-right-form-wrapper form input[type="submit"]:hover {
@@ -91,3 +70,27 @@
     background: var(--color-main);
     color: white;
 }
+
+
+/* Icon */
+
+.login-input-container{
+    display: flex;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.login-icon-wrapper{
+    height: 100%;
+    padding: 8px;
+    background-color: var(--color-main);
+    border-radius: 8px 0 0 8px;
+}
+
+.login-icon{
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    fill: white;
+}
+
