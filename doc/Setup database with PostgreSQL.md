@@ -1,6 +1,6 @@
 # Setup database with PostgreSQL
 
-For the first time, you need to follow every step. After that, you'll only need to run scripts from [Database setup](dDatabase-setup)
+For the first time, you need to follow every step. After that, you'll only need to run scripts from [Database setup](#database-setup).
 
 
 

@@ -94,3 +94,6 @@ ALTER TABLE "FinalReport" ADD FOREIGN KEY ("InternshipId") REFERENCES "Internshi
 
 ALTER TABLE "Visit" ADD FOREIGN KEY ("InternshipId") REFERENCES "Internship" ("InternshipId");
 
+GRANT ALL PRIVILEGES ON DATABASE st2eedb TO adm;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to adm;
+
