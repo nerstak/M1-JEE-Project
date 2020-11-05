@@ -1,0 +1,93 @@
+/*.login{*/
+/*    display: flex;*/
+/*    flex-wrap: nowrap;*/
+/*    width: 100%;*/
+/*    min-height: 100%;*/
+/*}*/
+
+/*.login-left{*/
+/*    flex: 60%;*/
+/*    background: url("../Image/bg_login.jpg");*/
+/*    background-repeat: no-repeat;*/
+/*    background-position: 60%;*/
+/*    background-size: contain;*/
+/*}*/
+
+/*.login-right{*/
+/*    flex: 40%;*/
+/*    position: relative;*/
+/*}*/
+
+:root{
+    --color-main : #2F80ED;
+    --color-textmain-lighttheme : rgba(0,0,0, 0.87);
+    --color-textmedium-lighttheme : rgba(0,0,0, 0.6);
+    --color-textdisable-lighttheme : rgba(0,0,0, 0.3);
+}
+
+.login{
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    min-height: 100%;
+}
+
+.login-left{
+    flex: 60%;
+    background: url("../Image/bg_login.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 60%;
+}
+
+.login-right{
+    flex: 40%;
+    position: relative;
+}
+
+.login-right-form-wrapper{
+    padding-top: 10%;
+    padding-left: 10%;
+}
+
+.login-right-form-wrapper > h1{
+    padding-bottom: 64px;
+}
+
+.login-right-form-wrapper form label{
+    display: block;
+    margin-bottom: 8px;
+}
+
+.login-right-form-wrapper form input[type="text"], .login-right-form-wrapper form input[type="password"]{
+    display: block;
+    margin-bottom: 16px;
+    padding: 4px;
+    height: 40px;
+    width: 30%;
+    border: var(--color-textdisable-lighttheme) 2px solid;
+    border-radius: 8px;
+}
+
+.login-right-form-wrapper form input:focus{
+    border: var(--color-main) 2px solid;
+    outline:none;
+}
+
+
+
+.login-right-form-wrapper form input[type="submit"]{
+    padding: 8px;
+    border : 2px solid var(--color-main);
+    background: transparent;
+    border-radius: 8px;
+    height: 48px;
+    width: 128px;
+    font-size: 20px;
+}
+
+.login-right-form-wrapper form input[type="submit"]:hover {
+    cursor: pointer;
+    background: var(--color-main);
+    color: white;
+}
