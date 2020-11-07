@@ -49,6 +49,60 @@ button{
     outline: none;
 }
 
+
+/*Navbar*/
+.navbar{
+    flex: 0 1 100px;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 16px 32px;
+    box-shadow: -8px 8px 16px -4px rgba(173,173,173,1);
+}
+
+.logo-efrei{
+    height: 64px;
+}
+
+.navbar-menu{
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+}
+
+.navbar-menu > *{
+    margin: 0 8px;
+}
+
+/*Button*/
+/*Submit*/
+form input[type="submit"]{
+    padding: 8px;
+    border : 2px solid var(--color-main);
+    background: transparent;
+    border-radius: 8px;
+    height: 40px;
+    width: 128px;
+    font-size: 20px;
+    line-height: 16px;
+    margin-top: 32px;
+}
+
+form input[type="submit"]:hover {
+    cursor: pointer;
+    background: var(--color-main);
+    color: white;
+}
+
+/*Input*/
+form input[type="text"]:disabled {
+    background: var(--color-textdisable-lighttheme);
+}
+
+/*Variable*/
 :root{
     --color-main : #2F80ED;
     --color-textmain-lighttheme : rgba(0,0,0, 0.87);

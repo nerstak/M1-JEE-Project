@@ -53,6 +53,7 @@ public class Controller extends HttpServlet {
      * @param resp
      */
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         //Use to redirect when controller is the entry point
         if(req.getParameter("login") == null){
             req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp); //redirect to welcome if ok
@@ -62,6 +63,7 @@ public class Controller extends HttpServlet {
             String pwd = req.getParameter("pwd");
             if (login.isEmpty() || pwd.isEmpty()){
                 req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp); //redirect to welcome if ok
+                req.setAttribute("errorMessage", "Empty field(s)");
             }
 
             //Get properties
