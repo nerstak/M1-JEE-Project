@@ -7,6 +7,11 @@ public class Tutor {
     private String name;
     private String firstName;
     private String pwd;
+    private String Email;
+
+    public String getEmail() { return Email; }
+
+    public void setEmail(String email) { Email = email; }
 
     public UUID getTutorId() {
         return tutorId;

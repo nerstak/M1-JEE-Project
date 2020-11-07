@@ -7,6 +7,15 @@ public class DataServices {
     private Connection con;
     private Statement stmt;
 
+    public DataServices(String login, String pwd, String connectionUrl){
+        try {
+            con = DriverManager.getConnection(connectionUrl, login, pwd);
+            stmt = con.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public DataServices(String login, String pwd, String connectionUrl, String jdbc){
         try {
             Class.forName(jdbc);

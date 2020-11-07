@@ -8,42 +8,75 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static utils.Constants.*;
-import static utils.Constants.HOME_PAGE;
-import static utils.Constants.LOGIN_PAGE;
 
 @WebServlet(name = "Controller")
 public class Controller extends HttpServlet {
     private Properties properties;
+    DataServices dataServices;
     private InputStream input;
 
+    private String dbUrl;
+    private String dbUser;
+    private String dbPwd;
+
+
+    private Connection conn;
+    private Statement stmt;
+    private ResultSet rs;
+    private PreparedStatement ps;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+        if(request.getParameter("login") == null) {
+            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
+        } else {
+            Tutor tutor = new Tutor();
+            tutor.setEmail(request.getParameter("login"));
+            tutor.setPwd(request.getParameter("pwd"));
 
-
-        /* OLD ONE
-        // Quick and dirty connection test
-        try {
-            ResultSet rs = stmt.executeQuery("SELECT first_name FROM supervisor WHERE id = 1");
-            if(rs.next()) {
-                request.setAttribute("name", rs.getString("first_name"));
+            if (tutor.getEmail().isEmpty() || tutor.getPwd().isEmpty()){
+                request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); //redirect to welcome if ok
+                request.setAttribute("errorMessage", ERR_MISSING_FIELD);
             }
-        } catch (SQLException e) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
-        }
 
-        request.getRequestDispatcher(WELCOME_PAGE).forward(request, response);*/
+            if(checkCredentials(tutor)) {
+                request.getRequestDispatcher(HOME_PAGE).forward(request, response);
+            } else {
+                request.setAttribute("errorMessage",ERR_INV_CRED_MESS);
+                request.getRequestDispatcher(LOGIN_PAGE).forward(request,response);
+            }
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
+    }
+
+    @Override
+    public void init() {
+        getPropertiesFile();
+
+        dbUrl = properties.getProperty("DB.URL");
+        dbUser = properties.getProperty("DB.USER");
+        dbPwd = properties.getProperty("DB.PWD");
+
+        try {
+            conn = DriverManager.getConnection(dbUrl,dbUser,dbPwd);
+            stmt = conn.createStatement();
+
+            dataServices = new DataServices(dbUser,dbPwd,dbUrl);
+        } catch (SQLException e) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     /**
@@ -53,7 +86,6 @@ public class Controller extends HttpServlet {
      * @param resp
      */
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         //Use to redirect when controller is the entry point
         if(req.getParameter("login") == null){
             req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp); //redirect to welcome if ok
@@ -76,10 +108,10 @@ public class Controller extends HttpServlet {
 
             //check credentials and redirect
             if (checkCredentials(myTutor)) {
-                req.getRequestDispatcher(HOME_PAGE).forward(req, resp); //redirect to welcome if ok
+                req.getRequestDispatcher(HOME_PAGE).forward(req, resp);
             } else {
-                req.setAttribute("errorMessage", ERR_MSG);
-                req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp); //redirect to index if not
+                req.setAttribute("errorMessage", ERR_INV_CRED_MESS);
+                req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
             }
         }
     }
@@ -90,13 +122,15 @@ public class Controller extends HttpServlet {
      * @return true/false connection
      */
     private boolean checkCredentials(Tutor myTutor){
-        DataServices dataServices = new DataServices(properties.getProperty("DB.USER"), properties.getProperty("DB.PWD"),properties.getProperty("DB.URL") , properties.getProperty("DB.JDBC"));
-        ResultSet rs = dataServices.selectResultSet("SELECT * FROM \"Tutor\" WHERE \"Name\"='" + myTutor.getName() + "' AND \"Pwd\"='" + myTutor.getPwd() + "';");
+        // Todo Convert this simple Statement to a Prepared Statement
+        // See: https://github.com/nerstak/M1-JEE-Project/blob/feature/linking-db-and-pages/src/main/java/control/Controller.java#L80
+        rs = dataServices.selectResultSet("SELECT * FROM \"Tutor\" WHERE \"Email\"='" + myTutor.getEmail() + "' AND \"Pwd\"='" + myTutor.getPwd() + "';");
         if (rs != null){
             try {
                 if(rs.next()){ //if rs contain the user data => set bean's property
                     myTutor.setTutorId(UUID.fromString(rs.getString("TutorId")));
                     myTutor.setFirstName(rs.getString("FirstName"));
+                    myTutor.setName(rs.getString("Name"));
                     return true;
                 }
                 else { //no data returned = error in login or password
@@ -112,23 +146,37 @@ public class Controller extends HttpServlet {
 
     }
 
-    private DataServices connectDb(String dbLogin, String dbpwd, String dbUrl){
-        return new DataServices(dbUrl, dbLogin, dbpwd, properties.getProperty("DB.JDBC"));
-    }
-
     /**
      * Get the db.properties file
      * @return Properties from the db.properties
      */
     private Properties getPropertiesFile(){
-        Properties prop = new Properties();
+        properties = new Properties();
         try{
-            InputStream stream = getServletContext().getResourceAsStream("/WEB-INF/db.properties");
-            prop.load(stream);
+            input = getServletContext().getResourceAsStream(DB_PROPERTIES);
+            properties.load(input);
         }
         catch (IOException e ){
             e.printStackTrace();
         }
-        return prop;
+        return properties;
     }
+/**
+    private boolean checkCredentials(Tutor tutor) {
+        try {
+            ps = conn.prepareStatement(TUTOR_PASSWORD);
+            ps.setString(1,tutor.getEmail());
+            rs = ps.executeQuery();
+
+            if(rs.next()) {
+                if(tutor.getPwd().equals(rs.getString("Pwd"))) {
+                    return true;
+                }
+            }
+        } catch (SQLException throwables) {
+            return false;
+        }
+        return false;
+    }
+ **/
 }
