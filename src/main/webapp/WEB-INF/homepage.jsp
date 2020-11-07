@@ -20,81 +20,87 @@
     <title>Homepage</title>
 </head>
 <body class="main-body">
-<header class="navbar">
-    <img class="logo-efrei" src="${pageContext.request.contextPath}/Image/Logo-Efrei-2017-Fr-Web.png" alt="efrei">
-    <div class="navbar-menu">
-        <p>John Doe</p>
-        <p>Logout</p>
-    </div>
-</header>
-<main class="homepage-main">
-    <div class="homepage-main-content">
-        <!--Todo replace 12 by the real number -->
-        <h1>Extranet myEfrei - 12 student assigned</h1>
-        <div class="homepage-selector">
-            <div class="homepage-selector-select">
-                <div>
-                    <h2>Year</h2>
-                    <p>2020</p>
+    <header class="navbar">
+        <img class="logo-efrei" src="${pageContext.request.contextPath}/Image/Logo-Efrei-2017-Fr-Web.png" alt="efrei">
+        <div class="navbar-menu">
+            <p>John Doe</p>
+            <p>Logout</p>
+        </div>
+    </header>
+    <main class="homepage-main">
+        <div class="homepage-main-content">
+            <!--Todo replace 12 by the real number -->
+            <h1>Extranet myEfrei - 12 student assigned</h1>
+            <div class="homepage-selector">
+                <div class="homepage-selector-select">
+                    <div>
+                        <h2>Year</h2>
+                        <p>2020</p>
+                    </div>
+                    <div>
+                        <h2>Keyword</h2>
+                        <p>C++</p>
+                    </div>
+                    <div>
+                        <h2>Keyword</h2>
+                        <p>Smith</p>
+                    </div>
                 </div>
-                <div>
-                    <h2>Keyword</h2>
-                    <p>C++</p>
-                </div>
-                <div>
-                    <h2>Keyword</h2>
-                    <p>Smith</p>
+                <div class="homepage-selector-search">
+                    <input type="text">
                 </div>
             </div>
-            <div class="homepage-selector-search">
-                <input type="text">
-            </div>
+            <form method="get" action="test.html">
+                <div class="homepage-table-wrapper">
+                    <table class="homepage-table">
+                        <tr>
+                            <th>#</th>
+                            <th>Group</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>C.d.C</th>
+                            <th>Company eval</th>
+                            <th>Web poll</th>
+                            <th>Released report</th>
+                            <th>Defense</th><!-- Soutenance -->
+                            <th>Planned Visit</th>
+                            <th>Visit done</th>
+                            <th>Begin date</th>
+                            <th>End date</th>
+                            <th>MdS</th>
+                            <th>Address</th>
+                            <th>Tech note</th>
+                            <th>Comm note</th>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="radioId"></td>
+                            <td>2020</td>
+                            <td>John</td>
+                            <td>Doe</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox" name="fdskjf"></td>
+                            <td>26/04/2021</td>
+                            <td>26/09/2021</td>
+                            <td>Jane Doe</td>
+                            <td>30 avenue de la République</td>
+                            <td>12</td>
+                            <td>14</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="homepage-button">
+                    <input type="submit" value="Add"/>
+                    <input type="submit" value="Validate"/>
+                    <input type="submit" value="Details"/>
+                </div>
+            </form>
+
         </div>
-        <table class="homepage-table">
-            <tr>
-                <th>#</th>
-                <th>Group</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>C.d.C</th>
-                <th>Company eval</th>
-                <th>Web poll</th>
-                <th>Released report</th>
-                <th>Defense</th><!-- Soutenance -->
-                <th>Planned Visit</th>
-                <!-- Todo complete with the other categories -->
-            </tr>
-            <tr>
-                <td><input type="radio"></td>
-                <td>dlskf</td>
-                <td>dlskf</td>
-                <td>dlskf</td>
-                <td>dlskf</td>
-                <td>dlskf</td>
-                <td>dlskf</td>
-                <td>dlskf</td>
-                <td>dlskf</td>
-                <td>dlskf</td>
-            </tr>
-            <tr>
-                <td><input type="radio"></td>
-                <td>dlskf</td>
-                <td>dlskf</td>
-                <td>dlskf</td>
-                <td>dlskf</td>
-                <td>dlskf</td>
-                <td>dlskf</td>
-                <td>dlskf</td>
-                <td>dlskf</td>
-                <td>dlskf</td>
-            </tr>
-        </table>
-        <div class="homepage-button">
-            <button>Add</button>
-            <button>Validate</button>
-            <button>Details</button>
-        </div>
-    </div>
-</main>
+    </main>
 </body>
 </html>
