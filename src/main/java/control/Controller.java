@@ -122,12 +122,15 @@ public class Controller extends HttpServlet {
      * @return true/false connection
      */
     private boolean checkCredentials(Tutor myTutor){
+        // Todo Convert this simple Statement to a Prepared Statement
+        // See: https://github.com/nerstak/M1-JEE-Project/blob/feature/linking-db-and-pages/src/main/java/control/Controller.java#L80
         rs = dataServices.selectResultSet("SELECT * FROM \"Tutor\" WHERE \"Email\"='" + myTutor.getEmail() + "' AND \"Pwd\"='" + myTutor.getPwd() + "';");
         if (rs != null){
             try {
                 if(rs.next()){ //if rs contain the user data => set bean's property
                     myTutor.setTutorId(UUID.fromString(rs.getString("TutorId")));
                     myTutor.setFirstName(rs.getString("FirstName"));
+                    myTutor.setName(rs.getString("Name"));
                     return true;
                 }
                 else { //no data returned = error in login or password
@@ -150,7 +153,7 @@ public class Controller extends HttpServlet {
     private Properties getPropertiesFile(){
         properties = new Properties();
         try{
-            input = getServletContext().getResourceAsStream("/WEB-INF/db.properties");
+            input = getServletContext().getResourceAsStream(DB_PROPERTIES);
             properties.load(input);
         }
         catch (IOException e ){
