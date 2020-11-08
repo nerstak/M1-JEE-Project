@@ -24,7 +24,7 @@
         <img class="logo-efrei" src="${pageContext.request.contextPath}/Image/Logo-Efrei-2017-Fr-Web.png" alt="efrei">
         <div class="navbar-menu">
             <p>John Doe</p>
-            <p>Logout</p>
+            <a href="Logout">Logout</a>
         </div>
     </header>
     <main class="homepage-main">
