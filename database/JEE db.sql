@@ -69,7 +69,7 @@ CREATE TABLE "FinalReport" (
 );
 
 CREATE TABLE "Visit" (
-  "VisitId" UUID PRIMARY KEY,
+  "VisitId" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
   "Done" boolean,
   "Planned" boolean,
   "VisitReport" boolean,
