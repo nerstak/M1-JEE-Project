@@ -50,56 +50,60 @@
                     <input type="text">
                 </div>
             </div>
-            <form method="get" action="test.html">
-                <div class="homepage-table-wrapper">
-                    <table class="homepage-table">
-                        <tr>
-                            <th>#</th>
-                            <th>Group</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>C.d.C</th>
-                            <th>Company eval</th>
-                            <th>Web poll</th>
-                            <th>Released report</th>
-                            <th>Defense</th><!-- Soutenance -->
-                            <th>Planned Visit</th>
-                            <th>Visit done</th>
-                            <th>Begin date</th>
-                            <th>End date</th>
-                            <th>MdS</th>
-                            <th>Address</th>
-                            <th>Tech note</th>
-                            <th>Comm note</th>
-                        </tr>
-                        <tr>
-                            <td><input type="radio" name="radioId"></td>
-                            <td>2020</td>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox" name="fdskjf"></td>
-                            <td>26/04/2021</td>
-                            <td>26/09/2021</td>
-                            <td>Jane Doe</td>
-                            <td>30 avenue de la République</td>
-                            <td>12</td>
-                            <td>14</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="homepage-button">
-                    <input type="submit" value="Add"/>
-                    <input type="submit" value="Validate"/>
-                    <input type="submit" value="Details"/>
-                </div>
-            </form>
+            <div class="homepage-table-wrapper">
+                <div class="homepage-table">
+                    <div class="homepage-row">
+                        <span class="homepage-cell">#</span>
+                        <span class="homepage-cell">Group</span>
+                        <span class="homepage-cell">First name</span>
+                        <span class="homepage-cell">Last name</span>
+                        <span class="homepage-cell">Last name</span>
+                        <span class="homepage-cell">Last gd df gdf g fname</span>
+                        <span class="homepage-cell">Last name</span>
+                        <span class="homepage-cell">Last name</span>
+                        <span class="homepage-cell">Last name</span>
+                        <span class="homepage-cell">Last name</span>
+                        <span class="homepage-cell">Last name</span>
+                        <span class="homepage-cell">Last name</span>
+                    </div>
+                    <form class="homepage-row" method="post" action="blah.html">
+                        <span class="homepage-cell"><input type="radio" /></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                    </form>
+                    <form class="homepage-row" method="post" action="blah.html">
+                        <span class="homepage-cell"><input type="radio" /></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                    </form>
 
+                    <form class="homepage-row" method="post" action="blah.html">
+                        <span class="homepage-cell"><input type="radio" /></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                    </form>
+                </div>
+            </div>
+            <div class="homepage-button">
+                <input type="submit" value="Add"/>
+                <input type="submit" value="Validate"/>
+                <input type="submit" value="Details"/>
+            </div>
         </div>
     </main>
 </body>
