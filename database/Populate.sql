@@ -33,12 +33,30 @@ INSERT INTO "StudentToSkills" ("Skills", "StudentId")
 VALUES ('C', (SELECT "StudentId"
               FROM "Student"
               WHERE "Email" = 'dennis.ritchie@efrei.net')),
+       ('C++', (SELECT "StudentId"
+              FROM "Student"
+              WHERE "Email" = 'dennis.ritchie@efrei.net')),
        ('Java', (SELECT "StudentId"
                  FROM "Student"
                  WHERE "Email" = 'ada.lovelace@efrei.net')),
+       ('SQL', (SELECT "StudentId"
+                 FROM "Student"
+                 WHERE "Email" = 'ada.lovelace@efrei.net')),
+       ('Java', (SELECT "StudentId"
+                 FROM "Student"
+                 WHERE "Email" = 'peggy.johnson@efrei.net')),
+       ('J2EE', (SELECT "StudentId"
+                 FROM "Student"
+                 WHERE "Email" = 'peggy.johnson@efrei.net')),
+       ('Docker', (SELECT "StudentId"
+                 FROM "Student"
+                 WHERE "Email" = 'peggy.johnson@efrei.net')),
        ('CSS', (SELECT "StudentId"
                 FROM "Student"
                 WHERE "Email" = 'andy.warhol@efrei.net')),
+       ('C#', (SELECT "StudentId"
+                FROM "Student"
+                WHERE "Email" = 'alan.turing@efrei.net')),
        ('Git', (SELECT "StudentId"
                 FROM "Student"
                 WHERE "Email" = 'andy.warhol@efrei.net')),
@@ -50,19 +68,26 @@ INSERT INTO "Company" ("Name", "address")
 VALUES ('EFREI', '30-32 avenue de la République 94 800 Villejuif'),
        ('Mairie de Paris', 'Hôtel de Ville de Paris Place de l''Hôtel de Ville 75196 Paris cedex 04 '),
        ('Thalès', '11-13 Avenue Carnot, 91300 Massy, France - MASSY'),
-       ('Carrefour', '93 Avenue de Paris 91300 Massy');
+       ('Carrefour', '93 Avenue de Paris 91300 Massy'),
+       ('Microsoft','39 Quai du Président Roosevelt, 92130 Issy-les-Moulineaux');
 
 INSERT INTO "Internship" ("Description", "WebSurvey", "MidInternInfo", "Begining", "End", "InternSupervisor",
                           "StudentId", "CompanyId")
 VALUES ('This is a desc', false, false, to_date('26-04-2021', 'DD-MM-YYYY'), to_date('22-09-2021', 'DD-MM-YYYY'),
         'Patrick', (SELECT "StudentId" FROM "Student" WHERE "Email" = 'dennis.ritchie@efrei.net'),
         (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'Carrefour')),
-       ('This is a desc', true, false, to_date('27-04-2021', 'DD-MM-YYYY'), to_date('22-09-2021', 'DD-MM-YYYY'),
+       ('This is a desc', true, true, to_date('27-07-2020', 'DD-MM-YYYY'), to_date('22-12-2020', 'DD-MM-YYYY'),
         'Pierrot', (SELECT "StudentId" FROM "Student" WHERE "Email" = 'ada.lovelace@efrei.net'),
         (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'EFREI')),
-       ('This is a desc', true, true, to_date('27-02-2020', 'DD-MM-YYYY'), to_date('22-010-2020', 'DD-MM-YYYY'),
+       ('This is a desc', true, true, to_date('27-02-2020', 'DD-MM-YYYY'), to_date('22-10-2020', 'DD-MM-YYYY'),
         'Marie', (SELECT "StudentId" FROM "Student" WHERE "Email" = 'katie.bouman@efrei.net'),
         (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'EFREI')),
+       ('This is a desc', true, true, to_date('15-10-2018', 'DD-MM-YYYY'), to_date('10-02-2019', 'DD-MM-YYYY'),
+        'Marie', (SELECT "StudentId" FROM "Student" WHERE "Email" = 'peggy.johnson@efrei.net'),
+        (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'Mairie de Paris')),
+       ('This is a desc', true, true, to_date('08-09-2016', 'DD-MM-YYYY'), to_date('20-12-2016', 'DD-MM-YYYY'),
+        'Marie', (SELECT "StudentId" FROM "Student" WHERE "Email" = 'andy.warhol@efrei.net'),
+        (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'Microsoft')),
        ('This is a desc', false, false, to_date('26-03-2021', 'DD-MM-YYYY'), to_date('22-08-2021', 'DD-MM-YYYY'),
         'Patrick', (SELECT "StudentId" FROM "Student" WHERE "Email" = 'alan.turing@efrei.net'),
         (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'Thalès'));
@@ -70,22 +95,56 @@ VALUES ('This is a desc', false, false, to_date('26-04-2021', 'DD-MM-YYYY'), to_
 INSERT INTO "Marks" ("Tech", "Communication", "InternshipId")
 VALUES (17, 12, (SELECT "InternshipId"
                  FROM "Internship"
-                 WHERE "StudentId" = (SELECT "StudentId" FROM "Student" WHERE "Email" = 'katie.bouman@efrei.net')));
+                 WHERE "StudentId" = (SELECT "StudentId" FROM "Student" WHERE "Email" = 'katie.bouman@efrei.net'))),
+       (15, 16, (SELECT "InternshipId"
+                 FROM "Internship"
+                 WHERE "StudentId" = (SELECT "StudentId" FROM "Student" WHERE "Email" = 'peggy.johnson@efrei.net'))),
+       (9, 19, (SELECT "InternshipId"
+                 FROM "Internship"
+                 WHERE "StudentId" = (SELECT "StudentId" FROM "Student" WHERE "Email" = 'andy.warhol@efrei.net')));
 
 INSERT INTO "Comments" ("StudentComm", "SupervisorComm", "InternshipId")
 VALUES (true, true, (SELECT "InternshipId"
                      FROM "Internship"
-                     WHERE "StudentId" = (SELECT "StudentId" FROM "Student" WHERE "Email" = 'katie.bouman@efrei.net')));
+                     WHERE "StudentId" = (SELECT "StudentId" FROM "Student" WHERE "Email" = 'katie.bouman@efrei.net'))),
+       (true, true, (SELECT "InternshipId"
+                     FROM "Internship"
+                     WHERE "StudentId" = (SELECT "StudentId" FROM "Student" WHERE "Email" = 'andy.warhol@efrei.net'))),
+       (true, true, (SELECT "InternshipId"
+                     FROM "Internship"
+                     WHERE "StudentId" = (SELECT "StudentId" FROM "Student" WHERE "Email" = 'peggy.johnson@efrei.net')));
 
 INSERT INTO "FinalReport" ("Title", "Report", "InternshipId")
 VALUES ('My cool report.pdf', true, (SELECT "InternshipId"
                                      FROM "Internship"
                                      WHERE "StudentId" = (SELECT "StudentId"
                                                           FROM "Student"
-                                                          WHERE "Email" = 'katie.bouman@efrei.net')));
+                                                          WHERE "Email" = 'katie.bouman@efrei.net'))),
+       ('Internship Report.pdf', true, (SELECT "InternshipId"
+                                     FROM "Internship"
+                                     WHERE "StudentId" = (SELECT "StudentId"
+                                                          FROM "Student"
+                                                          WHERE "Email" = 'andy.warhol@efrei.net'))),
+       ('FinalReport.docx', true, (SELECT "InternshipId"
+                                     FROM "Internship"
+                                     WHERE "StudentId" = (SELECT "StudentId"
+                                                          FROM "Student"
+                                                          WHERE "Email" = 'peggy.johnson@efrei.net')));
 
 INSERT INTO "Visit" ("Done", "Planned", "VisitReport", "InternshipId")
 VALUES (true, true, true, (SELECT "InternshipId"
                            FROM "Internship"
                            WHERE "StudentId" =
-                                 (SELECT "StudentId" FROM "Student" WHERE "Email" = 'katie.bouman@efrei.net')))
+                                 (SELECT "StudentId" FROM "Student" WHERE "Email" = 'katie.bouman@efrei.net'))),
+       (false, true, false, (SELECT "InternshipId"
+                             FROM "Internship"
+                             WHERE "StudentId" =
+                                   (SELECT "StudentId" FROM "Student" WHERE "Email" = 'ada.lovelace@efrei.net'))),
+       (true, true, true, (SELECT "InternshipId"
+                           FROM "Internship"
+                           WHERE "StudentId" =
+                                 (SELECT "StudentId" FROM "Student" WHERE "Email" = 'andy.warhol@efrei.net'))),
+       (true, true, true, (SELECT "InternshipId"
+                           FROM "Internship"
+                           WHERE "StudentId" =
+                                 (SELECT "StudentId" FROM "Student" WHERE "Email" = 'peggy.johnson@efrei.net')));
