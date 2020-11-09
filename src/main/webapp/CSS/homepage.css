@@ -121,27 +121,34 @@
 .homepage-table input[type=text]:focus, .homepage-table input[type=date]:focus{
     border-color: var(--color-main);
 }
+
+.homepage-row .homepage-cell:first-child div{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
 /*Button*/
-.homepage-button{
+.homepage-cell{
     text-align: center;
 }
 
-.homepage-button input[type="submit"]{
-    padding: 8px;
+.homepage-cell input[type="submit"]{
     border : 2px solid var(--color-main);
     background: transparent;
     border-radius: 8px;
     height: 40px;
     width: 100px;
-    margin: 8px;
     font-size: 1rem;
+    padding: 0;
+    margin: 0 8px 0 0;
 }
 
-.homepage-button input[type="submit"]:hover{
+.homepage-cell input[type="submit"]:hover{
     cursor: pointer;
     background: var(--color-main);
     color: white;
-
 }
 
 @media (min-width: 0px) and (max-width: 480px) {

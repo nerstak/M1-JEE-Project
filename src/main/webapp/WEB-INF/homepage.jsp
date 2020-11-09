@@ -71,8 +71,13 @@
                         <span class="homepage-cell">Tech note</span>
                         <span class="homepage-cell">Comm note</span>
                     </div>
-                    <form class="homepage-row" method="post" action="blah.html">
-                        <span class="homepage-cell"><input type="radio" name="radioId"/></span>
+                    <form class="homepage-row" name="form-1" method="post" action="">
+                        <span class="homepage-cell">
+                            <div>
+                                <input type="submit" value="modify"/>
+                                <input type="submit" value="details">
+                            </div>
+                        </span>
                         <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
                         <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
                         <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
@@ -89,31 +94,32 @@
                         <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
                         <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
                         <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-
                     </form>
-<%--                    <td><input type="radio" name="radioId"></td>--%>
-<%--                    <td><input type="text" value="2020"></td>--%>
-<%--                    <td>John</td>--%>
-<%--                    <td>Doe</td>--%>
-<%--                    <td><input type="checkbox"></td>--%>
-<%--                    <td><input type="checkbox"></td>--%>
-<%--                    <td><input type="checkbox"></td>--%>
-<%--                    <td><input type="checkbox"></td>--%>
-<%--                    <td><input type="checkbox"></td>--%>
-<%--                    <td><input type="checkbox"></td>--%>
-<%--                    <td><input type="checkbox" name="fdskjf"></td>--%>
-<%--                    <td>26/04/2021</td>--%>
-<%--                    <td>26/09/2021</td>--%>
-<%--                    <td>Jane Doe</td>--%>
-<%--                    <td>30 avenue de la République</td>--%>
-<%--                    <td>12</td>--%>
-<%--                    <td>14</td>--%>
+                    <form class="homepage-row" method="post" action="">
+                        <span class="homepage-cell">
+                            <div>
+                                <input type="submit" value="modify"/>
+                                <input type="submit" value="details">
+                            </div>
+                        </span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="date" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="date" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                    </form>
                 </div>
-            </div>
-            <div class="homepage-button">
-                <input type="submit" value="Add"/>
-                <input type="submit" value="Validate"/>
-                <input type="submit" value="Details"/>
             </div>
         </div>
     </main>
