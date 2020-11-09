@@ -53,6 +53,7 @@
             <div class="homepage-table-wrapper">
                 <div class="homepage-table">
                     <div class="homepage-row">
+                        <span class="homepage-cell"></span>
                         <span class="homepage-cell">#</span>
                         <span class="homepage-cell">Group</span>
                         <span class="homepage-cell">First name</span>
@@ -78,47 +79,50 @@
                                 <input type="submit" value="details">
                             </div>
                         </span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="date" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="date" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="a807467a-12a8-46f7-a45c-0546117176f0"/></span>
+                        <span class="homepage-cell"><input type="text" value="2022"/></span>
+                        <span class="homepage-cell"><input type="text" value="John"/></span>
+                        <span class="homepage-cell"><input type="text" value="Doe"/></span>
+                        <span class="homepage-cell"><input type="checkbox"/></span>
+                        <span class="homepage-cell"><input type="checkbox"/></span>
+                        <span class="homepage-cell"><input type="checkbox"/></span>
+                        <span class="homepage-cell"><input type="checkbox"/></span>
+                        <span class="homepage-cell"><input type="checkbox"/></span>
+                        <span class="homepage-cell"><input type="checkbox"/></span>
+                        <span class="homepage-cell"><input type="checkbox"/></span>
+                        <span class="homepage-cell"><input type="date" /></span>
+                        <span class="homepage-cell"><input type="date" /></span>
+                        <span class="homepage-cell"><input type="text" value="Jacques Augustin"/></span>
+                        <span class="homepage-cell"><input type="text" value="30 avenue de la République"/></span>
+                        <span class="homepage-cell"><input type="text" value="12"/></span>
+                        <span class="homepage-cell"><input type="text" value="14"/></span>
                     </form>
-                    <form class="homepage-row" method="post" action="">
+                    <form class="homepage-row" name="form-1" method="post" action="">
                         <span class="homepage-cell">
                             <div>
                                 <input type="submit" value="modify"/>
                                 <input type="submit" value="details">
                             </div>
                         </span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="date" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="date" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="a807467a-12a8-46f7-a45c-0546117176f0"/></span>
+                        <span class="homepage-cell"><input type="text" value="2022"/></span>
+                        <span class="homepage-cell"><input type="text" value="John"/></span>
+                        <span class="homepage-cell"><input type="text" value="Doe"/></span>
+                        <span class="homepage-cell"><input type="checkbox"/></span>
+                        <span class="homepage-cell"><input type="checkbox"/></span>
+                        <span class="homepage-cell"><input type="checkbox"/></span>
+                        <span class="homepage-cell"><input type="checkbox"/></span>
+                        <span class="homepage-cell"><input type="checkbox"/></span>
+                        <span class="homepage-cell"><input type="checkbox"/></span>
+                        <span class="homepage-cell"><input type="checkbox"/></span>
+                        <span class="homepage-cell"><input type="date" /></span>
+                        <span class="homepage-cell"><input type="date" /></span>
+                        <span class="homepage-cell"><input type="text" value="Jacques Augustin"/></span>
+                        <span class="homepage-cell"><input type="text" value="30 avenue de la République"/></span>
+                        <span class="homepage-cell"><input type="text" value="12"/></span>
+                        <span class="homepage-cell"><input type="text" value="14"/></span>
                     </form>
+
                 </div>
             </div>
         </div>

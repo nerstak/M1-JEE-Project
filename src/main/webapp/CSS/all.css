@@ -27,6 +27,7 @@ a,p,li, label, input[type="text"]{
 
 a{
     font-size: 1.125rem;
+    text-decoration: none;
 }
 
 p,  li, input{
@@ -75,6 +76,15 @@ button{
 
 .navbar-menu > *{
     margin: 0 8px;
+}
+
+.navbar-menu a{
+    font-size: 1.25rem;
+}
+
+
+.navbar-menu a:hover{
+    color: var(--color-main);
 }
 
 /*Button*/
