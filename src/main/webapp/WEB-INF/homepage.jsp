@@ -57,46 +57,57 @@
                         <span class="homepage-cell">Group</span>
                         <span class="homepage-cell">First name</span>
                         <span class="homepage-cell">Last name</span>
-                        <span class="homepage-cell">Last name</span>
-                        <span class="homepage-cell">Last gd df gdf g fname</span>
-                        <span class="homepage-cell">Last name</span>
-                        <span class="homepage-cell">Last name</span>
-                        <span class="homepage-cell">Last name</span>
-                        <span class="homepage-cell">Last name</span>
-                        <span class="homepage-cell">Last name</span>
-                        <span class="homepage-cell">Last name</span>
+                        <span class="homepage-cell">C.d.C</span>
+                        <span class="homepage-cell">Company eval</span>
+                        <span class="homepage-cell">Web survey</span>
+                        <span class="homepage-cell">Released report</span>
+                        <span class="homepage-cell">Defense</span>
+                        <span class="homepage-cell">Planned visit</span>
+                        <span class="homepage-cell">Visit done</span>
+                        <span class="homepage-cell">Begin date</span>
+                        <span class="homepage-cell">End date</span>
+                        <span class="homepage-cell">M.d.S</span>
+                        <span class="homepage-cell">Address</span>
+                        <span class="homepage-cell">Tech note</span>
+                        <span class="homepage-cell">Comm note</span>
                     </div>
                     <form class="homepage-row" method="post" action="blah.html">
-                        <span class="homepage-cell"><input type="radio" /></span>
+                        <span class="homepage-cell"><input type="radio" name="radioId"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="checkbox" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="date" value="slkfjkld"/></span>
+                        <span class="homepage-cell"><input type="date" value="slkfjkld"/></span>
                         <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
                         <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
                         <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
                         <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                    </form>
-                    <form class="homepage-row" method="post" action="blah.html">
-                        <span class="homepage-cell"><input type="radio" /></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                    </form>
 
-                    <form class="homepage-row" method="post" action="blah.html">
-                        <span class="homepage-cell"><input type="radio" /></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
-                        <span class="homepage-cell"><input type="text" value="slkfjkld"/></span>
                     </form>
+<%--                    <td><input type="radio" name="radioId"></td>--%>
+<%--                    <td><input type="text" value="2020"></td>--%>
+<%--                    <td>John</td>--%>
+<%--                    <td>Doe</td>--%>
+<%--                    <td><input type="checkbox"></td>--%>
+<%--                    <td><input type="checkbox"></td>--%>
+<%--                    <td><input type="checkbox"></td>--%>
+<%--                    <td><input type="checkbox"></td>--%>
+<%--                    <td><input type="checkbox"></td>--%>
+<%--                    <td><input type="checkbox"></td>--%>
+<%--                    <td><input type="checkbox" name="fdskjf"></td>--%>
+<%--                    <td>26/04/2021</td>--%>
+<%--                    <td>26/09/2021</td>--%>
+<%--                    <td>Jane Doe</td>--%>
+<%--                    <td>30 avenue de la République</td>--%>
+<%--                    <td>12</td>--%>
+<%--                    <td>14</td>--%>
                 </div>
             </div>
             <div class="homepage-button">
