@@ -94,3 +94,16 @@
     fill: white;
 }
 
+/*Error message*/
+.error-msg-wrapper{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.error-msg-wrapper svg{
+    fill: var(--color-red);
+    width: 32px;
+    height: 32px;
+    margin-right: 16px;
+}
