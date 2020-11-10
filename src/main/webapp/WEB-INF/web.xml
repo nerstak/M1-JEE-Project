@@ -23,6 +23,14 @@
         <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
 
+    <!-- Define taglib -->
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <include-prelude>/WEB-INF/taglibjstl.jsp</include-prelude>
+        </jsp-property-group>
+    </jsp-config>
+
     <welcome-file-list>
         <welcome-file>Controller</welcome-file>
     </welcome-file-list>

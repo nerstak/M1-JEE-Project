@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -49,8 +48,8 @@ public class Controller extends HttpServlet {
         tutor.setPwd(request.getParameter("pwd"));
 
         if (tutor.getEmail().isEmpty() || tutor.getPwd().isEmpty()) {
-            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); //redirect to welcome if ok
             request.setAttribute("errorMessage", ERR_MISSING_FIELD);
+            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); //redirect to welcome if ok
         }
 
         if (checkCredentials(tutor)) {
@@ -73,12 +72,14 @@ public class Controller extends HttpServlet {
         dbPwd = properties.getProperty("DB.PWD");
 
         try {
+            Class.forName(properties.getProperty("DB.JDBC"));
             conn = DriverManager.getConnection(dbUrl, dbUser, dbPwd);
             stmt = conn.createStatement();
-
             dataServices = new DataServices(dbUser, dbPwd, dbUrl);
         } catch (SQLException e) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
