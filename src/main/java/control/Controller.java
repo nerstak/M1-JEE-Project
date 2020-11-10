@@ -1,5 +1,6 @@
 package control;
 
+import model.InternshipData;
 import model.Tutor;
 import utils.DataServices;
 
@@ -13,6 +14,7 @@ import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -49,8 +51,8 @@ public class Controller extends HttpServlet {
         tutor.setPwd(request.getParameter("pwd"));
 
         if (tutor.getEmail().isEmpty() || tutor.getPwd().isEmpty()) {
-            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); //redirect to welcome if ok
             request.setAttribute("errorMessage", ERR_MISSING_FIELD);
+            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); //redirect to welcome if ok
         }
 
         if (checkCredentials(tutor)) {
@@ -73,12 +75,14 @@ public class Controller extends HttpServlet {
         dbPwd = properties.getProperty("DB.PWD");
 
         try {
+            Class.forName(properties.getProperty("DB.JDBC"));
             conn = DriverManager.getConnection(dbUrl, dbUser, dbPwd);
             stmt = conn.createStatement();
-
             dataServices = new DataServices(dbUser, dbPwd, dbUrl);
         } catch (SQLException e) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, e);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
