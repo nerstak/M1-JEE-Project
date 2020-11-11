@@ -2,26 +2,22 @@ package utils;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static utils.Constants.*;
 
 public class DataServices {
     private Connection con;
     private Statement stmt;
+    private ResultSet rs;
+    private PreparedStatement ps;
 
     public DataServices(String login, String pwd, String connectionUrl){
         try {
             con = DriverManager.getConnection(connectionUrl, login, pwd);
             stmt = con.createStatement();
         } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public DataServices(String login, String pwd, String connectionUrl, String jdbc){
-        try {
-            Class.forName(jdbc);
-            con = DriverManager.getConnection(connectionUrl, login, pwd);
-            stmt = con.createStatement();
-        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }
@@ -59,12 +55,43 @@ public class DataServices {
      */
     public ResultSet selectResultSet(String query){
         try {
-            ResultSet rs = stmt.executeQuery(query);
+            rs = stmt.executeQuery(query);
             return rs;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * Select a tutor using email and password
+     * @param email Email of the tutor
+     * @param password Password of the tutor
+     * @return ResultSet (may be null)
+     */
+    public ResultSet selectTutor(String email, String password) {
+        try {
+            ps = con.prepareStatement(DB_SELECT_SINGLE_TUTOR);
+            ps.setString(1, email);
+            ps.setString(2, password);
+
+            return ps.executeQuery();
+        } catch (SQLException e) {
+            Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;
+    }
+
+    public ResultSet selectStudents(String tutorId) {
+        try {
+            ps = con.prepareStatement(DB_SELECT_STUDENTS);
+            ps.setString(1, tutorId);
+
+            return ps.executeQuery();
+        } catch (SQLException e) {
+            Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;
     }
 
 

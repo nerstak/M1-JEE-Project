@@ -130,7 +130,7 @@ public class Controller extends HttpServlet {
     private boolean checkCredentials(Tutor myTutor) {
         // Todo Convert this simple Statement to a Prepared Statement
         // See: https://github.com/nerstak/M1-JEE-Project/blob/feature/linking-db-and-pages/src/main/java/control/Controller.java#L80
-        rs = dataServices.selectResultSet("SELECT * FROM \"Tutor\" WHERE \"Email\"='" + myTutor.getEmail() + "' AND \"Pwd\"='" + myTutor.getPwd() + "';");
+        rs = dataServices.selectTutor(myTutor.getEmail(),myTutor.getPwd());
         if (rs != null) {
             try {
                 if (rs.next()) { //if rs contain the user data => set bean's property
@@ -148,7 +148,6 @@ public class Controller extends HttpServlet {
         } else {
             return false;
         }
-
     }
 
     /**

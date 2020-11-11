@@ -12,4 +12,5 @@ public class Constants {
     public static final String ERR_MISSING_FIELD = "At least one field is missing";
 
     public static final String DB_SELECT_SINGLE_TUTOR = "SELECT * FROM \"Tutor\" WHERE \"Tutor\".\"Email\"  = ? AND \"Tutor\".\"Pwd\" = ?";
+    public static final String DB_SELECT_STUDENTS = "SELECT * FROM students_table WHERE \"TutorId\" = ? ";
 }
