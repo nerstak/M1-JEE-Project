@@ -82,11 +82,21 @@ public class DataServices {
         return null;
     }
 
-    public ResultSet selectStudents(String tutorId) {
+    /**
+     * Select internships supervised by a tutor
+     * @param tutorId Supervisor
+     * @return List of internships (may be null)
+     */
+    public ResultSet selectInternships(String tutorId) {
         return getResultSet(tutorId, DB_SELECT_INTERNSHIPS);
     }
 
-    public ResultSet selectInternship(String internshipId) {
+    /**
+     * Select internship and its details
+     * @param internshipId Internship
+     * @return Details (may be null)
+     */
+    public ResultSet selectInternshipDetailed(String internshipId) {
         return getResultSet(internshipId, DB_SELECT_INTERNSHIP_DETAILED);
     }
 

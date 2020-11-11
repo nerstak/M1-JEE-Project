@@ -140,6 +140,13 @@ CREATE VIEW internships_data_details AS (
             ON S."InternshipId" = C."InternshipId"
                                       );
 
+CREATE VIEW students_skills AS (
+   SELECT S.*, sts."StudentId"
+   FROM "Skills" S
+            JOIN "StudentToSkills" sts
+                 ON sts."SkillsId" = s."SkillId"
+                               );
+
 GRANT ALL PRIVILEGES ON DATABASE st2eedb TO adm;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to adm;
 
