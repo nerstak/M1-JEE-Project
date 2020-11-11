@@ -38,19 +38,17 @@
                 <div class="homepage-selector-select">
                     <label for="year">Year</label>
                     <select name="year" id="year">
-                        <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="mercedes">Mercedes</option>
-                        <option value="audi">Audi</option>
+                        <c:forEach var="year" begin="2015" end="2020" step="1">
+                            <option value="${year}">${year}</option>
+                        </c:forEach>
                     </select>
                 </div>
                 <div class="homepage-selector-select">
                     <label for="keywords">Keywords</label>
                     <select name="keywords" id="keywords">
-                        <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="mercedes">Mercedes</option>
-                        <option value="audi">Audi</option>
+                        <c:forEach items="${listOfSkill}" var="skill">
+                            <option value="${skill.skill}">${skill.skill}</option>
+                        </c:forEach>
                     </select>
                 </div>
                 <div class="homepage-selector-select">
