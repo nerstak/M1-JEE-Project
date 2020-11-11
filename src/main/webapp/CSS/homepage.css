@@ -51,29 +51,34 @@
 .homepage-selector{
     display: flex;
     flex-wrap: nowrap;
-    justify-content: space-between;
 }
 
-.homepage-selector > div{
+.homepage-selector > div, .homepage-selector input[type="submit"]{
     margin: 16px 0 32px;
 }
 
 /*Selector keyword*/
+.homepage-selector-select > *{
+    display: inline-block;
+    margin-right: 16px;
+}
+
 .homepage-selector-select{
     display: flex;
     flex-wrap: nowrap;
 }
 
-.homepage-selector-select > div > *{
-    display: inline-block;
-    margin-right: 16px;
+.homepage-selector-select input[type=text], .homepage-selector-select select{
+    padding: 4px;
+    width: 80%;
+    border: var(--color-textdisable-lighttheme) 1px solid;
+    border-radius: 8px;
+    outline: none;
 }
 
-.homepage-selector-select > div > p{
-    color: white;
-    background-color: var(--color-main);
-    padding: 4px 12px;
-    border-radius: 8px;
+
+.homepage-selector-select input[type=text]:focus, .homepage-selector-select select:focus{
+    border-color: var(--color-main);
 }
 
 

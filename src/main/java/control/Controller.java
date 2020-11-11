@@ -1,5 +1,6 @@
 package control;
 
+import model.Skills;
 import model.Tutor;
 import utils.DataServices;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -36,6 +38,8 @@ public class Controller extends HttpServlet {
     private ResultSet rs;
     private PreparedStatement ps;
 
+    private ArrayList<Skills> listOfSkills;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
@@ -55,6 +59,7 @@ public class Controller extends HttpServlet {
         if (checkCredentials(tutor)) {
             session = request.getSession();
             session.setAttribute("tutor", tutor);
+            session.setAttribute("listOfSkill", getListOfSkills());
             request.getRequestDispatcher(HOME_PAGE).forward(request, response);
         } else {
             request.setAttribute("errorMessage", ERR_INV_CRED_MESS);
@@ -165,6 +170,24 @@ public class Controller extends HttpServlet {
         }
         return properties;
     }
+
+    private ArrayList<Skills> getListOfSkills(){
+        listOfSkills = new ArrayList<>();
+        rs = dataServices.selectResultSet("SELECT * FROM \"Skills\"");
+        if (rs != null){
+            try {
+                while (rs.next()){
+                    Skills skills = new Skills();
+                    skills.setSkill(rs.getString("Skill"));
+                    listOfSkills.add(skills);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return listOfSkills;
+    }
+
 /**
  private boolean checkCredentials(Tutor tutor) {
  try {
