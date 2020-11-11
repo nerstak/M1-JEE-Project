@@ -22,7 +22,10 @@
     <header class="navbar">
         <img class="logo-efrei" src="${pageContext.request.contextPath}/Image/Logo-Efrei-2017-Fr-Web.png" alt="efrei">
         <div class="navbar-menu">
-            <p>John Doe</p>
+            <jsp:useBean id="tutor" class="model.Tutor" scope="session"/>
+            <p>
+                ${tutor.firstName}${" "}${tutor.name}
+            </p>
             <p>Logout</p>
         </div>
     </header>
