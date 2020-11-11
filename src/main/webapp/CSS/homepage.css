@@ -68,7 +68,7 @@
     flex-wrap: nowrap;
 }
 
-.homepage-selector-select input[type=text]{
+.homepage-selector-select input[type=text], .homepage-selector-select select{
     padding: 4px;
     width: 80%;
     border: var(--color-textdisable-lighttheme) 1px solid;
@@ -76,7 +76,8 @@
     outline: none;
 }
 
-.homepage-selector-select input[type=text]:focus{
+
+.homepage-selector-select input[type=text]:focus, .homepage-selector-select select:focus{
     border-color: var(--color-main);
 }
 
