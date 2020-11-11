@@ -34,25 +34,31 @@
         <div class="homepage-main-content">
             <!--Todo replace 12 by the real number -->
             <h1>Extranet myEfrei - 12 student assigned</h1>
-            <div class="homepage-selector">
+            <form class="homepage-selector" >
                 <div class="homepage-selector-select">
-                    <div>
-                        <h2>Year</h2>
-                        <p>2020</p>
-                    </div>
-                    <div>
-                        <h2>Keyword</h2>
-                        <p>C++</p>
-                    </div>
-                    <div>
-                        <h2>Keyword</h2>
-                        <p>Smith</p>
-                    </div>
+                    <label for="year">Year</label>
+                    <select name="year" id="year">
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                    </select>
                 </div>
-                <div class="homepage-selector-search">
-                    <input type="text">
+                <div class="homepage-selector-select">
+                    <label for="keywords">Keywords</label>
+                    <select name="keywords" id="keywords">
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                    </select>
                 </div>
-            </div>
+                <div class="homepage-selector-select">
+                    <label for="search-name">Name</label>
+                    <input type="text" id="search-name">
+                </div>
+                <input type="submit" value="Search">
+            </form>
             <div class="homepage-table-wrapper">
                 <div class="homepage-table">
                     <div class="homepage-row">
