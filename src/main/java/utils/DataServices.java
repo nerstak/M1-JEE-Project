@@ -1,5 +1,7 @@
 package utils;
 
+import model.Student;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -117,6 +119,31 @@ public class DataServices {
         }
         return null;
     }
+
+    /**
+     * Update student in Database
+     * //TODO: Maybe move this to student object, and generalise the function
+     * @param s Student
+     * @return Row count impacted
+     */
+    public int updateStudent(Student s) {
+        try {
+            ps = con.prepareStatement(DB_UPDATE_STUDENT);
+            ps.setString(1,s.getName());
+            ps.setString(2,s.getFirstName());
+            ps.setString(3,s.getEmail());
+            ps.setString(4,s.getLinkedinProfile());
+            ps.setString(5,s.getGroup());
+            ps.setObject(6,s.getStudentId(), Types.OTHER);
+
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return 0;
+
+    }
+
 
 
     //Enable autocommit

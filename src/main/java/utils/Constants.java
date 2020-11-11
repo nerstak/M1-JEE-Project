@@ -17,4 +17,11 @@ public class Constants {
     public static final String DB_SELECT_SKILLS = "SELECT * FROM \"Skills\"";
     public static final String DB_SELECT_STUDENT_SKILLS = "SELECT * FROM students_skills WHERE \"StudentId\" = ?";
     public static final String DB_SELECT_STUDENTS_WITH_SKILL = "SELECT * FROM students_skills WHERE \"SkillsId\" = ?";
+
+    public static final String DB_UPDATE_COMMENTS = "UPDATE \"Comments\" SET \"SupervisorComm\" = ?, \"StudentComm\" = ? WHERE \"InternshipId\" = ?";
+    public static final String DB_UPDATE_COMPANY = "UPDATE \"Company\" SET \"Name\" = ?, \"Address\" = ? WHERE \"CompanyId\" = ?";
+    public static final String DB_UPDATE_FINAL_REPORT = "UPDATE \"FinalReport\" SET \"Title\" = ?, \"Report\" = ? WHERE \"InternshipId\" = ?";
+    public static final String DB_UPDATE_MARKS = "UPDATE \"Marks\" SET \"Tech\" = ?, \"Communication\" = ? WHERE \"InternshipId\" = ?";
+    public static final String DB_UPDATE_STUDENT = "UPDATE \"Student\" SET \"Name\" = ?, \"Firstname\" = ?, \"Email\" = ?, \"LinkedInProfile\" = ?, \"Group\" = ? WHERE \"StudentId\" = ?";
+    public static final String DB_UPDATE_VISIT = "UPDATE \"Visit\" SET \"Done\" = ?, \"Planned\" = ?, \"VisitReport\" = ? WHERE \"InternshipId\" = ?";
 }

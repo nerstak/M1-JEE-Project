@@ -118,6 +118,7 @@ public class Controller extends HttpServlet {
 
             //check credentials and redirect
             if (checkCredentials(myTutor)) {
+                // TODO: Link SELECT Internship
                 req.getRequestDispatcher(HOME_PAGE).forward(req, resp);
             } else {
                 req.setAttribute("errorMessage", ERR_INV_CRED_MESS);
