@@ -114,7 +114,7 @@ ALTER TABLE "Visit"
     ADD FOREIGN KEY ("InternshipId") REFERENCES "Internship" ("InternshipId");
 
 
-CREATE VIEW students_table AS (
+CREATE VIEW internships_data AS (
       SELECT S.*,
              I."InternshipId", I."CompanyId", I."Description", I."MidInternInfo", I."WebSurvey", I."Begining", I."End",
              C."Name" AS "CompanyName", C."Address",
@@ -133,9 +133,9 @@ CREATE VIEW students_table AS (
 
       ORDER BY (I."Begining") DESC);
 
-CREATE VIEW student_table_complete AS (
+CREATE VIEW internships_data_details AS (
     SELECT S.*, C."CommentsId", C."StudentComm", C."SupervisorComm"
-    FROM students_table S
+    FROM internships_data S
         LEFT JOIN "Comments" C
             ON S."InternshipId" = C."InternshipId"
                                       );

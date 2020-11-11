@@ -93,13 +93,13 @@ VALUES (17, 12, (SELECT "InternshipId"
                 WHERE "StudentId" = (SELECT "StudentId" FROM "Student" WHERE "Email" = 'andy.warhol@efrei.net')));
 
 INSERT INTO "Comments" ("StudentComm", "SupervisorComm", "InternshipId")
-VALUES ("Comments", null, (SELECT "InternshipId"
+VALUES ('Comments', null, (SELECT "InternshipId"
                      FROM "Internship"
                      WHERE "StudentId" = (SELECT "StudentId" FROM "Student" WHERE "Email" = 'katie.bouman@efrei.net'))),
-       ("Comments", "Comments", (SELECT "InternshipId"
+       ('Comments', 'Comments', (SELECT "InternshipId"
                      FROM "Internship"
                      WHERE "StudentId" = (SELECT "StudentId" FROM "Student" WHERE "Email" = 'andy.warhol@efrei.net'))),
-       ("Comments", "Comments", (SELECT "InternshipId"
+       ('Comments', 'Comments', (SELECT "InternshipId"
                      FROM "Internship"
                      WHERE "StudentId" =
                            (SELECT "StudentId" FROM "Student" WHERE "Email" = 'peggy.johnson@efrei.net')));

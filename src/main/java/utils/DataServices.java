@@ -83,17 +83,23 @@ public class DataServices {
     }
 
     public ResultSet selectStudents(String tutorId) {
-        return getResultSet(tutorId, DB_SELECT_STUDENTS);
+        return getResultSet(tutorId, DB_SELECT_INTERNSHIPS);
     }
 
     public ResultSet selectInternship(String internshipId) {
-        return getResultSet(internshipId, DB_SELECT_INTERNSHIP);
+        return getResultSet(internshipId, DB_SELECT_INTERNSHIP_DETAILED);
     }
 
-    private ResultSet getResultSet(String internshipId, String dbSelectInternship) {
+    /**
+     * Get ResultSet of a parameterised query
+     * @param parameter Parameter
+     * @param query Query
+     * @return ResultSet (may be null)
+     */
+    private ResultSet getResultSet(String parameter, String query) {
         try {
-            ps = con.prepareStatement(dbSelectInternship);
-            ps.setString(1, internshipId);
+            ps = con.prepareStatement(query);
+            ps.setString(1, parameter);
 
             return ps.executeQuery();
         } catch (SQLException e) {
