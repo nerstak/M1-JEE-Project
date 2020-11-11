@@ -13,4 +13,5 @@ public class Constants {
 
     public static final String DB_SELECT_SINGLE_TUTOR = "SELECT * FROM \"Tutor\" WHERE \"Tutor\".\"Email\"  = ? AND \"Tutor\".\"Pwd\" = ?";
     public static final String DB_SELECT_STUDENTS = "SELECT * FROM students_table WHERE \"TutorId\" = ? ";
+    public static final String DB_SELECT_INTERNSHIP = "SELECT * FROM student_table_complete WHERE \"InternshipId\" = ?";
 }

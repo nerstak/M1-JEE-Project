@@ -83,9 +83,17 @@ public class DataServices {
     }
 
     public ResultSet selectStudents(String tutorId) {
+        return getResultSet(tutorId, DB_SELECT_STUDENTS);
+    }
+
+    public ResultSet selectInternship(String internshipId) {
+        return getResultSet(internshipId, DB_SELECT_INTERNSHIP);
+    }
+
+    private ResultSet getResultSet(String internshipId, String dbSelectInternship) {
         try {
-            ps = con.prepareStatement(DB_SELECT_STUDENTS);
-            ps.setString(1, tutorId);
+            ps = con.prepareStatement(dbSelectInternship);
+            ps.setString(1, internshipId);
 
             return ps.executeQuery();
         } catch (SQLException e) {
