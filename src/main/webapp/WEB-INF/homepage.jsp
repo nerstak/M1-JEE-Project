@@ -60,7 +60,7 @@
 
             <%-- todo replace false by ${empty listOfInternship} --%>
             <c:choose>
-                <c:when test="${false}">
+                <c:when test="${empty listOfInternship}">
                     <div>
                         <h2>No data ! </h2>
                         <p>It seems that no internship have been found with your criteria</p>
