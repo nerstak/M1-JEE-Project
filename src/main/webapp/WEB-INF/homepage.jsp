@@ -60,7 +60,7 @@
 
             <%-- todo replace false by ${empty listOfInternship} --%>
             <c:choose>
-                <c:when test="${false}">
+                <c:when test="${empty listOfInternship}">
                     <div>
                         <h2>No data ! </h2>
                         <p>It seems that no internship have been found with your criteria</p>
@@ -89,56 +89,33 @@
                                 <span class="homepage-cell">Tech note</span>
                                 <span class="homepage-cell">Comm note</span>
                             </div>
-                            <form class="homepage-row" name="form-1" method="post" action="">
-                        <span class="homepage-cell">
-                            <div>
-                                <input type="submit" value="modify"/>
-                                <input type="submit" value="details">
-                            </div>
-                        </span>
-                                <span class="homepage-cell"><input type="text" value="a807467a-12a8-46f7-a45c-0546117176f0" disabled/></span>
-                                <span class="homepage-cell"><input type="text" value="2022"/></span>
-                                <span class="homepage-cell"><input type="text" value="John"/></span>
-                                <span class="homepage-cell"><input type="text" value="Doe"/></span>
-                                <span class="homepage-cell"><input type="checkbox"/></span>
-                                <span class="homepage-cell"><input type="checkbox"/></span>
-                                <span class="homepage-cell"><input type="checkbox"/></span>
-                                <span class="homepage-cell"><input type="checkbox"/></span>
-                                <span class="homepage-cell"><input type="checkbox"/></span>
-                                <span class="homepage-cell"><input type="checkbox"/></span>
-                                <span class="homepage-cell"><input type="checkbox"/></span>
-                                <span class="homepage-cell"><input type="date" /></span>
-                                <span class="homepage-cell"><input type="date" /></span>
-                                <span class="homepage-cell"><input type="text" value="Jacques Augustin"/></span>
-                                <span class="homepage-cell"><input type="text" value="30 avenue de la République"/></span>
-                                <span class="homepage-cell"><input type="text" value="12"/></span>
-                                <span class="homepage-cell"><input type="text" value="14"/></span>
-                            </form>
-                            <form class="homepage-row" name="form-1" method="post" action="">
-                        <span class="homepage-cell">
-                            <div>
-                                <input type="submit" value="modify"/>
-                                <input type="submit" value="details">
-                            </div>
-                        </span>
-                                <span class="homepage-cell"><input type="text" value="a807467a-12a8-46f7-a45c-0546117176f0" disabled/></span>
-                                <span class="homepage-cell"><input type="text" value="2022"/></span>
-                                <span class="homepage-cell"><input type="text" value="John"/></span>
-                                <span class="homepage-cell"><input type="text" value="Doe"/></span>
-                                <span class="homepage-cell"><input type="checkbox"/></span>
-                                <span class="homepage-cell"><input type="checkbox"/></span>
-                                <span class="homepage-cell"><input type="checkbox"/></span>
-                                <span class="homepage-cell"><input type="checkbox"/></span>
-                                <span class="homepage-cell"><input type="checkbox"/></span>
-                                <span class="homepage-cell"><input type="checkbox"/></span>
-                                <span class="homepage-cell"><input type="checkbox"/></span>
-                                <span class="homepage-cell"><input type="date" /></span>
-                                <span class="homepage-cell"><input type="date" /></span>
-                                <span class="homepage-cell"><input type="text" value="Jacques Augustin"/></span>
-                                <span class="homepage-cell"><input type="text" value="30 avenue de la République"/></span>
-                                <span class="homepage-cell"><input type="text" value="12"/></span>
-                                <span class="homepage-cell"><input type="text" value="14"/></span>
-                            </form>
+                            <c:forEach items="${listOfInternship}" var="Internship" >
+                                <form class="homepage-row" name="form" method="post" action="">
+                                    <span class="homepage-cell">
+                                        <div>
+                                            <input type="submit" value="modify"/>
+                                            <input type="submit" value="details">
+                                        </div>
+                                    </span>
+                                    <span class="homepage-cell"><input type="text" value="${Internship.internship.internship}" disabled/></span>
+                                    <span class="homepage-cell"><input type="text" value="${Internship.student.group}"/></span>
+                                    <span class="homepage-cell"><input type="text" value="${Internship.student.firstName}"/></span>
+                                    <span class="homepage-cell"><input type="text" value="${Internship.student.name}"/></span>
+                                    <span class="homepage-cell"><input type="checkbox"} /></span>
+                                    <span class="homepage-cell"><input type="checkbox"/></span>
+                                    <span class="homepage-cell"><input type="checkbox" ${Internship.internship.webSurvey == true ? 'checked' : ''}/></span>
+                                    <span class="homepage-cell"><input type="checkbox"/></span>
+                                    <span class="homepage-cell"><input type="checkbox"/></span>
+                                    <span class="homepage-cell"><input type="checkbox" ${Internship.visit.planned == true ? 'checked' : ''}/></span>
+                                    <span class="homepage-cell"><input type="checkbox" ${Internship.visit.done == true ? 'checked' : ''}/></span>
+                                    <span class="homepage-cell"><input type="date" value="${Internship.internship.begining}" /></span>
+                                    <span class="homepage-cell"><input type="date" value="${Internship.internship.end}"/></span>
+                                    <span class="homepage-cell"><input type="text" value="${Internship.internship.internSupervisor}"/></span>
+                                    <span class="homepage-cell"><input type="text" value="${Internship.company.address}"/></span>
+                                    <span class="homepage-cell"><input type="text" value="${Internship.marks.tech}"/></span>
+                                    <span class="homepage-cell"><input type="text" value="${Internship.marks.communication}"/></span>
+                                </form>
+                            </c:forEach>
                         </div>
                     </div>
                 </c:otherwise>

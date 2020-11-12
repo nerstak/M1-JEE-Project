@@ -1,7 +1,6 @@
 package control;
 
-import model.Skills;
-import model.Tutor;
+import model.*;
 import utils.DataServices;
 
 import javax.servlet.ServletException;
@@ -39,6 +38,7 @@ public class Controller extends HttpServlet {
     private PreparedStatement ps;
 
     private ArrayList<Skills> listOfSkills;
+    private ArrayList<InternshipData> listOfInternshipdata;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -59,7 +59,8 @@ public class Controller extends HttpServlet {
         if (checkCredentials(tutor)) {
             session = request.getSession();
             session.setAttribute("tutor", tutor);
-            session.setAttribute("listOfSkill", getListOfSkills());
+            request.setAttribute("listOfSkill", getListOfSkills());
+            request.setAttribute("listOfInternship", getListOfInternshipDate(tutor));
             // TODO: Link SELECT Internships
             request.getRequestDispatcher(HOME_PAGE).forward(request, response);
         } else {
@@ -148,5 +149,64 @@ public class Controller extends HttpServlet {
             }
         }
         return listOfSkills;
+    }
+
+    //TODO : move
+    private ArrayList<InternshipData> getListOfInternshipDate(Tutor tutor){
+        listOfInternshipdata = new ArrayList<>();
+        rs = dataServices.selectInternships(tutor.getTutorId().toString());
+
+        if (rs != null){
+            try {
+                while (rs.next()){
+                    Student student = new Student();
+                    student.setStudentId(UUID.fromString(rs.getString("StudentId")));
+                    student.setName(rs.getString("Name"));
+                    student.setFirstName(rs.getString("FirstName"));
+                    student.setEmail(rs.getString("Email"));
+                    student.setGroup(rs.getString("Group"));
+
+                    Internship internship = new Internship();
+                    internship.setInternship(UUID.fromString(rs.getString("InternshipId")));
+                    internship.setDesciption(rs.getString("Description"));
+                    internship.setMidInternInfo(rs.getBoolean("MidInternInfo"));
+                    internship.setWebSurvey(rs.getBoolean("WebSurvey"));
+                    internship.setBegining(rs.getDate("Begining"));
+                    internship.setEnd(rs.getDate("End"));
+
+                    Company company = new Company();
+                    company.setCompanyId(UUID.fromString(rs.getString("CompanyId")));
+                    company.setName(rs.getString("CompanyName"));
+                    company.setAddress(rs.getString("Address"));
+
+                    Visit visit = new Visit();
+                    visit.setVisitID(UUID.fromString(rs.getString("VisitId")));
+                    visit.setDone(rs.getBoolean("Done"));
+                    visit.setPlanned(rs.getBoolean("Planned"));
+                    visit.setVisitReport(rs.getBoolean("VisitReport"));
+
+                    Marks marks = new Marks();
+                    marks.setMarksId(UUID.fromString(rs.getString("MarksId")));
+                    marks.setCommunication(rs.getInt("Communication"));
+                    marks.setTech(rs.getInt("Tech"));
+
+                    InternshipData internshipData = new InternshipData();
+                    internship.setInternship(UUID.fromString(rs.getString("InternshipId")));
+                    internshipData.setStudent(student);
+                    internshipData.setInternship(internship);
+                    internshipData.setCompany(company);
+                    internshipData.setVisit(visit);
+                    internshipData.setMarks(marks);
+
+                    listOfInternshipdata.add(internshipData);
+
+
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return listOfInternshipdata;
     }
 }

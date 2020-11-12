@@ -111,8 +111,7 @@ public class DataServices {
     private ResultSet getResultSet(String parameter, String query) {
         try {
             ps = con.prepareStatement(query);
-            ps.setString(1, parameter);
-
+            ps.setObject(1, parameter, Types.OTHER);
             return ps.executeQuery();
         } catch (SQLException e) {
             Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);
