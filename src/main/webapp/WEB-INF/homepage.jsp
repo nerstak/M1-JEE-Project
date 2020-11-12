@@ -97,17 +97,17 @@
                                             <input type="submit" value="details">
                                         </div>
                                     </span>
-                                    <span class="homepage-cell"><input type="text" value="a807467a-12a8-46f7-a45c-0546117176f0" disabled/></span>
-                                    <span class="homepage-cell"><input type="text" value="2022"/></span>
+                                    <span class="homepage-cell"><input type="text" value="${Internship.internship.internship}" disabled/></span>
+                                    <span class="homepage-cell"><input type="text" value="${Internship.student.group}"/></span>
                                     <span class="homepage-cell"><input type="text" value="${Internship.student.firstName}"/></span>
                                     <span class="homepage-cell"><input type="text" value="${Internship.student.name}"/></span>
                                     <span class="homepage-cell"><input type="checkbox"} /></span>
                                     <span class="homepage-cell"><input type="checkbox"/></span>
+                                    <span class="homepage-cell"><input type="checkbox" ${Internship.internship.webSurvey == true ? 'checked' : ''}/></span>
                                     <span class="homepage-cell"><input type="checkbox"/></span>
                                     <span class="homepage-cell"><input type="checkbox"/></span>
-                                    <span class="homepage-cell"><input type="checkbox"/></span>
-                                    <span class="homepage-cell"><input type="checkbox"/></span>
-                                    <span class="homepage-cell"><input type="checkbox" ${Internship.visit.done == false ? 'checked' : ''}/></span>
+                                    <span class="homepage-cell"><input type="checkbox" ${Internship.visit.planned == true ? 'checked' : ''}/></span>
+                                    <span class="homepage-cell"><input type="checkbox" ${Internship.visit.done == true ? 'checked' : ''}/></span>
                                     <span class="homepage-cell"><input type="date" value="${Internship.internship.begining}" /></span>
                                     <span class="homepage-cell"><input type="date" value="${Internship.internship.end}"/></span>
                                     <span class="homepage-cell"><input type="text" value="${Internship.internship.internSupervisor}"/></span>
