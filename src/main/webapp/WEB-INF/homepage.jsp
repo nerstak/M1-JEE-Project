@@ -57,82 +57,97 @@
                 </div>
                 <input type="submit" value="Search">
             </form>
-            <div class="homepage-table-wrapper">
-                <div class="homepage-table">
-                    <div class="homepage-row">
-                        <span class="homepage-cell"></span>
-                        <span class="homepage-cell">#</span>
-                        <span class="homepage-cell">Group</span>
-                        <span class="homepage-cell">First name</span>
-                        <span class="homepage-cell">Last name</span>
-                        <span class="homepage-cell">C.d.C</span>
-                        <span class="homepage-cell">Company eval</span>
-                        <span class="homepage-cell">Web survey</span>
-                        <span class="homepage-cell">Released report</span>
-                        <span class="homepage-cell">Defense</span>
-                        <span class="homepage-cell">Planned visit</span>
-                        <span class="homepage-cell">Visit done</span>
-                        <span class="homepage-cell">Begin date</span>
-                        <span class="homepage-cell">End date</span>
-                        <span class="homepage-cell">M.d.S</span>
-                        <span class="homepage-cell">Address</span>
-                        <span class="homepage-cell">Tech note</span>
-                        <span class="homepage-cell">Comm note</span>
-                    </div>
-                    <form class="homepage-row" name="form-1" method="post" action="">
-                        <span class="homepage-cell">
-                            <div>
-                                <input type="submit" value="modify"/>
-                                <input type="submit" value="details">
-                            </div>
-                        </span>
-                        <span class="homepage-cell"><input type="text" value="a807467a-12a8-46f7-a45c-0546117176f0"/></span>
-                        <span class="homepage-cell"><input type="text" value="2022"/></span>
-                        <span class="homepage-cell"><input type="text" value="John"/></span>
-                        <span class="homepage-cell"><input type="text" value="Doe"/></span>
-                        <span class="homepage-cell"><input type="checkbox"/></span>
-                        <span class="homepage-cell"><input type="checkbox"/></span>
-                        <span class="homepage-cell"><input type="checkbox"/></span>
-                        <span class="homepage-cell"><input type="checkbox"/></span>
-                        <span class="homepage-cell"><input type="checkbox"/></span>
-                        <span class="homepage-cell"><input type="checkbox"/></span>
-                        <span class="homepage-cell"><input type="checkbox"/></span>
-                        <span class="homepage-cell"><input type="date" /></span>
-                        <span class="homepage-cell"><input type="date" /></span>
-                        <span class="homepage-cell"><input type="text" value="Jacques Augustin"/></span>
-                        <span class="homepage-cell"><input type="text" value="30 avenue de la République"/></span>
-                        <span class="homepage-cell"><input type="text" value="12"/></span>
-                        <span class="homepage-cell"><input type="text" value="14"/></span>
-                    </form>
-                    <form class="homepage-row" name="form-1" method="post" action="">
-                        <span class="homepage-cell">
-                            <div>
-                                <input type="submit" value="modify"/>
-                                <input type="submit" value="details">
-                            </div>
-                        </span>
-                        <span class="homepage-cell"><input type="text" value="a807467a-12a8-46f7-a45c-0546117176f0"/></span>
-                        <span class="homepage-cell"><input type="text" value="2022"/></span>
-                        <span class="homepage-cell"><input type="text" value="John"/></span>
-                        <span class="homepage-cell"><input type="text" value="Doe"/></span>
-                        <span class="homepage-cell"><input type="checkbox"/></span>
-                        <span class="homepage-cell"><input type="checkbox"/></span>
-                        <span class="homepage-cell"><input type="checkbox"/></span>
-                        <span class="homepage-cell"><input type="checkbox"/></span>
-                        <span class="homepage-cell"><input type="checkbox"/></span>
-                        <span class="homepage-cell"><input type="checkbox"/></span>
-                        <span class="homepage-cell"><input type="checkbox"/></span>
-                        <span class="homepage-cell"><input type="date" /></span>
-                        <span class="homepage-cell"><input type="date" /></span>
-                        <span class="homepage-cell"><input type="text" value="Jacques Augustin"/></span>
-                        <span class="homepage-cell"><input type="text" value="30 avenue de la République"/></span>
-                        <span class="homepage-cell"><input type="text" value="12"/></span>
-                        <span class="homepage-cell"><input type="text" value="14"/></span>
-                    </form>
 
-                </div>
-            </div>
+            <%-- todo replace false by ${empty listOfInternship} --%>
+            <c:choose>
+                <c:when test="${false}">
+                    <div>
+                        <h2>No data ! </h2>
+                        <p>It seems that no internship have been found with your criteria</p>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="homepage-table-wrapper">
+                        <div class="homepage-table">
+                            <div class="homepage-row">
+                                <span class="homepage-cell"></span>
+                                <span class="homepage-cell">#</span>
+                                <span class="homepage-cell">Group</span>
+                                <span class="homepage-cell">First name</span>
+                                <span class="homepage-cell">Last name</span>
+                                <span class="homepage-cell">C.d.C</span>
+                                <span class="homepage-cell">Company eval</span>
+                                <span class="homepage-cell">Web survey</span>
+                                <span class="homepage-cell">Released report</span>
+                                <span class="homepage-cell">Defense</span>
+                                <span class="homepage-cell">Planned visit</span>
+                                <span class="homepage-cell">Visit done</span>
+                                <span class="homepage-cell">Begin date</span>
+                                <span class="homepage-cell">End date</span>
+                                <span class="homepage-cell">M.d.S</span>
+                                <span class="homepage-cell">Address</span>
+                                <span class="homepage-cell">Tech note</span>
+                                <span class="homepage-cell">Comm note</span>
+                            </div>
+                            <form class="homepage-row" name="form-1" method="post" action="">
+                        <span class="homepage-cell">
+                            <div>
+                                <input type="submit" value="modify"/>
+                                <input type="submit" value="details">
+                            </div>
+                        </span>
+                                <span class="homepage-cell"><input type="text" value="a807467a-12a8-46f7-a45c-0546117176f0"/></span>
+                                <span class="homepage-cell"><input type="text" value="2022"/></span>
+                                <span class="homepage-cell"><input type="text" value="John"/></span>
+                                <span class="homepage-cell"><input type="text" value="Doe"/></span>
+                                <span class="homepage-cell"><input type="checkbox"/></span>
+                                <span class="homepage-cell"><input type="checkbox"/></span>
+                                <span class="homepage-cell"><input type="checkbox"/></span>
+                                <span class="homepage-cell"><input type="checkbox"/></span>
+                                <span class="homepage-cell"><input type="checkbox"/></span>
+                                <span class="homepage-cell"><input type="checkbox"/></span>
+                                <span class="homepage-cell"><input type="checkbox"/></span>
+                                <span class="homepage-cell"><input type="date" /></span>
+                                <span class="homepage-cell"><input type="date" /></span>
+                                <span class="homepage-cell"><input type="text" value="Jacques Augustin"/></span>
+                                <span class="homepage-cell"><input type="text" value="30 avenue de la République"/></span>
+                                <span class="homepage-cell"><input type="text" value="12"/></span>
+                                <span class="homepage-cell"><input type="text" value="14"/></span>
+                            </form>
+                            <form class="homepage-row" name="form-1" method="post" action="">
+                        <span class="homepage-cell">
+                            <div>
+                                <input type="submit" value="modify"/>
+                                <input type="submit" value="details">
+                            </div>
+                        </span>
+                                <span class="homepage-cell"><input type="text" value="a807467a-12a8-46f7-a45c-0546117176f0"/></span>
+                                <span class="homepage-cell"><input type="text" value="2022"/></span>
+                                <span class="homepage-cell"><input type="text" value="John"/></span>
+                                <span class="homepage-cell"><input type="text" value="Doe"/></span>
+                                <span class="homepage-cell"><input type="checkbox"/></span>
+                                <span class="homepage-cell"><input type="checkbox"/></span>
+                                <span class="homepage-cell"><input type="checkbox"/></span>
+                                <span class="homepage-cell"><input type="checkbox"/></span>
+                                <span class="homepage-cell"><input type="checkbox"/></span>
+                                <span class="homepage-cell"><input type="checkbox"/></span>
+                                <span class="homepage-cell"><input type="checkbox"/></span>
+                                <span class="homepage-cell"><input type="date" /></span>
+                                <span class="homepage-cell"><input type="date" /></span>
+                                <span class="homepage-cell"><input type="text" value="Jacques Augustin"/></span>
+                                <span class="homepage-cell"><input type="text" value="30 avenue de la République"/></span>
+                                <span class="homepage-cell"><input type="text" value="12"/></span>
+                                <span class="homepage-cell"><input type="text" value="14"/></span>
+                            </form>
+                        </div>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+
+
+
         </div>
+
     </main>
 </body>
 </html>
