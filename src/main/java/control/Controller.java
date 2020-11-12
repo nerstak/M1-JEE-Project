@@ -60,6 +60,7 @@ public class Controller extends HttpServlet {
             session = request.getSession();
             session.setAttribute("tutor", tutor);
             session.setAttribute("listOfSkill", getListOfSkills());
+            // TODO: Link SELECT Internships
             request.getRequestDispatcher(HOME_PAGE).forward(request, response);
         } else {
             request.setAttribute("errorMessage", ERR_INV_CRED_MESS);
@@ -88,43 +89,6 @@ public class Controller extends HttpServlet {
         }
     }
 
-    /**
-     * todo change to handle just the good one
-     * Use to handle both get and post request
-     *
-     * @param req
-     * @param resp
-     */
-    private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //Use to redirect when controller is the entry point
-        if (req.getParameter("login") == null) {
-            req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp); //redirect to welcome if ok
-        } else {
-            //Check if parameter(s) are null
-            String login = req.getParameter("login");
-            String pwd = req.getParameter("pwd");
-            if (login.isEmpty() || pwd.isEmpty()) {
-                req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp); //redirect to welcome if ok
-                req.setAttribute("errorMessage", "Empty field(s)");
-            }
-
-            //Get properties
-            properties = getPropertiesFile();
-
-            //Instantiate Tutor
-            Tutor myTutor = new Tutor();
-            myTutor.setName(login);
-            myTutor.setPwd(pwd);
-
-            //check credentials and redirect
-            if (checkCredentials(myTutor)) {
-                req.getRequestDispatcher(HOME_PAGE).forward(req, resp);
-            } else {
-                req.setAttribute("errorMessage", ERR_INV_CRED_MESS);
-                req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
-            }
-        }
-    }
 
     /**
      * Check login credentials from database
@@ -133,9 +97,7 @@ public class Controller extends HttpServlet {
      * @return true/false connection
      */
     private boolean checkCredentials(Tutor myTutor) {
-        // Todo Convert this simple Statement to a Prepared Statement
-        // See: https://github.com/nerstak/M1-JEE-Project/blob/feature/linking-db-and-pages/src/main/java/control/Controller.java#L80
-        rs = dataServices.selectResultSet("SELECT * FROM \"Tutor\" WHERE \"Email\"='" + myTutor.getEmail() + "' AND \"Pwd\"='" + myTutor.getPwd() + "';");
+        rs = dataServices.selectTutor(myTutor.getEmail(),myTutor.getPwd());
         if (rs != null) {
             try {
                 if (rs.next()) { //if rs contain the user data => set bean's property
@@ -153,7 +115,6 @@ public class Controller extends HttpServlet {
         } else {
             return false;
         }
-
     }
 
     /**
@@ -172,14 +133,14 @@ public class Controller extends HttpServlet {
         return properties;
     }
 
+    // TODO: Move this to another location (DateServices or Skills)
     private ArrayList<Skills> getListOfSkills(){
         listOfSkills = new ArrayList<>();
-        rs = dataServices.selectResultSet("SELECT * FROM \"Skills\"");
+        rs = dataServices.selectResultSet(DB_SELECT_SKILLS);
         if (rs != null){
             try {
                 while (rs.next()){
-                    Skills skills = new Skills();
-                    skills.setSkill(rs.getString("Skill"));
+                    Skills skills = new Skills(rs.getString("Skill"), (UUID) rs.getObject("SkillId"));
                     listOfSkills.add(skills);
                 }
             }catch (Exception e){
@@ -188,23 +149,4 @@ public class Controller extends HttpServlet {
         }
         return listOfSkills;
     }
-
-/**
- private boolean checkCredentials(Tutor tutor) {
- try {
- ps = conn.prepareStatement(TUTOR_PASSWORD);
- ps.setString(1,tutor.getEmail());
- rs = ps.executeQuery();
-
- if(rs.next()) {
- if(tutor.getPwd().equals(rs.getString("Pwd"))) {
- return true;
- }
- }
- } catch (SQLException throwables) {
- return false;
- }
- return false;
- }
- **/
 }
