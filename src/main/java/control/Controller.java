@@ -160,11 +160,14 @@ public class Controller extends HttpServlet {
             try {
                 while (rs.next()){
                     Student student = new Student();
+                    student.setStudentId(UUID.fromString(rs.getString("StudentId")));
                     student.setName(rs.getString("Name"));
                     student.setFirstName(rs.getString("FirstName"));
                     student.setEmail(rs.getString("Email"));
+                    student.setGroup(rs.getString("Group"));
 
                     Internship internship = new Internship();
+                    internship.setInternship(UUID.fromString(rs.getString("InternshipId")));
                     internship.setDesciption(rs.getString("Description"));
                     internship.setMidInternInfo(rs.getBoolean("MidInternInfo"));
                     internship.setWebSurvey(rs.getBoolean("WebSurvey"));
@@ -172,19 +175,23 @@ public class Controller extends HttpServlet {
                     internship.setEnd(rs.getDate("End"));
 
                     Company company = new Company();
+                    company.setCompanyId(UUID.fromString(rs.getString("CompanyId")));
                     company.setName(rs.getString("CompanyName"));
                     company.setAddress(rs.getString("Address"));
 
                     Visit visit = new Visit();
+                    visit.setVisitID(UUID.fromString(rs.getString("VisitId")));
                     visit.setDone(rs.getBoolean("Done"));
                     visit.setPlanned(rs.getBoolean("Planned"));
                     visit.setVisitReport(rs.getBoolean("VisitReport"));
 
                     Marks marks = new Marks();
+                    marks.setMarksId(UUID.fromString(rs.getString("MarksId")));
                     marks.setCommunication(rs.getInt("Communication"));
                     marks.setTech(rs.getInt("Tech"));
 
                     InternshipData internshipData = new InternshipData();
+                    internship.setInternship(UUID.fromString(rs.getString("InternshipId")));
                     internshipData.setStudent(student);
                     internshipData.setInternship(internship);
                     internshipData.setCompany(company);

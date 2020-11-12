@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Internship {
-    private UUID intership;
+    private UUID internship;
     private String desciption;
     private boolean webSurvey;
     private boolean midInternInfo;
@@ -14,12 +14,12 @@ public class Internship {
     private UUID StudentId;
     private UUID CompanyID;
 
-    public UUID getIntership() {
-        return intership;
+    public UUID getInternship() {
+        return internship;
     }
 
-    public void setIntership(UUID intership) {
-        this.intership = intership;
+    public void setInternship(UUID internship) {
+        this.internship = internship;
     }
 
     public String getDesciption() {
