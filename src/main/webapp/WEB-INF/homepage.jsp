@@ -96,7 +96,7 @@
                                 <input type="submit" value="details">
                             </div>
                         </span>
-                                <span class="homepage-cell"><input type="text" value="a807467a-12a8-46f7-a45c-0546117176f0"/></span>
+                                <span class="homepage-cell"><input type="text" value="a807467a-12a8-46f7-a45c-0546117176f0" disabled/></span>
                                 <span class="homepage-cell"><input type="text" value="2022"/></span>
                                 <span class="homepage-cell"><input type="text" value="John"/></span>
                                 <span class="homepage-cell"><input type="text" value="Doe"/></span>
@@ -121,7 +121,7 @@
                                 <input type="submit" value="details">
                             </div>
                         </span>
-                                <span class="homepage-cell"><input type="text" value="a807467a-12a8-46f7-a45c-0546117176f0"/></span>
+                                <span class="homepage-cell"><input type="text" value="a807467a-12a8-46f7-a45c-0546117176f0" disabled/></span>
                                 <span class="homepage-cell"><input type="text" value="2022"/></span>
                                 <span class="homepage-cell"><input type="text" value="John"/></span>
                                 <span class="homepage-cell"><input type="text" value="Doe"/></span>
