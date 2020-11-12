@@ -9,8 +9,18 @@
     </servlet>
 
     <servlet>
+        <servlet-name>Homepage</servlet-name>
+        <servlet-class>control.Homepage</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>Logout</servlet-name>
         <servlet-class>control.Logout</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>Details</servlet-name>
+        <servlet-class>control.Details</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -19,9 +29,22 @@
     </servlet-mapping>
 
     <servlet-mapping>
+        <servlet-name>Homepage</servlet-name>
+        <url-pattern>/Homepage</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
+
+
+    <servlet-mapping>
+        <servlet-name>Details</servlet-name>
+        <url-pattern>/Details</url-pattern>
+    </servlet-mapping>
+
+
 
     <!-- Define taglib -->
     <jsp-config>
