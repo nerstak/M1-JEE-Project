@@ -154,7 +154,7 @@ public class Controller extends HttpServlet {
     //TODO : move
     private ArrayList<InternshipData> getListOfInternshipDate(Tutor tutor){
         listOfInternshipdata = new ArrayList<>();
-        rs = dataServices.selectResultSet("SELECT * FROM internships_data WHERE \"TutorId\" = '"+ tutor.getTutorId() + "'");
+        rs = dataServices.selectInternships(tutor.getTutorId().toString());
 
         if (rs != null){
             try {
