@@ -182,7 +182,7 @@ public class Controller extends HttpServlet {
 
                     Marks marks = new Marks();
                     marks.setCommunication(rs.getInt("Communication"));
-                    marks.setCommunication(rs.getInt("Tech"));
+                    marks.setTech(rs.getInt("Tech"));
 
                     InternshipData internshipData = new InternshipData();
                     internshipData.setStudent(student);
