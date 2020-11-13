@@ -74,7 +74,7 @@ VALUES ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Test'),
         (SELECT "StudentId" FROM "Student" WHERE "Email" = 'peggy.johnson@efrei.net')),
        ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Keyword'),
         (SELECT "StudentId" FROM "Student" WHERE "Email" = 'peggy.johnson@efrei.net')),
-       ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Keyword'),
+       ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Key'),
         (SELECT "StudentId" FROM "Student" WHERE "Email" = 'peggy.johnson@efrei.net')),
        ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Word'),
         (SELECT "StudentId" FROM "Student" WHERE "Email" = 'andy.warhol@efrei.net')),
@@ -82,7 +82,7 @@ VALUES ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Test'),
         (SELECT "StudentId" FROM "Student" WHERE "Email" = 'alan.turing@efrei.net')),
        ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'HappyTest'),
         (SELECT "StudentId" FROM "Student" WHERE "Email" = 'andy.warhol@efrei.net')),
-       ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Happy'),
+       ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Key'),
         (SELECT "StudentId" FROM "Student" WHERE "Email" = 'dennis.ritchie@efrei.net'));
 
 INSERT INTO "Company" ("Name", "Address")
@@ -92,7 +92,7 @@ VALUES ('EFREI', '30-32 avenue de la République 94 800 Villejuif'),
        ('Carrefour', '93 Avenue de Paris 91300 Massy'),
        ('Microsoft', '39 Quai du Président Roosevelt, 92130 Issy-les-Moulineaux');
 
-INSERT INTO "Internship" ("Description", "WebSurvey", "MidInternInfo", "Begining", "End",
+INSERT INTO "Internship" ("Description", "WebSurvey", "MidInternInfo", "Beginning", "End",
                           "StudentId", "CompanyId", "Cdc", "CompanyEval", "Defense", "InternSupervisor")
 VALUES ('This is a desc', false, false, to_date('26-04-2021', 'DD-MM-YYYY'), to_date('22-09-2021', 'DD-MM-YYYY'),
         (SELECT "StudentId" FROM "Student" WHERE "Email" = 'dennis.ritchie@efrei.net'),
