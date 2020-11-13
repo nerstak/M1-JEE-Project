@@ -147,6 +147,7 @@ SELECT S.*,
        I.web_survey,
        I.beginning,
        I.ending,
+       I.cdc,
        I.company_eval,
        I.defense,
        I.intern_supervisor,
@@ -158,7 +159,11 @@ SELECT S.*,
        V.visit_id,
        M.communication,
        M.tech,
-       M.marks_id
+       M.marks_id,
+       Fr.final_report_id,
+       Fr.title,
+       fr.report
+
 
 FROM student S
          LEFT JOIN internship I
@@ -169,6 +174,8 @@ FROM student S
                    ON I.internship_id = V.internship_id
          LEFT JOIN marks M
                    ON I.internship_id = M.internship_id
+         LEFT JOIN final_report Fr
+                   ON Fr.internship_id = I.internship_id
 
 ORDER BY (I.beginning) DESC);
 

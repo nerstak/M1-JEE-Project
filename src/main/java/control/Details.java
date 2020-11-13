@@ -1,19 +1,131 @@
 package control;
 
+import model.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static utils.Constants.*;
 
 @WebServlet(name = "Details")
-public class Details extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+public class Details extends ServletModel {
+    private InternshipData internshipData;
+    private ResultSet rs;
+    private ArrayList<Skills> listOfSkills;
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Check from which submit button the request come from
+        String internshipSubmit = request.getParameter("internshipSubmit");
+        if (internshipSubmit.equals("details")){
+            String internshipId = request.getParameter("internshipId");
+            internshipData = getInternshipDataDetails(internshipId);
+            request.setAttribute("internshipData", internshipData);
+            request.setAttribute("listOfStudentSkills", getInternshipDataDetails(internshipData.getStudent().getStudentId().toString()));
+            request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
+        }else if (internshipSubmit.equals("modify")){
+
+        }else{
+            //todo je pense qu'il n'y a plus la liste des internship à renvoyer
+            request.getRequestDispatcher(HOME_PAGE).forward(request, response);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+
+
+    public InternshipData getInternshipDataDetails(String internshipId){
+        internshipData = new InternshipData();
+        rs = dataServices.selectInternshipDetailed(internshipId);
+
+        if (rs != null){
+            try {
+                while (rs.next()){
+                    Student student = new Student();
+                    student.setStudentId(UUID.fromString(rs.getString("student_id")));
+                    student.setName(rs.getString("name"));
+                    student.setFirstName(rs.getString("firstname"));
+                    student.setEmail(rs.getString("email"));
+                    student.setGroup(rs.getString("group"));
+                    student.setLinkedinProfile(rs.getString("linkedin_profile"));
+
+                    Internship internship = new Internship();
+                    internship.setInternship(UUID.fromString(rs.getString("internship_id")));
+                    internship.setDesciption(rs.getString("description"));
+                    internship.setMidInternInfo(rs.getBoolean("mid_intern_info"));
+                    internship.setWebSurvey(rs.getBoolean("web_survey"));
+                    internship.setBegining(rs.getDate("beginning"));
+                    internship.setEnd(rs.getDate("ending"));
+                    internship.setCdc(rs.getBoolean("cdc"));
+                    internship.setDefense(rs.getBoolean("defense"));
+                    internship.setCompanyEval(rs.getBoolean("company_eval"));
+                    internship.setInternSupervisor(rs.getString("intern_supervisor"));
+
+                    Company company = new Company();
+                    company.setCompanyId(UUID.fromString(rs.getString("company_id")));
+                    company.setName(rs.getString("company_name"));
+                    company.setAddress(rs.getString("address"));
+
+                    Visit visit = new Visit();
+                    visit.setVisitID(UUID.fromString(rs.getString("visit_id")));
+                    visit.setDone(rs.getBoolean("done"));
+                    visit.setPlanned(rs.getBoolean("planned"));
+                    visit.setVisitReport(rs.getBoolean("visit_report"));
+
+                    Marks marks = new Marks();
+                    marks.setMarksId(UUID.fromString(rs.getString("marks_id")));
+                    marks.setCommunication(rs.getInt("communication"));
+                    marks.setTech(rs.getInt("tech"));
+
+                    Comments comments = new Comments();
+                    comments.setCommentsId(UUID.fromString(rs.getString("comments_id")));
+                    comments.setStudentComm(rs.getString("student_comm"));
+                    comments.setSupervisorComment(rs.getString("supervisor_comm"));
+
+                    FinalReport finalReport = new FinalReport();
+                    finalReport.setFinalReportId(UUID.fromString(rs.getString("final_report_id")));
+                    finalReport.setReport(rs.getBoolean("report"));
+                    finalReport.setTitle(rs.getString("title"));
+
+                    internshipData.setStudent(student);
+                    internshipData.setInternship(internship);
+                    internshipData.setCompany(company);
+                    internshipData.setVisit(visit);
+                    internshipData.setMarks(marks);
+                    internshipData.setComments(comments);
+                    internshipData.setFinalReport(finalReport);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return internshipData;
+    }
+
+    public ArrayList<Skills> getListOfStudentSkills(String studentId){
+        listOfSkills = new ArrayList<>();
+        rs = dataServices.selectStudentSkillsAll(studentId);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    Skills skills = new Skills(rs.getString("skill"), (UUID) rs.getObject("skill_id"));
+                    listOfSkills.add(skills);
+                }
+            } catch (Exception e) {
+                Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+        return listOfSkills;
 
     }
 }

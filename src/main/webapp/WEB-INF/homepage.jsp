@@ -90,30 +90,30 @@
                                 <span class="homepage-cell">Comm note</span>
                             </div>
                             <c:forEach items="${listOfInternship}" var="Internship" >
-                                <form class="homepage-row" name="form" method="post" action="">
+                                <form class="homepage-row" name="form" action="Details" method="post">
                                     <span class="homepage-cell">
                                         <div>
-                                            <input type="submit" value="modify"/>
-                                            <input type="submit" value="details">
+                                            <input type="submit" value="details" name="internshipSubmit"/>
+                                            <input type="submit" value="modify" name="internshipSubmit"/>
                                         </div>
                                     </span>
-                                    <span class="homepage-cell"><input type="text" value="${Internship.internship.internship}" disabled/></span>
-                                    <span class="homepage-cell"><input type="text" value="${Internship.student.group}"/></span>
-                                    <span class="homepage-cell"><input type="text" value="${Internship.student.firstName}"/></span>
-                                    <span class="homepage-cell"><input type="text" value="${Internship.student.name}"/></span>
-                                    <span class="homepage-cell"><input type="checkbox"} /></span>
-                                    <span class="homepage-cell"><input type="checkbox"/></span>
-                                    <span class="homepage-cell"><input type="checkbox" ${Internship.internship.webSurvey == true ? 'checked' : ''}/></span>
-                                    <span class="homepage-cell"><input type="checkbox"/></span>
-                                    <span class="homepage-cell"><input type="checkbox"/></span>
-                                    <span class="homepage-cell"><input type="checkbox" ${Internship.visit.planned == true ? 'checked' : ''}/></span>
-                                    <span class="homepage-cell"><input type="checkbox" ${Internship.visit.done == true ? 'checked' : ''}/></span>
-                                    <span class="homepage-cell"><input type="date" value="${Internship.internship.begining}" /></span>
-                                    <span class="homepage-cell"><input type="date" value="${Internship.internship.end}"/></span>
-                                    <span class="homepage-cell"><input type="text" value="${Internship.internship.internSupervisor}"/></span>
-                                    <span class="homepage-cell"><input type="text" value="${Internship.company.address}"/></span>
-                                    <span class="homepage-cell"><input type="text" value="${Internship.marks.tech}"/></span>
-                                    <span class="homepage-cell"><input type="text" value="${Internship.marks.communication}"/></span>
+                                    <span class="homepage-cell"><input name="internshipId" type="text" value="${Internship.internship.internship}" readonly/></span>
+                                    <span class="homepage-cell"><input name="studentGroup"  type="text" value="${Internship.student.group}"/></span>
+                                    <span class="homepage-cell"><input name="studentFirstname" type="text" value="${Internship.student.firstName}"/></span>
+                                    <span class="homepage-cell"><input name="studentName"  type="text" value="${Internship.student.name}"/></span>
+                                    <span class="homepage-cell"><input name="cdc" type="checkbox" ${Internship.internship.cdc == true ? 'checked' : ''} /></span>
+                                    <span class="homepage-cell"><input name="companyEval" type="checkbox" ${Internship.internship.companyEval == true ? 'checked' : ''}/></span>
+                                    <span class="homepage-cell"><input name="webSurvey" type="checkbox" ${Internship.internship.webSurvey == true ? 'checked' : ''}/></span>
+                                    <span class="homepage-cell"><input name="releasedReport" type="checkbox" ${Internship.finalReport.report == true ? 'checked' : ''}/></span>
+                                    <span class="homepage-cell"><input name="defense" type="checkbox" ${Internship.internship.defense == true ? 'checked' : ''} /></span>
+                                    <span class="homepage-cell"><input name="visitPlanned" type="checkbox" ${Internship.visit.planned == true ? 'checked' : ''}/></span>
+                                    <span class="homepage-cell"><input name="visitDone" type="checkbox" ${Internship.visit.done == true ? 'checked' : ''}/></span>
+                                    <span class="homepage-cell"><input name="beginingDate" type="date" value="${Internship.internship.begining}" /></span>
+                                    <span class="homepage-cell"><input name="endDate" type="date" value="${Internship.internship.end}"/></span>
+                                    <span class="homepage-cell"><input name="supervisor" type="text" value="${Internship.internship.internSupervisor}"/></span>
+                                    <span class="homepage-cell"><input name="companyAddress" type="text" value="${Internship.company.address}"/></span>
+                                    <span class="homepage-cell"><input name="techMark" type="text" value="${Internship.marks.tech}"/></span>
+                                    <span class="homepage-cell"><input name="commMark" type="text" value="${Internship.marks.communication}"/></span>
                                 </form>
                             </c:forEach>
                         </div>
