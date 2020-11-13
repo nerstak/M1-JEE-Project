@@ -1,150 +1,150 @@
 -- You need to be connected to st2eedb to execute this part
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TABLE "Tutor"
+CREATE TABLE tutor
 (
-    "TutorId"   UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
-    "Name"      varchar,
-    "Firstname" varchar,
-    "Pwd"       varchar,
-    "Email"     varchar
+    tutor_id   UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    name      varchar,
+    firstname varchar,
+    pwd       varchar,
+    email     varchar
 );
 
-CREATE TABLE "Student"
+CREATE TABLE student
 (
-    "StudentId"       UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
-    "Name"            varchar,
-    "Firstname"       varchar,
-    "Email"           varchar,
-    "Group"           varchar,
-    "LinkedInProfile" varchar,
-    "TutorId"         UUID
+    student_id       UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    name            varchar,
+    firstname       varchar,
+    email           varchar,
+    "group"           varchar,
+    linkedin_profile varchar,
+    tutor_id         UUID
 );
 
-CREATE TABLE "Skills"
+CREATE TABLE skills
 (
-    "SkillId" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
-    "Skill" varchar
+    skill_id UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    skill varchar
 );
 
-CREATE TABLE "StudentToSkills"
+CREATE TABLE student_to_skills
 (
-    "StudentId" UUID,
-    "SkillsId"    UUID,
-    PRIMARY KEY ("StudentId", "SkillsId")
+    student_id UUID,
+    skills_id    UUID,
+    PRIMARY KEY (student_id, skills_id)
 );
 
-CREATE TABLE "Internship"
+CREATE TABLE internship
 (
-    "InternshipId"     UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
-    "Description"      text,
-    "WebSurvey"        boolean,
-    "MidInternInfo"    boolean,
-    "Begining"         date,
-    "End"              date,
-    "StudentId"        UUID,
-    "CompanyId"        UUID
+    internship_id     UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    description      text,
+    web_survey        boolean,
+    mid_term_info    boolean,
+    beginning         date,
+    ending              date,
+    student_id        UUID,
+    company_id        UUID
 );
 
-CREATE TABLE "Company"
+CREATE TABLE company
 (
-    "CompanyId" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
-    "Name"      varchar,
-    "Address"   varchar
+    company_id UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    name      varchar,
+    address   varchar
 );
 
-CREATE TABLE "Marks"
+CREATE TABLE marks
 (
-    "MarksId"       UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
-    "Tech"          integer,
-    "Communication" integer,
-    "InternshipId"  UUID
+    marks_id       UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    tech          integer,
+    communication integer,
+    internship_id  UUID
 );
 
-CREATE TABLE "Comments"
+CREATE TABLE comments
 (
-    "CommentsId"     UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
-    "StudentComm"    varchar,
-    "SupervisorComm" varchar,
-    "InternshipId"   UUID
+    comments_id     UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    student_comm    varchar,
+    supervisor_comm varchar,
+    internship_id   UUID
 );
 
-CREATE TABLE "FinalReport"
+CREATE TABLE final_report
 (
-    "FinalReportId" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
-    "Title"         varchar,
-    "Report"        boolean,
-    "InternshipId"  UUID
+    final_report_id UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    title         varchar,
+    report        boolean,
+    internship_id  UUID
 );
 
-CREATE TABLE "Visit"
+CREATE TABLE visit
 (
-    "VisitId"      UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
-    "Done"         boolean,
-    "Planned"      boolean,
-    "VisitReport"  boolean,
-    "InternshipId" UUID
+    visit_id      UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    done         boolean,
+    planned      boolean,
+    visit_report  boolean,
+    internship_id UUID
 );
 
-ALTER TABLE "Student"
-    ADD FOREIGN KEY ("TutorId") REFERENCES "Tutor" ("TutorId");
+ALTER TABLE student
+    ADD FOREIGN KEY (tutor_id) REFERENCES tutor (tutor_id);
 
-ALTER TABLE "StudentToSkills"
-    ADD FOREIGN KEY ("StudentId") REFERENCES "Student" ("StudentId");
+ALTER TABLE student_to_skills
+    ADD FOREIGN KEY (student_id) REFERENCES student (student_id);
 
-ALTER TABLE "StudentToSkills"
-    ADD FOREIGN KEY ("SkillsId") REFERENCES "Skills" ("SkillId");
+ALTER TABLE student_to_skills
+    ADD FOREIGN KEY (skills_id) REFERENCES skills (skill_id);
 
-ALTER TABLE "Internship"
-    ADD FOREIGN KEY ("StudentId") REFERENCES "Student" ("StudentId");
+ALTER TABLE internship
+    ADD FOREIGN KEY (student_id) REFERENCES student (student_id);
 
-ALTER TABLE "Internship"
-    ADD FOREIGN KEY ("CompanyId") REFERENCES "Company" ("CompanyId");
+ALTER TABLE internship
+    ADD FOREIGN KEY (company_id) REFERENCES company (company_id);
 
-ALTER TABLE "Marks"
-    ADD FOREIGN KEY ("InternshipId") REFERENCES "Internship" ("InternshipId");
+ALTER TABLE marks
+    ADD FOREIGN KEY (internship_id) REFERENCES internship (internship_id);
 
-ALTER TABLE "Comments"
-    ADD FOREIGN KEY ("InternshipId") REFERENCES "Internship" ("InternshipId");
+ALTER TABLE comments
+    ADD FOREIGN KEY (internship_id) REFERENCES internship (internship_id);
 
-ALTER TABLE "FinalReport"
-    ADD FOREIGN KEY ("InternshipId") REFERENCES "Internship" ("InternshipId");
+ALTER TABLE final_report
+    ADD FOREIGN KEY (internship_id) REFERENCES internship (internship_id);
 
-ALTER TABLE "Visit"
-    ADD FOREIGN KEY ("InternshipId") REFERENCES "Internship" ("InternshipId");
+ALTER TABLE visit
+    ADD FOREIGN KEY (internship_id) REFERENCES internship (internship_id);
 
 
 CREATE VIEW internships_data AS (
       SELECT S.*,
-             I."InternshipId", I."CompanyId", I."Description", I."MidInternInfo", I."WebSurvey", I."Begining", I."End",
-             C."Name" AS "CompanyName", C."Address",
-             V."Done", V."Planned", V."VisitReport", V."VisitId",
-             M."Communication",M."Tech", M."MarksId"
+             I.internship_id, I.company_id, I.description, I.mid_term_info, I.web_survey, I.beginning, I.ending,
+             C.name AS companyname, C.address,
+             V.done, V.planned, V.visit_report, V.visit_id,
+             M.communication,M.tech, M.marks_id
 
-      FROM "Student" S
-               LEFT JOIN "Internship" I
-                         ON S."StudentId" = I."StudentId"
-               JOIN "Company" C
-                    ON I."CompanyId" = C."CompanyId"
-               LEFT JOIN "Visit" V
-                    ON I."InternshipId" = V."InternshipId"
-               LEFT JOIN "Marks" M
-                    ON I."InternshipId" = M."InternshipId"
+      FROM student S
+               LEFT JOIN internship I
+                         ON S.student_id = I.student_id
+               JOIN company C
+                    ON I.company_id = C.company_id
+               LEFT JOIN visit V
+                    ON I.internship_id = V.internship_id
+               LEFT JOIN marks M
+                    ON I.internship_id = M.internship_id
 
-      ORDER BY (I."Begining") DESC);
+      ORDER BY (I.beginning) DESC);
 
 CREATE VIEW internships_data_details AS (
-    SELECT S.*, C."CommentsId", C."StudentComm", C."SupervisorComm"
+    SELECT S.*, C.comments_id, C.student_comm, C.supervisor_comm
     FROM internships_data S
-        LEFT JOIN "Comments" C
-            ON S."InternshipId" = C."InternshipId"
+        LEFT JOIN comments C
+            ON S.internship_id = C.internship_id
                                       );
 
 CREATE VIEW students_skills AS (
-   SELECT S.*, sts."StudentId"
-   FROM "Skills" S
-            JOIN "StudentToSkills" sts
-                 ON sts."SkillsId" = s."SkillId"
+   SELECT S.*, sts.student_id
+   FROM skills S
+            JOIN student_to_skills sts
+                 ON sts.skills_id = s.skill_id
                                );
 
 GRANT ALL PRIVILEGES ON DATABASE st2eedb TO adm;
