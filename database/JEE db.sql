@@ -141,7 +141,7 @@ ALTER TABLE "Visit"
 CREATE VIEW internships_data AS (
       SELECT S.*,
              I."InternshipId", I."CompanyId", I."Description", I."MidInternInfo", I."WebSurvey", I."Beginning", I."End", I."Cdc", I."CompanyEval", I."Defense", I."InternSupervisor",
-             C."Name" AS "CompanyName", C."Address", C."CompanyId",
+             C."Name" AS "CompanyName", C."Address",
              V."Done", V."Planned", V."VisitReport", V."VisitId",
              M."Communication",M."Tech", M."MarksId",
              Fr."FinalReportId", Fr."Title", Fr."Report"
