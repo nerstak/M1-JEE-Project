@@ -27,6 +27,6 @@ public class Logout extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         session = request.getSession();
         session.removeAttribute("tutor");
-        response.sendRedirect("Controller");
+        response.sendRedirect("Login");
     }
 }

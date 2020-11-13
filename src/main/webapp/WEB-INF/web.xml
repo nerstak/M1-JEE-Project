@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <servlet>
-        <servlet-name>Controller</servlet-name>
-        <servlet-class>control.Controller</servlet-class>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>control.Login</servlet-class>
     </servlet>
 
     <servlet>
@@ -24,8 +24,8 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>Controller</servlet-name>
-        <url-pattern>/Controller</url-pattern>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -55,6 +55,6 @@
     </jsp-config>
 
     <welcome-file-list>
-        <welcome-file>Controller</welcome-file>
+        <welcome-file>Login</welcome-file>
     </welcome-file-list>
 </web-app>
