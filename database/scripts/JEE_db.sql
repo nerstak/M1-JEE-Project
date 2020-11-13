@@ -40,11 +40,11 @@ CREATE TABLE keywords
     keyword    varchar
 );
 
-CREATE TABLE students_to_keywords
+CREATE TABLE internship_to_keywords
 (
-    student_id UUID,
+    internship_id UUID,
     keyword_id UUID,
-    PRIMARY KEY (student_id, keyword_id)
+    PRIMARY KEY (internship_id, keyword_id)
 );
 
 CREATE TABLE internship
@@ -112,10 +112,10 @@ ALTER TABLE student_to_skills
 ALTER TABLE student_to_skills
     ADD FOREIGN KEY (skill_id) REFERENCES skills (skill_id);
 
-ALTER TABLE students_to_keywords
-    ADD FOREIGN KEY (student_id) REFERENCES student (student_id);
+ALTER TABLE internship_to_keywords
+    ADD FOREIGN KEY (internship_id) REFERENCES internship (internship_id);
 
-ALTER TABLE students_to_keywords
+ALTER TABLE internship_to_keywords
     ADD FOREIGN KEY (keyword_id) REFERENCES keywords (keyword_id);
 
 ALTER TABLE internship

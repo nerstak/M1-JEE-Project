@@ -88,6 +88,7 @@ public class DataServices {
      * Select internships supervised by a tutor
      * @param tutorId Supervisor
      * @param year Beginning year of internship
+     * @param name Part of first/last name
      * @return List of internships (may be null)
      */
     public ResultSet selectInternships(String tutorId, int year, String name) {

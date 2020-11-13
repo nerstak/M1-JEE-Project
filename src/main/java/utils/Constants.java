@@ -15,6 +15,7 @@ public class Constants {
     public static final String DB_SELECT_INTERNSHIPS = "SELECT * FROM internships_data WHERE tutor_id = ? AND EXTRACT( year FROM beginning) = ? AND firstname || ' ' || name LIKE '%' || ? || '%'";
     public static final String DB_SELECT_INTERNSHIP_DETAILED = "SELECT * FROM internships_data_details WHERE internship_id = ?";
     public static final String DB_SELECT_SKILLS = "SELECT * FROM skills";
+    public static final String DB_SELECT_KEYWORDS = "SELECT * FROM keywords";
     public static final String DB_SELECT_STUDENT_SKILLS = "SELECT * FROM students_skills WHERE student_id = ?";
     public static final String DB_SELECT_STUDENTS_WITH_SKILL = "SELECT * FROM students_skills WHERE skill_id = ?";
     public static final String DB_SELECT_STUDENTS_SKILLS_ALL = "SELECT * FROM  skills inner join student_to_skills STS on skills.skill_id = STS.skill_id where student_id = ?";

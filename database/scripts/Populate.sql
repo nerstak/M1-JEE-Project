@@ -54,37 +54,12 @@ VALUES ((SELECT skill_id FROM skills WHERE skill = 'C'),
         (SELECT student_id FROM student WHERE email = 'dennis.ritchie@efrei.net'));
 
 INSERT INTO keywords(keyword)
-VALUES ('Test'),
-       ('Happy'),
-       ('HappyTest'),
-       ('Key'),
-       ('Word'),
-       ('Keyword');
-
-INSERT INTO students_to_keywords (keyword_id, student_id)
-VALUES ((SELECT keyword_id FROM keywords WHERE keyword = 'Test'),
-        (SELECT student_id FROM student WHERE email = 'dennis.ritchie@efrei.net')),
-       ((SELECT keyword_id FROM keywords WHERE keyword = 'Happy'),
-        (SELECT student_id FROM student WHERE email = 'dennis.ritchie@efrei.net')),
-       ((SELECT keyword_id FROM keywords WHERE keyword = 'HappyTest'),
-        (SELECT student_id FROM student WHERE email = 'ada.lovelace@efrei.net')),
-       ((SELECT keyword_id FROM keywords WHERE keyword = 'Key'),
-        (SELECT student_id FROM student WHERE email = 'ada.lovelace@efrei.net')),
-       ((SELECT keyword_id FROM keywords WHERE keyword = 'Word'),
-        (SELECT student_id FROM student WHERE email = 'peggy.johnson@efrei.net')),
-       ((SELECT keyword_id FROM keywords WHERE keyword = 'Keyword'),
-        (SELECT student_id FROM student WHERE email = 'peggy.johnson@efrei.net')),
-       ((SELECT keyword_id FROM keywords WHERE keyword = 'Key'),
-        (SELECT student_id FROM student WHERE email = 'peggy.johnson@efrei.net')),
-       ((SELECT keyword_id FROM keywords WHERE keyword = 'Word'),
-        (SELECT student_id FROM student WHERE email = 'andy.warhol@efrei.net')),
-       ((SELECT keyword_id FROM keywords WHERE keyword = 'Key'),
-        (SELECT student_id FROM student WHERE email = 'alan.turing@efrei.net')),
-       ((SELECT keyword_id FROM keywords WHERE keyword = 'HappyTest'),
-        (SELECT student_id FROM student WHERE email = 'andy.warhol@efrei.net')),
-       ((SELECT keyword_id FROM keywords WHERE keyword = 'Key'),
-        (SELECT student_id FROM student WHERE email = 'dennis.ritchie@efrei.net'));
-
+VALUES ('Etranger'),
+       ('Remunéré'),
+       ('Labo'),
+       ('Long'),
+       ('Cool'),
+       ('Bonus');
 
 INSERT INTO company (name, address)
 VALUES ('EFREI', '30-32 avenue de la République 94 800 Villejuif'),
@@ -95,25 +70,48 @@ VALUES ('EFREI', '30-32 avenue de la République 94 800 Villejuif'),
 
 INSERT INTO internship (description, web_survey, mid_intern_info, beginning, ending,
                         student_id, company_id, cdc, company_eval, defense, intern_supervisor)
-VALUES ('This is a desc', false, false, to_date('26-04-2021', 'DD-MM-YYYY'), to_date('22-09-2021', 'DD-MM-YYYY'),
+VALUES ('Marchant Carrefour', false, false, to_date('26-04-2021', 'DD-MM-YYYY'), to_date('22-09-2021', 'DD-MM-YYYY'),
         (SELECT student_id FROM student WHERE email = 'dennis.ritchie@efrei.net'),
         (SELECT company_id FROM company WHERE name = 'Carrefour'), false, true, true, 'John Doe'),
-       ('This is a desc', true, true, to_date('27-07-2020', 'DD-MM-YYYY'), to_date('22-12-2020', 'DD-MM-YYYY'),
+       ('Efrei time', true, true, to_date('27-07-2020', 'DD-MM-YYYY'), to_date('22-12-2020', 'DD-MM-YYYY'),
         (SELECT student_id FROM student WHERE email = 'ada.lovelace@efrei.net'),
         (SELECT company_id FROM company WHERE name = 'EFREI'), true, true, true, 'Elon Musk'),
-       ('This is a desc', true, true, to_date('27-02-2020', 'DD-MM-YYYY'), to_date('22-10-2020', 'DD-MM-YYYY'),
+       ('Presidente Efrei', true, true, to_date('27-02-2020', 'DD-MM-YYYY'), to_date('22-10-2020', 'DD-MM-YYYY'),
         (SELECT student_id FROM student WHERE email = 'katie.bouman@efrei.net'),
         (SELECT company_id FROM company WHERE name = 'EFREI'), false, false, true, 'Pic Sou'),
-       ('This is a desc', true, true, to_date('15-10-2018', 'DD-MM-YYYY'), to_date('10-02-2019', 'DD-MM-YYYY'),
+       ('Vice Maire', true, true, to_date('15-10-2018', 'DD-MM-YYYY'), to_date('10-02-2019', 'DD-MM-YYYY'),
         (SELECT student_id FROM student WHERE email = 'peggy.johnson@efrei.net'),
         (SELECT company_id FROM company WHERE name = 'Mairie de Paris'), false, true, false, 'Jack Arta'),
-       ('This is a desc', true, true, to_date('08-09-2016', 'DD-MM-YYYY'), to_date('20-12-2016', 'DD-MM-YYYY'),
+       ('Bill Gates 2', true, true, to_date('08-09-2016', 'DD-MM-YYYY'), to_date('20-12-2016', 'DD-MM-YYYY'),
         (SELECT student_id FROM student WHERE email = 'andy.warhol@efrei.net'),
         (SELECT company_id FROM company WHERE name = 'Microsoft'), false, false, false, 'Paul Ogne'),
-       ('This is a desc', false, false, to_date('26-03-2021', 'DD-MM-YYYY'), to_date('22-08-2021', 'DD-MM-YYYY'),
+       ('Ifreurs boss', false, false, to_date('26-03-2021', 'DD-MM-YYYY'), to_date('22-08-2021', 'DD-MM-YYYY'),
         (SELECT student_id FROM student WHERE email = 'alan.turing@efrei.net'),
         (SELECT company_id FROM company WHERE name = 'Thalès'), false, false, true, 'John Doe-Bis');
 
+INSERT INTO internship_to_keywords (keyword_id, internship_id)
+VALUES ((SELECT keyword_id FROM keywords WHERE keyword = 'Etranger'),
+        (SELECT internship_id FROM internship WHERE description = 'Marchant Carrefour')),
+       ((SELECT keyword_id FROM keywords WHERE keyword = 'Bonus'),
+        (SELECT internship_id FROM internship WHERE description = 'Marchant Carrefour')),
+       ((SELECT keyword_id FROM keywords WHERE keyword = 'Bonus'),
+        (SELECT internship_id FROM internship WHERE description = 'Efrei time')),
+       ((SELECT keyword_id FROM keywords WHERE keyword = 'Labo'),
+        (SELECT internship_id FROM internship WHERE description = 'Efrei time')),
+       ((SELECT keyword_id FROM keywords WHERE keyword = 'Long'),
+        (SELECT internship_id FROM internship WHERE description = 'Presidente Efrei')),
+       ((SELECT keyword_id FROM keywords WHERE keyword = 'Cool'),
+        (SELECT internship_id FROM internship WHERE description = 'Presidente Efrei')),
+       ((SELECT keyword_id FROM keywords WHERE keyword = 'Labo'),
+        (SELECT internship_id FROM internship WHERE description = 'Vice Maire')),
+       ((SELECT keyword_id FROM keywords WHERE keyword = 'Cool'),
+        (SELECT internship_id FROM internship WHERE description = 'Vice Maire')),
+       ((SELECT keyword_id FROM keywords WHERE keyword = 'Etranger'),
+        (SELECT internship_id FROM internship WHERE description = 'Bill Gates 2')),
+       ((SELECT keyword_id FROM keywords WHERE keyword = 'Remunéré'),
+        (SELECT internship_id FROM internship WHERE description = 'Bill Gates 2')),
+       ((SELECT keyword_id FROM keywords WHERE keyword = 'Remunéré'),
+        (SELECT internship_id FROM internship WHERE description = 'Ifreurs boss'));
 
 INSERT INTO marks (tech, communication, internship_id)
 VALUES (17, 12, (SELECT internship_id

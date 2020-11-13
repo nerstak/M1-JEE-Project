@@ -14,13 +14,13 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static utils.Constants.DB_SELECT_SKILLS;
-import static utils.Constants.HOME_PAGE;
+import static utils.Constants.*;
 
 @WebServlet(name = "Homepage")
 public class Homepage extends ServletModel {
     private HttpSession session;
     private ArrayList<Skills> listOfSkills;
+    private ArrayList<Keywords> listOfKeywords;
     private ArrayList<InternshipData> listOfInternshipdata;
 
     private Tutor tutor;
@@ -42,7 +42,7 @@ public class Homepage extends ServletModel {
         session = request.getSession();
         tutor = (Tutor) session.getAttribute("tutor");
         if (tutor != null) {
-            request.setAttribute("listOfSkill", getListOfSkills());
+            request.setAttribute("listOfKeywords", getListOfKeywords());
 
             try {
                 year = Integer.parseInt(request.getParameter("year"));
@@ -61,14 +61,14 @@ public class Homepage extends ServletModel {
         }
     }
 
-    // TODO: Move this to another location (DateServices or Skills)
+    // TODO: Move this or DELETE IT
     private ArrayList<Skills> getListOfSkills() {
         listOfSkills = new ArrayList<>();
         rs = dataServices.selectResultSet(DB_SELECT_SKILLS);
         if (rs != null) {
             try {
                 while (rs.next()) {
-                    Skills skills = new Skills(rs.getString("Skill"), (UUID) rs.getObject("SkillId"));
+                    Skills skills = new Skills(rs.getString("Skill"), (UUID) rs.getObject("Skill_Id"));
                     listOfSkills.add(skills);
                 }
             } catch (Exception e) {
@@ -76,6 +76,23 @@ public class Homepage extends ServletModel {
             }
         }
         return listOfSkills;
+    }
+
+    // TODO: Move this to another location (DateServices or Skills)
+    private ArrayList<Keywords> getListOfKeywords() {
+        listOfKeywords = new ArrayList<>();
+        rs = dataServices.selectResultSet(DB_SELECT_KEYWORDS);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    Keywords keywords = new Keywords(rs.getString("keyword"), (UUID) rs.getObject("keyword_Id"));
+                    listOfKeywords.add(keywords);
+                }
+            } catch (Exception e) {
+                Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+        return listOfKeywords;
     }
 
     //TODO : move

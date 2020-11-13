@@ -46,8 +46,8 @@
                 <div class="homepage-selector-select">
                     <label for="keywords">Keywords</label>
                     <select name="keywords" id="keywords">
-                        <c:forEach items="${listOfSkill}" var="skill">
-                            <option value="${skill.skill}">${skill.skill}</option>
+                        <c:forEach items="${listOfKeywords}" var="keyword">
+                            <option value="${keyword.keyword}">${keyword.keyword}</option>
                         </c:forEach>
                     </select>
                 </div>
