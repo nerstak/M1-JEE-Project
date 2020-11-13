@@ -22,8 +22,10 @@ public class Homepage extends ServletModel {
     private HttpSession session;
     private ArrayList<Skills> listOfSkills;
     private ArrayList<InternshipData> listOfInternshipdata;
+
     private Tutor tutor;
     private int year;
+    private String name;
 
     private ResultSet rs;
 
@@ -46,6 +48,10 @@ public class Homepage extends ServletModel {
                 year = Integer.parseInt(request.getParameter("year"));
             } catch (NumberFormatException e) {
                 year= 2020;
+            }
+            name = request.getParameter("search-name");
+            if(name == null) {
+                name = "";
             }
             request.setAttribute("listOfInternship", getListOfInternshipDate(tutor));
 
@@ -75,7 +81,7 @@ public class Homepage extends ServletModel {
     //TODO : move
     private ArrayList<InternshipData> getListOfInternshipDate(Tutor tutor) {
         listOfInternshipdata = new ArrayList<>();
-        rs = dataServices.selectInternships(tutor.getTutorId().toString(), year);
+        rs = dataServices.selectInternships(tutor.getTutorId().toString(), year, name);
 
         if (rs != null) {
             try {

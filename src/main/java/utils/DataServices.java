@@ -90,11 +90,12 @@ public class DataServices {
      * @param year Beginning year of internship
      * @return List of internships (may be null)
      */
-    public ResultSet selectInternships(String tutorId, int year) {
+    public ResultSet selectInternships(String tutorId, int year, String name) {
         try {
             ps = con.prepareStatement(DB_SELECT_INTERNSHIPS);
             ps.setObject(1, tutorId, Types.OTHER);
             ps.setInt(2, year);
+            ps.setString(3, name);
 
             return ps.executeQuery();
         } catch (SQLException e) {

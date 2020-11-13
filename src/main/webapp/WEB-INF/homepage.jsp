@@ -53,7 +53,7 @@
                 </div>
                 <div class="homepage-selector-select">
                     <label for="search-name">Name</label>
-                    <input type="text" id="search-name">
+                    <input type="text" name="search-name" id="search-name">
                 </div>
                 <input type="submit" value="Search">
             </form>
