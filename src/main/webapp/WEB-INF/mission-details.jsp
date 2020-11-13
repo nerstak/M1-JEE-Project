@@ -30,32 +30,33 @@
         </div>
     </header>
     <main class="main-info">
+        <jsp:useBean id="internshipData" class="model.InternshipData" scope="request"/>
         <div class="info-company">
             <h2>Company</h2>
             <form class="info-company-form">
                 <div class="div-input-half">
                     <div class="input-left">
                         <label for="cName">Name</label>
-                        <input type="text" id="cName">
+                        <input type="text" id="cName" value="${internshipData.company.name}">
                     </div>
                     <div class="input-right">
                         <label>M.d.S</label>
-                        <input type="text">
+                        <input type="text" value="${internshipData.internship.internSupervisor}">
                     </div>
                 </div>
                 <div class="div-input-half">
                     <div class="input-left">
                         <label>Begin</label>
-                        <input type="tdext">
+                        <input type="text" value="${internshipData.internship.begining}">
                     </div>
                     <div class="input-right">
                         <label>End</label>
-                        <input type="text">
+                        <input type="text"  value="${internshipData.internship.end}">
                     </div>
                 </div>
                 <div class="div-input-full">
-                    <label>Adress</label>
-                    <input type="text">
+                    <label>Address</label>
+                    <input type="text"  value="${internshipData.company.address}">
                 </div>
                 <input type="submit" value="Modify">
             </form>
@@ -67,26 +68,26 @@
                 <div class="div-input-half">
                     <div class="input-left">
                         <label>ID</label>
-                        <input type="text" disabled>
+                        <input type="text"  value="${internshipData.student.studentId}" readonly>
                     </div>
                     <div class="input-right">
                         <label>Promo</label>
-                        <input type="text">
+                        <input type="text"  value="${internshipData.student.group}">
                     </div>
                 </div>
                 <div class="div-input-half">
                     <div class="input-left">
                         <label>First Name</label>
-                        <input type="tdext">
+                        <input type="text"  value="${internshipData.student.firstName}">
                     </div>
                     <div class="input-right">
                         <label>Last Name</label>
-                        <input type="text">
+                        <input type="text"  value="${internshipData.student.name}">
                     </div>
                 </div>
                 <div class="div-input-full">
                     <label>Linkedin Profile</label>
-                    <input type="text">
+                    <input type="text"  value="${internshipData.student.linkedinProfile}">
                 </div>
                 <input type="submit" value="Modify">
             </form>
@@ -98,21 +99,21 @@
                 <div class="div-input-half">
                     <div class="input-left">
                         <label>Report's title</label>
-                        <input type="text">
+                        <input type="text"  value="${internshipData.finalReport.title}">
                     </div>
                 </div>
                 <div class="div-input-third">
                     <div class="input-left">
                         <label>Description</label>
-                        <textarea form="info-company-form"></textarea>
+                        <textarea form="info-company-form">${internshipData.internship.desciption}"</textarea>
                     </div>
                     <div class="input-right">
                         <label>Tutor's comment</label>
-                        <textarea form="info-company-form"></textarea>
+                        <textarea form="info-company-form">${internshipData.comments.supervisorComment}</textarea>
                     </div>
                     <div class="input-right">
                         <label>Student's comments</label>
-                        <textarea form="info-company-form"></textarea>
+                        <textarea form="info-company-form">${internshipData.comments.studentComm}</textarea>
                     </div>
                 </div>
                 <input type="submit" value="Modify">
