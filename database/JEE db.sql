@@ -140,10 +140,12 @@ ALTER TABLE "Visit"
 
 CREATE VIEW internships_data AS (
       SELECT S.*,
-             I."InternshipId", I."CompanyId", I."Description", I."MidInternInfo", I."WebSurvey", I."Begining", I."End",
-             C."Name" AS "CompanyName", C."Address",
+             I."InternshipId", I."CompanyId", I."Description", I."MidInternInfo", I."WebSurvey", I."Beginning", I."End", I."Cdc", I."CompanyEval", I."Defense", I."InternSupervisor",
+             C."Name" AS "CompanyName", C."Address", C."CompanyId",
              V."Done", V."Planned", V."VisitReport", V."VisitId",
-             M."Communication",M."Tech", M."MarksId"
+             M."Communication",M."Tech", M."MarksId",
+             Fr."FinalReportId", Fr."Title", Fr."Report"
+
 
       FROM "Student" S
                LEFT JOIN "Internship" I
@@ -154,8 +156,11 @@ CREATE VIEW internships_data AS (
                     ON I."InternshipId" = V."InternshipId"
                LEFT JOIN "Marks" M
                     ON I."InternshipId" = M."InternshipId"
+               LEFT JOIN "FinalReport" Fr
+                    ON Fr."InternshipId" = I."InternshipId"
 
-      ORDER BY (I."Begining") DESC);
+
+      ORDER BY (I."Beginning") DESC);
 
 CREATE VIEW internships_data_details AS (
     SELECT S.*, C."CommentsId", C."StudentComm", C."SupervisorComm"
