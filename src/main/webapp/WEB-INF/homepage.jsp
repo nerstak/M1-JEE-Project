@@ -97,7 +97,7 @@
                                             <input type="submit" value="modify" name="internshipSubmit"/>
                                         </div>
                                     </span>
-                                    <span class="homepage-cell"><input name="internshipId" type="text" value="${Internship.internship.internship}" disabled/></span>
+                                    <span class="homepage-cell"><input name="internshipId" type="text" value="${Internship.internship.internship}" readonly/></span>
                                     <span class="homepage-cell"><input name="studentGroup"  type="text" value="${Internship.student.group}"/></span>
                                     <span class="homepage-cell"><input name="studentFirstname" type="text" value="${Internship.student.firstName}"/></span>
                                     <span class="homepage-cell"><input name="studentName"  type="text" value="${Internship.student.name}"/></span>
