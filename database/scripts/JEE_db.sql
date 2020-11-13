@@ -30,8 +30,21 @@ CREATE TABLE skills
 CREATE TABLE student_to_skills
 (
     student_id UUID,
-    skills_id    UUID,
-    PRIMARY KEY (student_id, skills_id)
+    skill_id    UUID,
+    PRIMARY KEY (student_id, skill_id)
+);
+
+CREATE TABLE keywords
+(
+    keyword_id   UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    keyword     varchar
+);
+
+CREATE TABLE students_to_keywords
+(
+    student_id UUID,
+    keyword_id    UUID,
+    PRIMARY KEY (student_id, keyword_id)
 );
 
 CREATE TABLE internship
@@ -43,7 +56,11 @@ CREATE TABLE internship
     beginning         date,
     ending              date,
     student_id        UUID,
-    company_id        UUID
+    company_id        UUID,
+    cdc             boolean,
+    company_eval    boolean,
+    defense         boolean,
+    intern_supervisor varchar
 );
 
 CREATE TABLE company
@@ -93,7 +110,13 @@ ALTER TABLE student_to_skills
     ADD FOREIGN KEY (student_id) REFERENCES student (student_id);
 
 ALTER TABLE student_to_skills
-    ADD FOREIGN KEY (skills_id) REFERENCES skills (skill_id);
+    ADD FOREIGN KEY (skill_id) REFERENCES skills (skill_id);
+
+ALTER TABLE students_to_keywords
+    ADD FOREIGN KEY (student_id) REFERENCES student (student_id);
+
+ALTER TABLE students_to_keywords
+    ADD FOREIGN KEY (keyword_id) REFERENCES keywords (keyword_id);
 
 ALTER TABLE internship
     ADD FOREIGN KEY (student_id) REFERENCES student (student_id);
@@ -116,8 +139,8 @@ ALTER TABLE visit
 
 CREATE VIEW internships_data AS (
       SELECT S.*,
-             I.internship_id, I.company_id, I.description, I.mid_term_info, I.web_survey, I.beginning, I.ending,
-             C.name AS companyname, C.address,
+             I.internship_id, I.company_id, I.description, I.mid_term_info, I.web_survey, I.beginning, I.ending, I.company_eval, I.defense, I.intern_supervisor,
+             C.name AS company_name, C.address,
              V.done, V.planned, V.visit_report, V.visit_id,
              M.communication,M.tech, M.marks_id
 
@@ -144,7 +167,7 @@ CREATE VIEW students_skills AS (
    SELECT S.*, sts.student_id
    FROM skills S
             JOIN student_to_skills sts
-                 ON sts.skills_id = s.skill_id
+                 ON sts.skill_id = s.skill_id
                                );
 
 GRANT ALL PRIVILEGES ON DATABASE st2eedb TO adm;
