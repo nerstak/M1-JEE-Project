@@ -1,19 +1,15 @@
 package control;
 
-import model.*;
-import utils.DataServices;
+import model.Tutor;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.Properties;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,8 +66,8 @@ public class Login extends ServletModel {
                 } else { //no data returned = error in login or password
                     return false;
                 }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);
                 return false;
             }
         } else {

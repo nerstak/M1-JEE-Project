@@ -4,7 +4,6 @@ import model.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,8 +11,11 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import static utils.Constants.*;
+import static utils.Constants.DB_SELECT_SKILLS;
+import static utils.Constants.HOME_PAGE;
 
 @WebServlet(name = "Homepage")
 public class Homepage extends ServletModel {
@@ -25,17 +27,18 @@ public class Homepage extends ServletModel {
     private ResultSet rs;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request,response);
+        // TODO: Should we keep this post method?
+        processRequest(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request,response);
+        processRequest(request, response);
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         session = request.getSession();
         tutor = (Tutor) session.getAttribute("tutor");
-        if(tutor != null) {
+        if (tutor != null) {
             request.setAttribute("listOfSkill", getListOfSkills());
             request.setAttribute("listOfInternship", getListOfInternshipDate(tutor));
             request.getRequestDispatcher(HOME_PAGE).forward(request, response);
@@ -45,30 +48,30 @@ public class Homepage extends ServletModel {
     }
 
     // TODO: Move this to another location (DateServices or Skills)
-    private ArrayList<Skills> getListOfSkills(){
+    private ArrayList<Skills> getListOfSkills() {
         listOfSkills = new ArrayList<>();
         rs = dataServices.selectResultSet(DB_SELECT_SKILLS);
-        if (rs != null){
+        if (rs != null) {
             try {
-                while (rs.next()){
+                while (rs.next()) {
                     Skills skills = new Skills(rs.getString("Skill"), (UUID) rs.getObject("SkillId"));
                     listOfSkills.add(skills);
                 }
-            }catch (Exception e){
-                e.printStackTrace();
+            } catch (Exception e) {
+                Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, e);
             }
         }
         return listOfSkills;
     }
 
     //TODO : move
-    private ArrayList<InternshipData> getListOfInternshipDate(Tutor tutor){
+    private ArrayList<InternshipData> getListOfInternshipDate(Tutor tutor) {
         listOfInternshipdata = new ArrayList<>();
         rs = dataServices.selectInternships(tutor.getTutorId().toString());
 
-        if (rs != null){
+        if (rs != null) {
             try {
-                while (rs.next()){
+                while (rs.next()) {
                     Student student = new Student();
                     student.setStudentId(UUID.fromString(rs.getString("StudentId")));
                     student.setName(rs.getString("Name"));
@@ -109,11 +112,9 @@ public class Homepage extends ServletModel {
                     internshipData.setMarks(marks);
 
                     listOfInternshipdata.add(internshipData);
-
-
                 }
-            }catch (Exception e){
-                e.printStackTrace();
+            } catch (Exception e) {
+                Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, e);
             }
         }
 

@@ -54,9 +54,9 @@ public abstract class ServletModel extends HttpServlet {
             stmt = conn.createStatement();
             dataServices = new DataServices(dbUser, dbPwd, dbUrl);
         } catch (SQLException e) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ServletModel.class.getName()).log(Level.SEVERE, null, e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            Logger.getLogger(ServletModel.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -71,7 +71,7 @@ public abstract class ServletModel extends HttpServlet {
             input = getServletContext().getResourceAsStream(DB_PROPERTIES);
             properties.load(input);
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(ServletModel.class.getName()).log(Level.SEVERE, null, e);
         }
         return properties;
     }
