@@ -4,8 +4,8 @@ import java.util.UUID;
 
 public class Comments {
     private UUID commentsId;
-    private boolean studentComm;
-    private boolean supervisorComment;
+    private String studentComm;
+    private String supervisorComment;
     private UUID internshipId;
 
     public UUID getCommentsId() {
@@ -16,19 +16,19 @@ public class Comments {
         this.commentsId = commentsId;
     }
 
-    public boolean isStudentComm() {
+    public String isStudentComm() {
         return studentComm;
     }
 
-    public void setStudentComm(boolean studentComm) {
+    public void setStudentComm(String studentComm) {
         this.studentComm = studentComm;
     }
 
-    public boolean isSupervisorComment() {
+    public String isSupervisorComment() {
         return supervisorComment;
     }
 
-    public void setSupervisorComment(boolean supervisorComment) {
+    public void setSupervisorComment(String supervisorComment) {
         this.supervisorComment = supervisorComment;
     }
 
