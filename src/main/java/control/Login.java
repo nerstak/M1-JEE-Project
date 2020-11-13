@@ -59,9 +59,9 @@ public class Login extends ServletModel {
         if (rs != null) {
             try {
                 if (rs.next()) { //if rs contain the user data => set bean's property
-                    myTutor.setTutorId(UUID.fromString(rs.getString("TutorId")));
-                    myTutor.setFirstName(rs.getString("FirstName"));
-                    myTutor.setName(rs.getString("Name"));
+                    myTutor.setTutorId(UUID.fromString(rs.getString("tutor_id")));
+                    myTutor.setFirstName(rs.getString("firstname"));
+                    myTutor.setName(rs.getString("name"));
                     return true;
                 } else { //no data returned = error in login or password
                     return false;

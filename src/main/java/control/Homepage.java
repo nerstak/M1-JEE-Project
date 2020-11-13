@@ -73,42 +73,43 @@ public class Homepage extends ServletModel {
             try {
                 while (rs.next()) {
                     Student student = new Student();
-                    student.setStudentId(UUID.fromString(rs.getString("StudentId")));
-                    student.setName(rs.getString("Name"));
-                    student.setFirstName(rs.getString("FirstName"));
-                    student.setEmail(rs.getString("Email"));
-                    student.setGroup(rs.getString("Group"));
+                    student.setStudentId(UUID.fromString(rs.getString("student_id")));
+                    student.setName(rs.getString("name"));
+                    student.setFirstName(rs.getString("firstname"));
+                    student.setEmail(rs.getString("email"));
+                    student.setGroup(rs.getString("group"));
+                    student.setLinkedinProfile(rs.getString("linkedin_profile"));
 
                     Internship internship = new Internship();
-                    internship.setInternship(UUID.fromString(rs.getString("InternshipId")));
-                    internship.setDesciption(rs.getString("Description"));
-                    internship.setMidInternInfo(rs.getBoolean("MidInternInfo"));
-                    internship.setWebSurvey(rs.getBoolean("WebSurvey"));
-                    internship.setBegining(rs.getDate("Beginning"));
-                    internship.setEnd(rs.getDate("End"));
-                    internship.setCdc(rs.getBoolean("Cdc"));
-                    internship.setDefense(rs.getBoolean("Defense"));
-                    internship.setCompanyEval(rs.getBoolean("CompanyEval"));
-                    internship.setInternSupervisor(rs.getString("InternSupervisor"));
+                    internship.setInternship(UUID.fromString(rs.getString("internship_id")));
+                    internship.setDesciption(rs.getString("description"));
+                    internship.setMidInternInfo(rs.getBoolean("mid_intern_info"));
+                    internship.setWebSurvey(rs.getBoolean("web_survey"));
+                    internship.setBegining(rs.getDate("beginning"));
+                    internship.setEnd(rs.getDate("ending"));
+                    internship.setCdc(rs.getBoolean("cdc"));
+                    internship.setDefense(rs.getBoolean("defense"));
+                    internship.setCompanyEval(rs.getBoolean("company_eval"));
+                    internship.setInternSupervisor(rs.getString("intern_supervisor"));
 
                     Company company = new Company();
-                    company.setCompanyId(UUID.fromString(rs.getString("CompanyId")));
-                    company.setName(rs.getString("CompanyName"));
-                    company.setAddress(rs.getString("Address"));
+                    company.setCompanyId(UUID.fromString(rs.getString("company_id")));
+                    company.setName(rs.getString("company_name"));
+                    company.setAddress(rs.getString("address"));
 
                     Visit visit = new Visit();
-                    visit.setVisitID(UUID.fromString(rs.getString("VisitId")));
-                    visit.setDone(rs.getBoolean("Done"));
-                    visit.setPlanned(rs.getBoolean("Planned"));
-                    visit.setVisitReport(rs.getBoolean("VisitReport"));
+                    visit.setVisitID(UUID.fromString(rs.getString("visit_id")));
+                    visit.setDone(rs.getBoolean("done"));
+                    visit.setPlanned(rs.getBoolean("planned"));
+                    visit.setVisitReport(rs.getBoolean("visit_report"));
 
                     Marks marks = new Marks();
-                    marks.setMarksId(UUID.fromString(rs.getString("MarksId")));
-                    marks.setCommunication(rs.getInt("Communication"));
-                    marks.setTech(rs.getInt("Tech"));
+                    marks.setMarksId(UUID.fromString(rs.getString("marks_id")));
+                    marks.setCommunication(rs.getInt("communication"));
+                    marks.setTech(rs.getInt("tech"));
 
                     InternshipData internshipData = new InternshipData();
-                    internship.setInternship(UUID.fromString(rs.getString("InternshipId")));
+                    internship.setInternship(UUID.fromString(rs.getString("internship_id")));
                     internshipData.setStudent(student);
                     internshipData.setInternship(internship);
                     internshipData.setCompany(company);
