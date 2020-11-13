@@ -34,16 +34,33 @@ CREATE TABLE "StudentToSkills"
     PRIMARY KEY ("StudentId", "SkillsId")
 );
 
+CREATE TABLE "Keywords"
+(
+    "KeywordsId"   UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "Keywords"     varchar
+);
+
+CREATE TABLE "StudentsToKeywords"
+(
+    "StudentId" UUID,
+    "KeywordsId"    UUID,
+    PRIMARY KEY ("StudentId", "KeywordsId")
+);
+
 CREATE TABLE "Internship"
 (
     "InternshipId"     UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
     "Description"      text,
     "WebSurvey"        boolean,
     "MidInternInfo"    boolean,
-    "Begining"         date,
+    "Beginning"        date,
     "End"              date,
     "StudentId"        UUID,
-    "CompanyId"        UUID
+    "CompanyId"        UUID,
+    "Cdc"              boolean,
+    "CompanyEval"      boolean,
+    "Defense"          boolean,
+    "InternSupervisor" varchar
 );
 
 CREATE TABLE "Company"
@@ -86,10 +103,17 @@ CREATE TABLE "Visit"
     "InternshipId" UUID
 );
 
+
 ALTER TABLE "Student"
     ADD FOREIGN KEY ("TutorId") REFERENCES "Tutor" ("TutorId");
 
 ALTER TABLE "StudentToSkills"
+    ADD FOREIGN KEY ("StudentId") REFERENCES "Student" ("StudentId");
+
+ALTER TABLE "StudentsToKeywords"
+    ADD FOREIGN KEY ("KeywordsId") REFERENCES "Keywords" ("KeywordsId");
+
+ALTER TABLE "StudentsToKeywords"
     ADD FOREIGN KEY ("StudentId") REFERENCES "Student" ("StudentId");
 
 ALTER TABLE "StudentToSkills"
@@ -116,10 +140,12 @@ ALTER TABLE "Visit"
 
 CREATE VIEW internships_data AS (
       SELECT S.*,
-             I."InternshipId", I."CompanyId", I."Description", I."MidInternInfo", I."WebSurvey", I."Begining", I."End",
+             I."InternshipId", I."CompanyId", I."Description", I."MidInternInfo", I."WebSurvey", I."Beginning", I."End", I."Cdc", I."CompanyEval", I."Defense", I."InternSupervisor",
              C."Name" AS "CompanyName", C."Address",
              V."Done", V."Planned", V."VisitReport", V."VisitId",
-             M."Communication",M."Tech", M."MarksId"
+             M."Communication",M."Tech", M."MarksId",
+             Fr."FinalReportId", Fr."Title", Fr."Report"
+
 
       FROM "Student" S
                LEFT JOIN "Internship" I
@@ -130,8 +156,11 @@ CREATE VIEW internships_data AS (
                     ON I."InternshipId" = V."InternshipId"
                LEFT JOIN "Marks" M
                     ON I."InternshipId" = M."InternshipId"
+               LEFT JOIN "FinalReport" Fr
+                    ON Fr."InternshipId" = I."InternshipId"
 
-      ORDER BY (I."Begining") DESC);
+
+      ORDER BY (I."Beginning") DESC);
 
 CREATE VIEW internships_data_details AS (
     SELECT S.*, C."CommentsId", C."StudentComm", C."SupervisorComm"
