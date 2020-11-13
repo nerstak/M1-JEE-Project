@@ -87,10 +87,20 @@ public class DataServices {
     /**
      * Select internships supervised by a tutor
      * @param tutorId Supervisor
+     * @param year Beginning year of internship
      * @return List of internships (may be null)
      */
-    public ResultSet selectInternships(String tutorId) {
-        return getResultSet(tutorId, DB_SELECT_INTERNSHIPS);
+    public ResultSet selectInternships(String tutorId, int year) {
+        try {
+            ps = con.prepareStatement(DB_SELECT_INTERNSHIPS);
+            ps.setObject(1, tutorId, Types.OTHER);
+            ps.setInt(2, year);
+
+            return ps.executeQuery();
+        } catch (SQLException e) {
+            Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;
     }
 
     /**

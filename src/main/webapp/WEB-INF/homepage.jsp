@@ -38,8 +38,8 @@
                 <div class="homepage-selector-select">
                     <label for="year">Year</label>
                     <select name="year" id="year">
-                        <c:forEach var="year" begin="2015" end="2020" step="1">
-                            <option value="${year}">${year}</option>
+                        <c:forEach var="year" begin="0" end="5" step="1">
+                            <option value="${2020 - year}">${2020 - year}</option>
                         </c:forEach>
                     </select>
                 </div>
