@@ -53,6 +53,38 @@ VALUES ((SELECT "SkillId" FROM "Skills" WHERE "Skill" = 'C'),
        ((SELECT "SkillId" FROM "Skills" WHERE "Skill" = 'Git'),
         (SELECT "StudentId" FROM "Student" WHERE "Email" = 'dennis.ritchie@efrei.net'));
 
+INSERT INTO "Keywords"("Keywords")
+VALUES ('Test'),
+       ('Happy'),
+       ('HappyTest'),
+       ('Key'),
+       ('Word'),
+       ('Keyword');
+
+INSERT INTO "StudentsToKeywords" ("KeywordsId", "StudentId")
+VALUES ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Test'),
+        (SELECT "StudentId" FROM "Student" WHERE "Email" = 'dennis.ritchie@efrei.net')),
+       ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Happy'),
+        (SELECT "StudentId" FROM "Student" WHERE "Email" = 'dennis.ritchie@efrei.net')),
+       ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'HappyTest'),
+        (SELECT "StudentId" FROM "Student" WHERE "Email" = 'ada.lovelace@efrei.net')),
+       ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Key'),
+        (SELECT "StudentId" FROM "Student" WHERE "Email" = 'ada.lovelace@efrei.net')),
+       ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Word'),
+        (SELECT "StudentId" FROM "Student" WHERE "Email" = 'peggy.johnson@efrei.net')),
+       ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Keyword'),
+        (SELECT "StudentId" FROM "Student" WHERE "Email" = 'peggy.johnson@efrei.net')),
+       ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Keyword'),
+        (SELECT "StudentId" FROM "Student" WHERE "Email" = 'peggy.johnson@efrei.net')),
+       ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Word'),
+        (SELECT "StudentId" FROM "Student" WHERE "Email" = 'andy.warhol@efrei.net')),
+       ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Key'),
+        (SELECT "StudentId" FROM "Student" WHERE "Email" = 'alan.turing@efrei.net')),
+       ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'HappyTest'),
+        (SELECT "StudentId" FROM "Student" WHERE "Email" = 'andy.warhol@efrei.net')),
+       ((SELECT "KeywordsId" FROM "Keywords" WHERE "Keywords" = 'Happy'),
+        (SELECT "StudentId" FROM "Student" WHERE "Email" = 'dennis.ritchie@efrei.net'));
+
 INSERT INTO "Company" ("Name", "Address")
 VALUES ('EFREI', '30-32 avenue de la République 94 800 Villejuif'),
        ('Mairie de Paris', 'Hôtel de Ville de Paris Place de l''Hôtel de Ville 75196 Paris cedex 04 '),
@@ -61,25 +93,25 @@ VALUES ('EFREI', '30-32 avenue de la République 94 800 Villejuif'),
        ('Microsoft', '39 Quai du Président Roosevelt, 92130 Issy-les-Moulineaux');
 
 INSERT INTO "Internship" ("Description", "WebSurvey", "MidInternInfo", "Begining", "End",
-                          "StudentId", "CompanyId")
+                          "StudentId", "CompanyId", "Cdc", "CompanyEval", "Defense", "InternSupervisor")
 VALUES ('This is a desc', false, false, to_date('26-04-2021', 'DD-MM-YYYY'), to_date('22-09-2021', 'DD-MM-YYYY'),
         (SELECT "StudentId" FROM "Student" WHERE "Email" = 'dennis.ritchie@efrei.net'),
-        (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'Carrefour')),
+        (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'Carrefour'), false, true, true, 'John Doe'),
        ('This is a desc', true, true, to_date('27-07-2020', 'DD-MM-YYYY'), to_date('22-12-2020', 'DD-MM-YYYY'),
         (SELECT "StudentId" FROM "Student" WHERE "Email" = 'ada.lovelace@efrei.net'),
-        (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'EFREI')),
+        (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'EFREI'), true, true, true, 'Elon Musk'),
        ('This is a desc', true, true, to_date('27-02-2020', 'DD-MM-YYYY'), to_date('22-10-2020', 'DD-MM-YYYY'),
         (SELECT "StudentId" FROM "Student" WHERE "Email" = 'katie.bouman@efrei.net'),
-        (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'EFREI')),
+        (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'EFREI'), false, false, true, 'Pic Sou'),
        ('This is a desc', true, true, to_date('15-10-2018', 'DD-MM-YYYY'), to_date('10-02-2019', 'DD-MM-YYYY'),
         (SELECT "StudentId" FROM "Student" WHERE "Email" = 'peggy.johnson@efrei.net'),
-        (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'Mairie de Paris')),
+        (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'Mairie de Paris'), false, true, false, 'Jack Arta'),
        ('This is a desc', true, true, to_date('08-09-2016', 'DD-MM-YYYY'), to_date('20-12-2016', 'DD-MM-YYYY'),
         (SELECT "StudentId" FROM "Student" WHERE "Email" = 'andy.warhol@efrei.net'),
-        (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'Microsoft')),
+        (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'Microsoft'), false, false, false, 'Paul Ogne'),
        ('This is a desc', false, false, to_date('26-03-2021', 'DD-MM-YYYY'), to_date('22-08-2021', 'DD-MM-YYYY'),
         (SELECT "StudentId" FROM "Student" WHERE "Email" = 'alan.turing@efrei.net'),
-        (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'Thalès'));
+        (SELECT "CompanyId" FROM "Company" WHERE "Name" = 'Thalès'), false, false, true, 'John Doe-Bis');
 
 INSERT INTO "Marks" ("Tech", "Communication", "InternshipId")
 VALUES (17, 12, (SELECT "InternshipId"

@@ -34,16 +34,33 @@ CREATE TABLE "StudentToSkills"
     PRIMARY KEY ("StudentId", "SkillsId")
 );
 
+CREATE TABLE "Keywords"
+(
+    "KeywordsId"   UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "Keywords"     varchar
+);
+
+CREATE TABLE "StudentsToKeywords"
+(
+    "StudentId" UUID,
+    "KeywordsId"    UUID,
+    PRIMARY KEY ("StudentId", "KeywordsId")
+);
+
 CREATE TABLE "Internship"
 (
     "InternshipId"     UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
     "Description"      text,
     "WebSurvey"        boolean,
     "MidInternInfo"    boolean,
-    "Begining"         date,
+    "Beginning"        date,
     "End"              date,
     "StudentId"        UUID,
-    "CompanyId"        UUID
+    "CompanyId"        UUID,
+    "Cdc"              boolean,
+    "CompanyEval"      boolean,
+    "Defense"          boolean,
+    "InternSupervisor" varchar
 );
 
 CREATE TABLE "Company"
@@ -86,10 +103,17 @@ CREATE TABLE "Visit"
     "InternshipId" UUID
 );
 
+
 ALTER TABLE "Student"
     ADD FOREIGN KEY ("TutorId") REFERENCES "Tutor" ("TutorId");
 
 ALTER TABLE "StudentToSkills"
+    ADD FOREIGN KEY ("StudentId") REFERENCES "Student" ("StudentId");
+
+ALTER TABLE "StudentsToKeywords"
+    ADD FOREIGN KEY ("KeywordsId") REFERENCES "Keywords" ("KeywordsId");
+
+ALTER TABLE "StudentsToKeywords"
     ADD FOREIGN KEY ("StudentId") REFERENCES "Student" ("StudentId");
 
 ALTER TABLE "StudentToSkills"
