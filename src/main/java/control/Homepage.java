@@ -84,8 +84,12 @@ public class Homepage extends ServletModel {
                     internship.setDesciption(rs.getString("Description"));
                     internship.setMidInternInfo(rs.getBoolean("MidInternInfo"));
                     internship.setWebSurvey(rs.getBoolean("WebSurvey"));
-                    internship.setBegining(rs.getDate("Begining"));
+                    internship.setBegining(rs.getDate("Beginning"));
                     internship.setEnd(rs.getDate("End"));
+                    internship.setCdc(rs.getBoolean("Cdc"));
+                    internship.setDefense(rs.getBoolean("Defense"));
+                    internship.setCompanyEval(rs.getBoolean("CompanyEval"));
+                    internship.setInternSupervisor(rs.getString("InternSupervisor"));
 
                     Company company = new Company();
                     company.setCompanyId(UUID.fromString(rs.getString("CompanyId")));

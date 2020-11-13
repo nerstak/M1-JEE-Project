@@ -13,6 +13,33 @@ public class Internship {
     private String internSupervisor;
     private UUID StudentId;
     private UUID CompanyID;
+    private boolean cdc;
+    private boolean companyEval;
+    private boolean defense;
+
+    public boolean isCdc() {
+        return cdc;
+    }
+
+    public void setCdc(boolean cdc) {
+        this.cdc = cdc;
+    }
+
+    public boolean isCompanyEval() {
+        return companyEval;
+    }
+
+    public void setCompanyEval(boolean companyEval) {
+        this.companyEval = companyEval;
+    }
+
+    public boolean isDefense() {
+        return defense;
+    }
+
+    public void setDefense(boolean defense) {
+        this.defense = defense;
+    }
 
     public UUID getInternship() {
         return internship;

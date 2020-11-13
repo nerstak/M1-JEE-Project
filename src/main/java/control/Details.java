@@ -63,7 +63,7 @@ public class Details extends ServletModel {
                     internship.setDesciption(rs.getString("Description"));
                     internship.setMidInternInfo(rs.getBoolean("MidInternInfo"));
                     internship.setWebSurvey(rs.getBoolean("WebSurvey"));
-                    internship.setBegining(rs.getDate("Begining"));
+                    internship.setBegining(rs.getDate("Beginning"));
                     internship.setEnd(rs.getDate("End"));
 
                     Company company = new Company();

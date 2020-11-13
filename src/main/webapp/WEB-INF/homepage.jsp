@@ -101,11 +101,11 @@
                                     <span class="homepage-cell"><input name="studentGroup"  type="text" value="${Internship.student.group}"/></span>
                                     <span class="homepage-cell"><input name="studentFirstname" type="text" value="${Internship.student.firstName}"/></span>
                                     <span class="homepage-cell"><input name="studentName"  type="text" value="${Internship.student.name}"/></span>
-                                    <span class="homepage-cell"><input name="cdc" type="checkbox"} /></span>
-                                    <span class="homepage-cell"><input name="companyEval" type="checkbox"/></span>
+                                    <span class="homepage-cell"><input name="cdc" type="checkbox" ${Internship.internship.cdc == true ? 'checked' : ''} /></span>
+                                    <span class="homepage-cell"><input name="companyEval" type="checkbox" ${Internship.internship.companyEval == true ? 'checked' : ''}/></span>
                                     <span class="homepage-cell"><input name="webSurvey" type="checkbox" ${Internship.internship.webSurvey == true ? 'checked' : ''}/></span>
-                                    <span class="homepage-cell"><input name="releasedReport" type="checkbox"/></span>
-                                    <span class="homepage-cell"><input name="defense" type="checkbox"/></span>
+                                    <span class="homepage-cell"><input name="releasedReport" type="checkbox" ${Internship.finalReport.report == true ? 'checked' : ''}/></span>
+                                    <span class="homepage-cell"><input name="defense" type="checkbox" ${Internship.internship.defense == true ? 'checked' : ''} /></span>
                                     <span class="homepage-cell"><input name="visitPlanned" type="checkbox" ${Internship.visit.planned == true ? 'checked' : ''}/></span>
                                     <span class="homepage-cell"><input name="visitDone" type="checkbox" ${Internship.visit.done == true ? 'checked' : ''}/></span>
                                     <span class="homepage-cell"><input name="beginingDate" type="date" value="${Internship.internship.begining}" /></span>
