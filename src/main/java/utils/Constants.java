@@ -12,7 +12,10 @@ public class Constants {
     public static final String ERR_MISSING_FIELD = "At least one field is missing";
 
     public static final String DB_SELECT_SINGLE_TUTOR = "SELECT * FROM tutor WHERE email  = ? AND pwd = ?";
-    public static final String DB_SELECT_INTERNSHIPS = "SELECT * FROM internships_data WHERE tutor_id = ? AND EXTRACT( year FROM beginning) = ? AND firstname || ' ' || name LIKE '%' || ? || '%'";
+    public static final String DB_SELECT_INTERNSHIPS = "SELECT * FROM internships_data WHERE tutor_id = ? " +
+                                                            "AND EXTRACT( year FROM beginning) = ? " +
+                                                            "AND firstname || ' ' || name LIKE '%' || ? || '%' " +
+                                                            "AND internship_id IN (SELECT itk.internship_id FROM internship_to_keywords itk JOIN keywords k ON itk.keyword_id = k.keyword_id WHERE k.keyword LIKE ?);";
     public static final String DB_SELECT_INTERNSHIP_DETAILED = "SELECT * FROM internships_data_details WHERE internship_id = ?";
     public static final String DB_SELECT_SKILLS = "SELECT * FROM skills";
     public static final String DB_SELECT_KEYWORDS = "SELECT * FROM keywords";

@@ -26,6 +26,8 @@ public class Homepage extends ServletModel {
     private Tutor tutor;
     private int year;
     private String name;
+    String keyword;
+
 
     private ResultSet rs;
 
@@ -52,6 +54,10 @@ public class Homepage extends ServletModel {
             name = request.getParameter("search-name");
             if(name == null) {
                 name = "";
+            }
+            keyword = request.getParameter("keywords");
+            if(keyword == null) {
+                keyword = "%";
             }
             request.setAttribute("listOfInternship", getListOfInternshipDate(tutor));
 
@@ -98,7 +104,7 @@ public class Homepage extends ServletModel {
     //TODO : move
     private ArrayList<InternshipData> getListOfInternshipDate(Tutor tutor) {
         listOfInternshipdata = new ArrayList<>();
-        rs = dataServices.selectInternships(tutor.getTutorId().toString(), year, name);
+        rs = dataServices.selectInternships(tutor.getTutorId().toString(), year, name, keyword);
 
         if (rs != null) {
             try {
