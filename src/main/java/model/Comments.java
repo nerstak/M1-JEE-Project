@@ -16,7 +16,7 @@ public class Comments {
         this.commentsId = commentsId;
     }
 
-    public String isStudentComm() {
+    public String getStudentComm() {
         return studentComm;
     }
 
@@ -24,7 +24,7 @@ public class Comments {
         this.studentComm = studentComm;
     }
 
-    public String isSupervisorComment() {
+    public String getSupervisorComment() {
         return supervisorComment;
     }
 

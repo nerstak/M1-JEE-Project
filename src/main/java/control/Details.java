@@ -28,7 +28,8 @@ public class Details extends ServletModel {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String internshipSubmit = request.getParameter("internshipSubmit");
         if (internshipSubmit.equals("details")){
-            getInternshipDataDetails(request.getParameter("internshipId"));
+            String internshipId = request.getParameter("internshipId");
+            request.setAttribute("internshipData", getInternshipDataDetails(internshipId));
             request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
         }else if (internshipSubmit.equals("modify")){
 
