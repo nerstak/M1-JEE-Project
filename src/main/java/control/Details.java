@@ -65,6 +65,10 @@ public class Details extends ServletModel {
                     internship.setWebSurvey(rs.getBoolean("WebSurvey"));
                     internship.setBegining(rs.getDate("Beginning"));
                     internship.setEnd(rs.getDate("End"));
+                    internship.setCdc(rs.getBoolean("Cdc"));
+                    internship.setDefense(rs.getBoolean("Defense"));
+                    internship.setCompanyEval(rs.getBoolean("CompanyEval"));
+                    internship.setInternSupervisor(rs.getString("InternSupervisor"));
 
                     Company company = new Company();
                     company.setCompanyId(UUID.fromString(rs.getString("CompanyId")));
@@ -87,13 +91,18 @@ public class Details extends ServletModel {
                     comments.setStudentComm(rs.getString("StudentComm"));
                     comments.setSupervisorComment(rs.getString("SupervisorComm"));
 
+                    FinalReport finalReport = new FinalReport();
+                    finalReport.setFinalReportId(UUID.fromString(rs.getString("FinalReportId")));
+                    finalReport.setReport(rs.getBoolean("Report"));
+                    finalReport.setTitle(rs.getString("Title"));
+
                     internshipData.setStudent(student);
                     internshipData.setInternship(internship);
                     internshipData.setCompany(company);
                     internshipData.setVisit(visit);
                     internshipData.setMarks(marks);
                     internshipData.setComments(comments);
-
+                    internshipData.setFinalReport(finalReport);
                 }
             }catch (Exception e){
                 e.printStackTrace();
