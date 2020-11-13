@@ -93,8 +93,8 @@ VALUES ('EFREI', '30-32 avenue de la République 94 800 Villejuif'),
        ('Carrefour', '93 Avenue de Paris 91300 Massy'),
        ('Microsoft', '39 Quai du Président Roosevelt, 92130 Issy-les-Moulineaux');
 
-INSERT INTO internship (description, web_survey, mid_term_info, beginning, ending,
-                          student_id, company_id, cdc, company_eval, defense, intern_supervisor)
+INSERT INTO internship (description, web_survey, mid_intern_info, beginning, ending,
+                        student_id, company_id, cdc, company_eval, defense, intern_supervisor)
 VALUES ('This is a desc', false, false, to_date('26-04-2021', 'DD-MM-YYYY'), to_date('22-09-2021', 'DD-MM-YYYY'),
         (SELECT student_id FROM student WHERE email = 'dennis.ritchie@efrei.net'),
         (SELECT company_id FROM company WHERE name = 'Carrefour'), false, true, true, 'John Doe'),
@@ -128,32 +128,33 @@ VALUES (17, 12, (SELECT internship_id
 
 INSERT INTO comments (student_comm, supervisor_comm, internship_id)
 VALUES ('Comments', null, (SELECT internship_id
-                     FROM internship
-                     WHERE student_id = (SELECT student_id FROM student WHERE email = 'katie.bouman@efrei.net'))),
+                           FROM internship
+                           WHERE student_id = (SELECT student_id FROM student WHERE email = 'katie.bouman@efrei.net'))),
        ('Comments', 'Comments', (SELECT internship_id
-                     FROM internship
-                     WHERE student_id = (SELECT student_id FROM student WHERE email = 'andy.warhol@efrei.net'))),
+                                 FROM internship
+                                 WHERE student_id =
+                                       (SELECT student_id FROM student WHERE email = 'andy.warhol@efrei.net'))),
        ('Comments', 'Comments', (SELECT internship_id
-                     FROM internship
-                     WHERE student_id =
-                           (SELECT student_id FROM student WHERE email = 'peggy.johnson@efrei.net')));
+                                 FROM internship
+                                 WHERE student_id =
+                                       (SELECT student_id FROM student WHERE email = 'peggy.johnson@efrei.net')));
 
 INSERT INTO final_report (title, report, internship_id)
 VALUES ('My cool report.pdf', true, (SELECT internship_id
                                      FROM internship
                                      WHERE student_id = (SELECT student_id
-                                                          FROM student
-                                                          WHERE email = 'katie.bouman@efrei.net'))),
+                                                         FROM student
+                                                         WHERE email = 'katie.bouman@efrei.net'))),
        ('Internship Report.pdf', true, (SELECT internship_id
                                         FROM internship
                                         WHERE student_id = (SELECT student_id
-                                                             FROM student
-                                                             WHERE email = 'andy.warhol@efrei.net'))),
+                                                            FROM student
+                                                            WHERE email = 'andy.warhol@efrei.net'))),
        ('FinalReport.docx', true, (SELECT internship_id
                                    FROM internship
                                    WHERE student_id = (SELECT student_id
-                                                        FROM student
-                                                        WHERE email = 'peggy.johnson@efrei.net')));
+                                                       FROM student
+                                                       WHERE email = 'peggy.johnson@efrei.net')));
 
 INSERT INTO visit (done, planned, visit_report, internship_id)
 VALUES (true, true, true, (SELECT internship_id
