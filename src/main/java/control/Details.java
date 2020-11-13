@@ -1,18 +1,14 @@
 package control;
 
 import model.*;
-import utils.DataServices;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Properties;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,13 +19,16 @@ import static utils.Constants.*;
 public class Details extends ServletModel {
     private InternshipData internshipData;
     private ResultSet rs;
-
+    private ArrayList<Skills> listOfSkills;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Check from which submit button the request come from
         String internshipSubmit = request.getParameter("internshipSubmit");
         if (internshipSubmit.equals("details")){
             String internshipId = request.getParameter("internshipId");
-            request.setAttribute("internshipData", getInternshipDataDetails(internshipId));
+            internshipData = getInternshipDataDetails(internshipId);
+            request.setAttribute("internshipData", internshipData);
+            request.setAttribute("listOfStudentSkills", getInternshipDataDetails(internshipData.getStudent().getStudentId().toString()));
             request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
         }else if (internshipSubmit.equals("modify")){
 
@@ -102,5 +101,22 @@ public class Details extends ServletModel {
         }
 
         return internshipData;
+    }
+
+    public ArrayList<Skills> getListOfStudentSkills(String studentId){
+        listOfSkills = new ArrayList<>();
+        rs = dataServices.selectStudentSkillsAll(studentId);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    Skills skills = new Skills(rs.getString("Skill"), (UUID) rs.getObject("SkillId"));
+                    listOfSkills.add(skills);
+                }
+            } catch (Exception e) {
+                Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+        return listOfSkills;
+
     }
 }

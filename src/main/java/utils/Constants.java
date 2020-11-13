@@ -17,6 +17,8 @@ public class Constants {
     public static final String DB_SELECT_SKILLS = "SELECT * FROM \"Skills\"";
     public static final String DB_SELECT_STUDENT_SKILLS = "SELECT * FROM students_skills WHERE \"StudentId\" = ?";
     public static final String DB_SELECT_STUDENTS_WITH_SKILL = "SELECT * FROM students_skills WHERE \"SkillsId\" = ?";
+    public static final String DB_SELECT_STUDENTS_SKILLS_ALL = "SELECT * FROM  \"Skills\" inner join \"StudentToSkills\" STS on \"Skills\".\"SkillId\" = STS.\"SkillsId\" where \"StudentId\" = ?";
+
 
     public static final String DB_UPDATE_COMMENTS = "UPDATE \"Comments\" SET \"SupervisorComm\" = ?, \"StudentComm\" = ? WHERE \"InternshipId\" = ?";
     public static final String DB_UPDATE_COMPANY = "UPDATE \"Company\" SET \"Name\" = ?, \"Address\" = ? WHERE \"CompanyId\" = ?";
