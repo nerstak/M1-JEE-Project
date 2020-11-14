@@ -133,14 +133,16 @@
                 </div>
             </form>
             <div class="list-data">
-                <p>CSS</p>
-                <p>Java</p>
-                <p>HTML</p>
-                <p>Leadership</p>
-                <p>JEE</p>
-                <p>JS</p>
-                <p>Git</p>
-                <p>Jenkins</p>
+                <c:choose>
+                    <c:when test="${empty listOfStudentSkills}">
+                        <h2>No skills registered</h2>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach items="${listOfStudentSkills}" var="skill">
+                            <p>${skill.skill}</p>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
 

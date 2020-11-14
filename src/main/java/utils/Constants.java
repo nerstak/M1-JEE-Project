@@ -21,8 +21,7 @@ public class Constants {
     public static final String DB_SELECT_KEYWORDS = "SELECT * FROM keywords";
     public static final String DB_SELECT_STUDENT_SKILLS = "SELECT * FROM students_skills WHERE student_id = ?";
     public static final String DB_SELECT_STUDENTS_WITH_SKILL = "SELECT * FROM students_skills WHERE skill_id = ?";
-    public static final String DB_SELECT_STUDENTS_SKILLS_ALL = "SELECT * FROM  skills inner join student_to_skills STS on skills.skill_id = STS.skill_id where student_id = ?";
-
+    public static final String DB_SELECT_STUDENTS_SKILLS_ALL = "SELECT STS.skill_id as skill_id, skills.skill as skill FROM  student_to_skills as STS inner join skills on skills.skill_id = STS.skill_id where STS.student_id =  ?";
 
     public static final String DB_UPDATE_COMMENTS = "UPDATE comments SET supervisor_comm = ?, student_comm = ? WHERE internship_id = ?";
     public static final String DB_UPDATE_COMPANY = "UPDATE company SET name = ?, address = ? WHERE company_id = ?";
