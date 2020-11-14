@@ -38,22 +38,23 @@
                 <div class="homepage-selector-select">
                     <label for="year">Year</label>
                     <select name="year" id="year">
-                        <c:forEach var="year" begin="2015" end="2020" step="1">
-                            <option value="${year}">${year}</option>
+                        <c:forEach var="year" begin="0" end="5" step="1">
+                            <option value="${2020 - year}">${2020 - year}</option>
                         </c:forEach>
                     </select>
                 </div>
                 <div class="homepage-selector-select">
                     <label for="keywords">Keywords</label>
                     <select name="keywords" id="keywords">
-                        <c:forEach items="${listOfSkill}" var="skill">
-                            <option value="${skill.skill}">${skill.skill}</option>
+                        <option value="%">-</option>
+                        <c:forEach items="${listOfKeywords}" var="keyword">
+                            <option value="${keyword.keyword}">${keyword.keyword}</option>
                         </c:forEach>
                     </select>
                 </div>
                 <div class="homepage-selector-select">
                     <label for="search-name">Name</label>
-                    <input type="text" id="search-name">
+                    <input type="text" name="search-name" id="search-name">
                 </div>
                 <input type="submit" value="Search">
             </form>

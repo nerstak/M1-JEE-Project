@@ -156,11 +156,12 @@
                 </div>
             </form>
             <div class="list-data">
-                <p>Happy</p>
-                <p>Bad</p>
-                <p>Bold</p>
-                <p>Leadership</p>
-                <p>Well explained</p>
+                <p>Etranger</p>
+                <p>Remunéré</p>
+                <p>Labo</p>
+                <p>Long</p>
+                <p>Cool</p>
+                <p>Bonus</p>
             </div>
         </div>
     </main>
