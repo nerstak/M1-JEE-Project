@@ -27,6 +27,8 @@ public class Details extends ServletModel {
         if (internshipSubmit.equals("details")){
             String internshipId = request.getParameter("internshipId");
             internshipData = getInternshipDataDetails(internshipId);
+
+            //Set request attributes
             request.setAttribute("internshipData", internshipData);
             request.setAttribute("listOfStudentSkills", getListOfStudentSkills(internshipData.getStudent().getStudentId().toString()));
             request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
@@ -42,7 +44,11 @@ public class Details extends ServletModel {
 
     }
 
-
+    /**
+     * Get all the details about an internship for one student
+     * @param internshipId, the student ID in the database
+     * @return internshipData that contains all the data
+     */
     public InternshipData getInternshipDataDetails(String internshipId){
         internshipData = new InternshipData();
         rs = dataServices.selectInternshipDetailed(internshipId);
@@ -50,6 +56,7 @@ public class Details extends ServletModel {
         if (rs != null){
             try {
                 while (rs.next()){
+                    //Instantiate a student bean
                     Student student = new Student();
                     student.setStudentId(UUID.fromString(rs.getString("student_id")));
                     student.setName(rs.getString("name"));
@@ -58,6 +65,7 @@ public class Details extends ServletModel {
                     student.setGroup(rs.getString("group"));
                     student.setLinkedinProfile(rs.getString("linkedin_profile"));
 
+                    //Instantiate a internship bean
                     Internship internship = new Internship();
                     internship.setInternship(UUID.fromString(rs.getString("internship_id")));
                     internship.setDesciption(rs.getString("description"));
@@ -70,32 +78,39 @@ public class Details extends ServletModel {
                     internship.setCompanyEval(rs.getBoolean("company_eval"));
                     internship.setInternSupervisor(rs.getString("intern_supervisor"));
 
+                    //Instantiate a company bean
                     Company company = new Company();
                     company.setCompanyId(UUID.fromString(rs.getString("company_id")));
                     company.setName(rs.getString("company_name"));
                     company.setAddress(rs.getString("address"));
 
+                    //Instantiate a visit bean
                     Visit visit = new Visit();
                     visit.setVisitID(UUID.fromString(rs.getString("visit_id")));
                     visit.setDone(rs.getBoolean("done"));
                     visit.setPlanned(rs.getBoolean("planned"));
                     visit.setVisitReport(rs.getBoolean("visit_report"));
 
+                    //Instantiate a marks bean
                     Marks marks = new Marks();
                     marks.setMarksId(UUID.fromString(rs.getString("marks_id")));
                     marks.setCommunication(rs.getInt("communication"));
                     marks.setTech(rs.getInt("tech"));
 
+                    //Instantiate a comments bean
                     Comments comments = new Comments();
                     comments.setCommentsId(UUID.fromString(rs.getString("comments_id")));
                     comments.setStudentComm(rs.getString("student_comm"));
                     comments.setSupervisorComment(rs.getString("supervisor_comm"));
 
+
+                    //Instantiate a final report bean
                     FinalReport finalReport = new FinalReport();
                     finalReport.setFinalReportId(UUID.fromString(rs.getString("final_report_id")));
                     finalReport.setReport(rs.getBoolean("report"));
                     finalReport.setTitle(rs.getString("title"));
 
+                    //Set attributes of internshipData
                     internshipData.setStudent(student);
                     internshipData.setInternship(internship);
                     internshipData.setCompany(company);
@@ -112,6 +127,11 @@ public class Details extends ServletModel {
         return internshipData;
     }
 
+    /**
+     * Get the list of skills of a student
+     * @param studentId, the ID of the student
+     * @return the list of skills for the student
+     */
     public ArrayList<Skills> getListOfStudentSkills(String studentId){
         listOfSkills = new ArrayList<>();
         rs = dataServices.selectStudentSkillsAll(studentId);
@@ -126,6 +146,5 @@ public class Details extends ServletModel {
             }
         }
         return listOfSkills;
-
     }
 }
