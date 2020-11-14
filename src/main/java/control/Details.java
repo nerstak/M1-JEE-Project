@@ -28,7 +28,7 @@ public class Details extends ServletModel {
             String internshipId = request.getParameter("internshipId");
             internshipData = getInternshipDataDetails(internshipId);
             request.setAttribute("internshipData", internshipData);
-            request.setAttribute("listOfStudentSkills", getInternshipDataDetails(internshipData.getStudent().getStudentId().toString()));
+            request.setAttribute("listOfStudentSkills", getListOfStudentSkills(internshipData.getStudent().getStudentId().toString()));
             request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
         }else if (internshipSubmit.equals("modify")){
 

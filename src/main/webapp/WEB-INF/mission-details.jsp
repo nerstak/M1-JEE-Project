@@ -133,14 +133,9 @@
                 </div>
             </form>
             <div class="list-data">
-                <p>CSS</p>
-                <p>Java</p>
-                <p>HTML</p>
-                <p>Leadership</p>
-                <p>JEE</p>
-                <p>JS</p>
-                <p>Git</p>
-                <p>Jenkins</p>
+                <c:forEach items="${listOfStudentSkills}" var="skill">
+                    <p>${skill.skill}</p>
+                </c:forEach>
             </div>
         </div>
 
