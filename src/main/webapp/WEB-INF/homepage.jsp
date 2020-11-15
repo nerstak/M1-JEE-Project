@@ -46,7 +46,7 @@
                 <div class="homepage-selector-select">
                     <label for="keywords">Keywords</label>
                     <select name="keywords" id="keywords">
-                        <option value="%">-</option>
+                        <option value="-">-</option>
                         <c:forEach items="${listOfKeywords}" var="keyword">
                             <option value="${keyword.keyword}">${keyword.keyword}</option>
                         </c:forEach>

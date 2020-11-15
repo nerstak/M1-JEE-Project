@@ -57,7 +57,7 @@ public class Homepage extends ServletModel {
             }
             keyword = request.getParameter("keywords");
             if(keyword == null) {
-                keyword = "%";
+                keyword = "-";
             }
             request.setAttribute("listOfInternship", getListOfInternshipDate(tutor));
 

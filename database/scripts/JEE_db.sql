@@ -195,6 +195,14 @@ FROM skills S
               ON sts.skill_id = s.skill_id
     );
 
+CREATE VIEW internship_keywords AS
+(
+SELECT k.keyword, itk.internship_id
+FROM keywords k
+         JOIN internship_to_keywords itk
+              ON k.keyword_id = itk.keyword_id
+    );
+
 GRANT ALL PRIVILEGES ON DATABASE st2eedb TO adm;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to adm;
 

@@ -99,6 +99,7 @@ public class DataServices {
             ps.setInt(2, year);
             ps.setString(3, name);
             ps.setString(4, keyword);
+            ps.setString(5, keyword);
 
             return ps.executeQuery();
         } catch (SQLException e) {
