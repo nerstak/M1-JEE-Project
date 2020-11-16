@@ -15,6 +15,9 @@ import java.util.logging.Logger;
 
 import static utils.Constants.*;
 
+/**
+ * Details controller, for any additional information on internship
+ */
 @WebServlet(name = "Details")
 public class Details extends ServletModel {
     private InternshipData internshipData;
@@ -44,6 +47,7 @@ public class Details extends ServletModel {
 
     }
 
+    // TODO: Will be moved later, don't touch this
     /**
      * Get all the details about an internship for one student
      * @param internshipId, the student ID in the database
@@ -127,6 +131,7 @@ public class Details extends ServletModel {
         return internshipData;
     }
 
+    // TODO: Will be moved later, don't touch this
     /**
      * Get the list of skills of a student
      * @param studentId, the ID of the student

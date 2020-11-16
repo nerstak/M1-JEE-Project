@@ -19,6 +19,9 @@ import java.util.logging.Logger;
 
 import static utils.Constants.DB_PROPERTIES;
 
+/**
+ * Basis of any Controller, as it creates the connection with the database
+ */
 @WebServlet(name = "ServletModel")
 public abstract class ServletModel extends HttpServlet {
     protected Properties properties;
@@ -32,13 +35,9 @@ public abstract class ServletModel extends HttpServlet {
     private Connection conn;
     private Statement stmt;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
 
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
 
     @Override
     public void init() {
@@ -49,23 +48,21 @@ public abstract class ServletModel extends HttpServlet {
         dbPwd = properties.getProperty("DB.PWD");
 
         try {
+            // Setting up database connection
             Class.forName(properties.getProperty("DB.JDBC"));
             conn = DriverManager.getConnection(dbUrl, dbUser, dbPwd);
             stmt = conn.createStatement();
+            // May have to be removed later
             dataServices = new DataServices(dbUser, dbPwd, dbUrl);
-        } catch (SQLException e) {
-            Logger.getLogger(ServletModel.class.getName()).log(Level.SEVERE, null, e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             Logger.getLogger(ServletModel.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
     /**
-     * Get the db.properties file
-     *
-     * @return Properties from the db.properties
+     * Load the db.properties file
      */
-    private Properties getPropertiesFile() {
+    private void getPropertiesFile() {
         properties = new Properties();
         try {
             input = getServletContext().getResourceAsStream(DB_PROPERTIES);
@@ -73,6 +70,5 @@ public abstract class ServletModel extends HttpServlet {
         } catch (IOException e) {
             Logger.getLogger(ServletModel.class.getName()).log(Level.SEVERE, null, e);
         }
-        return properties;
     }
 }

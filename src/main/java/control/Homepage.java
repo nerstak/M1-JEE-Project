@@ -16,6 +16,9 @@ import java.util.logging.Logger;
 
 import static utils.Constants.*;
 
+/**
+ * Homepage controller, displaying list of internships
+ */
 @WebServlet(name = "Homepage")
 public class Homepage extends ServletModel {
     private HttpSession session;
@@ -67,7 +70,7 @@ public class Homepage extends ServletModel {
         }
     }
 
-    // TODO: Move this or DELETE IT
+    // TODO: Will be moved later, don't touch this
     private ArrayList<Skills> getListOfSkills() {
         listOfSkills = new ArrayList<>();
         rs = dataServices.selectResultSet(DB_SELECT_SKILLS);
@@ -84,7 +87,7 @@ public class Homepage extends ServletModel {
         return listOfSkills;
     }
 
-    // TODO: Move this to another location (DateServices or Skills)
+    // TODO: Will be moved later, don't touch this
     private ArrayList<Keywords> getListOfKeywords() {
         listOfKeywords = new ArrayList<>();
         rs = dataServices.selectResultSet(DB_SELECT_KEYWORDS);
@@ -101,7 +104,7 @@ public class Homepage extends ServletModel {
         return listOfKeywords;
     }
 
-    //TODO : move
+    //TODO: Will be moved later, don't touch this
     private ArrayList<InternshipData> getListOfInternshipDate(Tutor tutor) {
         listOfInternshipdata = new ArrayList<>();
         rs = dataServices.selectInternships(tutor.getTutorId().toString(), year, name, keyword);

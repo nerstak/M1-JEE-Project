@@ -16,6 +16,9 @@ import java.util.logging.Logger;
 
 import static utils.Constants.*;
 
+/**
+ * Login controller, to handle connection
+ */
 @WebServlet(name = "Login")
 public class Login extends ServletModel {
     private HttpSession session;
