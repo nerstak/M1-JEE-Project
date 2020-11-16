@@ -1,6 +1,7 @@
 package control;
 
 import model.Tutor;
+import utils.database.TutorData;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +24,7 @@ import static utils.Constants.*;
 public class Login extends ServletModel {
     private HttpSession session;
 
-    private ResultSet rs;
+    private TutorData tutorData;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,7 +42,7 @@ public class Login extends ServletModel {
             request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); //redirect to welcome if ok
         }
 
-        if (checkCredentials(tutor)) {
+        if (tutorData.selectTutor(tutor)) {
             session = request.getSession();
             session.setAttribute("tutor", tutor);
             response.sendRedirect("Homepage");
@@ -51,30 +52,9 @@ public class Login extends ServletModel {
         }
     }
 
-    /**
-     * Check login credentials from database
-     *
-     * @param myTutor user with his login/pwd
-     * @return true/false connection
-     */
-    private boolean checkCredentials(Tutor myTutor) {
-        rs = dataServices.selectTutor(myTutor.getEmail(),myTutor.getPwd());
-        if (rs != null) {
-            try {
-                if (rs.next()) { //if rs contain the user data => set bean's property
-                    myTutor.setTutorId(UUID.fromString(rs.getString("tutor_id")));
-                    myTutor.setFirstName(rs.getString("firstname"));
-                    myTutor.setName(rs.getString("name"));
-                    return true;
-                } else { //no data returned = error in login or password
-                    return false;
-                }
-            } catch (SQLException e) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);
-                return false;
-            }
-        } else {
-            return false;
-        }
+    @Override
+    public void init() {
+        super.init();
+        tutorData = new TutorData(dbUser, dbPwd, dbUrl);
     }
 }

@@ -1,6 +1,6 @@
 package control;
 
-import utils.DataServices;
+import utils.database.DataServices;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,9 +28,9 @@ public abstract class ServletModel extends HttpServlet {
     protected DataServices dataServices;
     protected InputStream input;
 
-    private String dbUrl;
-    private String dbUser;
-    private String dbPwd;
+    protected String dbUrl;
+    protected String dbUser;
+    protected String dbPwd;
 
     private Connection conn;
     private Statement stmt;
@@ -53,7 +53,7 @@ public abstract class ServletModel extends HttpServlet {
             conn = DriverManager.getConnection(dbUrl, dbUser, dbPwd);
             stmt = conn.createStatement();
             // May have to be removed later
-            dataServices = new DataServices(dbUser, dbPwd, dbUrl);
+            // dataServices = new DataServices(dbUser, dbPwd, dbUrl);
         } catch (SQLException | ClassNotFoundException e) {
             Logger.getLogger(ServletModel.class.getName()).log(Level.SEVERE, null, e);
         }
