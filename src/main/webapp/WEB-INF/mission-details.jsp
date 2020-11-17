@@ -33,7 +33,7 @@
         <jsp:useBean id="internshipData" class="model.InternshipData" scope="request"/>
         <div class="info-company">
             <h2>Company</h2>
-            <form class="info-company-form">
+            <form class="info-company-form" action="UpdateDetails" method="post">
                 <div class="div-input-half">
                     <div class="input-left">
                         <label for="cName">Name</label>
@@ -56,15 +56,15 @@
                 </div>
                 <div class="div-input-full">
                     <label>Address</label>
-                    <input type="text"  value="${internshipData.company.address}">
+                    <input type="text"  value="${internshipData.company.address}" >
                 </div>
-                <input type="submit" value="Modify">
+                <button type="submit" value="company" name="updateDetails">Modify</button>
             </form>
         </div>
 
         <div class="info-students">
             <h2>Student</h2>
-            <form class="info-company-form">
+            <form class="info-company-form" action="UpdateDetails" method="post" name="updateDetails">
                 <div class="div-input-half">
                     <div class="input-left">
                         <label>ID</label>
@@ -89,13 +89,13 @@
                     <label>Linkedin Profile</label>
                     <input type="text"  value="${internshipData.student.linkedinProfile}">
                 </div>
-                <input type="submit" value="Modify">
+                <button type="submit" value="student" name="updateDetails">Modify</button>
             </form>
         </div>
 
         <div class="info-internship">
             <h2>Internship</h2>
-            <form class="info-company-form" id="info-company-form">
+            <form class="info-company-form" id="info-company-form" action="UpdateDetails" method="post" name="updateDetails">
                 <div class="div-input-half">
                     <div class="input-left">
                         <label>Report's title</label>
@@ -116,20 +116,19 @@
                         <textarea form="info-company-form">${internshipData.comments.studentComm}</textarea>
                     </div>
                 </div>
-                <input type="submit" value="Modify">
+                <button type="submit" value="internship" name="updateDetails">Modify</button>
             </form>
-
         </div>
 
         <div class="info-skills">
             <h2>Skills</h2>
-            <form class="info-company-form">
+            <form class="info-company-form" action="UpdateDetails" method="post" name="updateDetails">
                 <div class="div-input-button">
                     <div class="input-left">
                         <label>Skills</label>
                         <input type="text">
                     </div>
-                    <input type="submit" value="Add">
+                    <button type="submit" value="skills" name="updateDetails">Add</button>
                 </div>
             </form>
             <div class="list-data">
@@ -148,13 +147,13 @@
 
         <div class="info-keywords">
             <h2>Keyword</h2>
-            <form class="info-company-form">
+            <form class="info-company-form" action="UpdateDetails" method="post" name="updateDetails">
                 <div class="div-input-button">
                     <div class="input-left">
                         <label>Keywords</label>
                         <input type="text">
                     </div>
-                    <input type="submit" value="Add">
+                    <button type="submit" value="keywords" name="updateDetails">Keywords</button>
                 </div>
             </form>
             <div class="list-data">
