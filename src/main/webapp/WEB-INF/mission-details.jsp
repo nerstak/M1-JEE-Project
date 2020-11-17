@@ -31,7 +31,7 @@
     </header>
 
 <%--    TODO
-    create arraylist woth internship/student id + name du boutton
+    create arraylist woth internshipData + name du boutton
     add it to button value
 --%>
 
