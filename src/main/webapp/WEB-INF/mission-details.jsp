@@ -29,6 +29,12 @@
             <p>Logout</p>
         </div>
     </header>
+
+<%--    TODO
+    create arraylist woth internship/student id + name du boutton
+    add it to button value
+--%>
+
     <main class="main-info">
         <jsp:useBean id="internshipData" class="model.InternshipData" scope="request"/>
         <div class="info-company">
@@ -36,27 +42,27 @@
             <form class="info-company-form" action="UpdateDetails" method="post">
                 <div class="div-input-half">
                     <div class="input-left">
-                        <label for="cName">Name</label>
-                        <input type="text" id="cName" value="${internshipData.company.name}">
+                        <label for="companyName">Name</label>
+                        <input type="text" id="companyName" name="companyName" value="${internshipData.company.name}">
                     </div>
                     <div class="input-right">
-                        <label>M.d.S</label>
-                        <input type="text" value="${internshipData.internship.internSupervisor}">
+                        <label for="mds">M.d.S</label>
+                        <input type="text" name="mds" id="mds" value="${internshipData.internship.internSupervisor}">
                     </div>
                 </div>
                 <div class="div-input-half">
                     <div class="input-left">
-                        <label>Begin</label>
-                        <input type="text" value="${internshipData.internship.begining}">
+                        <label for="begin">Begin</label>
+                        <input type="date" id="begin" name="begin" value="${internshipData.internship.begining}">
                     </div>
                     <div class="input-right">
-                        <label>End</label>
-                        <input type="text"  value="${internshipData.internship.end}">
+                        <label for="end">End</label>
+                        <input type="date" id="end" name="end" value="${internshipData.internship.end}">
                     </div>
                 </div>
                 <div class="div-input-full">
-                    <label>Address</label>
-                    <input type="text"  value="${internshipData.company.address}" >
+                    <label for="companyAddress">Address</label>
+                    <input type="text" id="companyAddress" name="companyAddress" value="${internshipData.company.address}" >
                 </div>
                 <button type="submit" value="company" name="updateDetails">Modify</button>
             </form>
@@ -67,27 +73,27 @@
             <form class="info-company-form" action="UpdateDetails" method="post" name="updateDetails">
                 <div class="div-input-half">
                     <div class="input-left">
-                        <label>ID</label>
-                        <input type="text"  value="${internshipData.student.studentId}" readonly>
+                        <label for="studentId">ID</label>
+                        <input type="text" id="studentId" name="studentId" value="${internshipData.student.studentId}" readonly>
                     </div>
                     <div class="input-right">
-                        <label>Promo</label>
-                        <input type="text"  value="${internshipData.student.group}">
+                        <label for="group">Group</label>
+                        <input type="text" name="group" id="group" value="${internshipData.student.group}">
                     </div>
                 </div>
                 <div class="div-input-half">
                     <div class="input-left">
-                        <label>First Name</label>
-                        <input type="text"  value="${internshipData.student.firstName}">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" value="${internshipData.student.firstName}">
                     </div>
                     <div class="input-right">
-                        <label>Last Name</label>
-                        <input type="text"  value="${internshipData.student.name}">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" value="${internshipData.student.name}">
                     </div>
                 </div>
                 <div class="div-input-full">
-                    <label>Linkedin Profile</label>
-                    <input type="text"  value="${internshipData.student.linkedinProfile}">
+                    <label for="linkedin">Linkedin Profile</label>
+                    <input type="text" id="linkedin" name="linkedin" value="${internshipData.student.linkedinProfile}">
                 </div>
                 <button type="submit" value="student" name="updateDetails">Modify</button>
             </form>
@@ -98,22 +104,22 @@
             <form class="info-company-form" id="info-company-form" action="UpdateDetails" method="post" name="updateDetails">
                 <div class="div-input-half">
                     <div class="input-left">
-                        <label>Report's title</label>
-                        <input type="text"  value="${internshipData.finalReport.title}">
+                        <label for="reportTitle">Report's title</label>
+                        <input type="text" name="reportTitle" id="reportTitle" value="${internshipData.finalReport.title}">
                     </div>
                 </div>
                 <div class="div-input-third">
                     <div class="input-left">
-                        <label>Description</label>
-                        <textarea form="info-company-form">${internshipData.internship.desciption}"</textarea>
+                        <label for="description">Description</label>
+                        <textarea name="description" id="description" form="info-company-form">${internshipData.internship.desciption}"</textarea>
                     </div>
                     <div class="input-right">
-                        <label>Tutor's comment</label>
-                        <textarea form="info-company-form">${internshipData.comments.supervisorComment}</textarea>
+                        <label for="tutorComments">Tutor's comment</label>
+                        <textarea name="tutorComments" id="tutorComments" form="info-company-form">${internshipData.comments.supervisorComment}</textarea>
                     </div>
                     <div class="input-right">
-                        <label>Student's comments</label>
-                        <textarea form="info-company-form">${internshipData.comments.studentComm}</textarea>
+                        <label for="studentComments">Student's comments</label>
+                        <textarea name="studentComments" id="studentComments" form="info-company-form">${internshipData.comments.studentComm}</textarea>
                     </div>
                 </div>
                 <button type="submit" value="internship" name="updateDetails">Modify</button>
