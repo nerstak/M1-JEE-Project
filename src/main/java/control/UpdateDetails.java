@@ -19,7 +19,6 @@ public class UpdateDetails extends ServletModel{
         super.init();
         InternshipDataServices internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
         StudentDataServices studentDataServices = new StudentDataServices(dbUser, dbPwd, dbUrl);
-        InternshipDataServices internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
 
     }
 
