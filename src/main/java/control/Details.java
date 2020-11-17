@@ -2,18 +2,13 @@ package control;
 
 import model.*;
 import utils.database.InternshipDataServices;
-import utils.database.StudentToSkillsDataServices;
+import utils.database.SkillsDataServices;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static utils.Constants.*;
 
@@ -23,17 +18,15 @@ import static utils.Constants.*;
 @WebServlet(name = "Details")
 public class Details extends ServletModel {
     private InternshipData internshipData;
-    private ResultSet rs;
-    private ArrayList<Skills> listOfSkills;
 
     private InternshipDataServices internshipDataServices;
-    private StudentToSkillsDataServices studentToSkillsDataServices;
+    private SkillsDataServices skillsDataServices;
 
     @Override
     public void init() {
         super.init();
         internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
-        studentToSkillsDataServices = new StudentToSkillsDataServices(dbUser, dbPwd, dbUrl);
+        skillsDataServices = new SkillsDataServices(dbUser, dbPwd, dbUrl);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -46,7 +39,7 @@ public class Details extends ServletModel {
             //Set request attributes
             request.setAttribute("internshipData", internshipData);
             request.setAttribute("listOfStudentSkills",
-                    studentToSkillsDataServices.getStudentSkillsAll(internshipData.getStudent()));
+                    skillsDataServices.getStudentSkillsAll(internshipData.getStudent()));
             request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
         } else if (internshipSubmit.equals("modify")) {
 

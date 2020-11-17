@@ -10,11 +10,36 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static utils.Constants.DB_SELECT_SKILLS;
 import static utils.Constants.DB_SELECT_STUDENTS_SKILLS_ALL;
 
-public class StudentToSkillsDataServices extends DataServices {
-    public StudentToSkillsDataServices(String login, String pwd, String connectionUrl) {
+public class SkillsDataServices extends DataServices {
+    private ArrayList<Skills> listOfSkills;
+
+    public SkillsDataServices(String login, String pwd, String connectionUrl) {
         super(login, pwd, connectionUrl);
+    }
+
+    /**
+     * Get the list of all skills
+     * @return List of skills
+     */
+    private ArrayList<Skills> getListOfSkills() {
+        listOfSkills = new ArrayList<>();
+        rs = selectResultSet(DB_SELECT_SKILLS);
+
+        // Formatting into a regular array
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    Skills skills = new Skills(rs.getString("Skill"), (UUID) rs.getObject("Skill_Id"));
+                    listOfSkills.add(skills);
+                }
+            } catch (Exception e) {
+                Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+        return listOfSkills;
     }
 
     /**
@@ -23,10 +48,10 @@ public class StudentToSkillsDataServices extends DataServices {
      * @return the list of skills for the student
      */
     public ArrayList<Skills> getStudentSkillsAll(Student st) {
-        ArrayList<Skills> listOfSkills = new ArrayList<>();
-
+        listOfSkills = new ArrayList<>();
         rs = selectStudentSkillsAll(st.getStudentId().toString());
 
+        // Formatting into a regular array
         if (rs != null) {
             try {
                 while (rs.next()) {
