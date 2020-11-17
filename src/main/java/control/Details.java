@@ -2,6 +2,7 @@ package control;
 
 import model.*;
 import utils.database.InternshipDataServices;
+import utils.database.StudentToSkillsDataServices;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,53 +27,35 @@ public class Details extends ServletModel {
     private ArrayList<Skills> listOfSkills;
 
     private InternshipDataServices internshipDataServices;
+    private StudentToSkillsDataServices studentToSkillsDataServices;
 
     @Override
     public void init() {
         super.init();
         internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
+        studentToSkillsDataServices = new StudentToSkillsDataServices(dbUser, dbPwd, dbUrl);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Check from which submit button the request come from
         String internshipSubmit = request.getParameter("internshipSubmit");
-        if (internshipSubmit.equals("details")){
+        if (internshipSubmit.equals("details")) {
             String internshipId = request.getParameter("internshipId");
             internshipData = internshipDataServices.getInternshipDetailed(internshipId);
 
             //Set request attributes
             request.setAttribute("internshipData", internshipData);
-            //request.setAttribute("listOfStudentSkills", getListOfStudentSkills(internshipData.getStudent().getStudentId().toString()));
+            request.setAttribute("listOfStudentSkills",
+                    studentToSkillsDataServices.getStudentSkillsAll(internshipData.getStudent()));
             request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
-        }else if (internshipSubmit.equals("modify")){
+        } else if (internshipSubmit.equals("modify")) {
 
-        }else{
+        } else {
             //todo je pense qu'il n'y a plus la liste des internship à renvoyer
             request.getRequestDispatcher(HOME_PAGE).forward(request, response);
         }
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
-
-    // TODO: Will be moved later, don't touch this
-    /**
-     * Get the list of skills of a student
-     * @param studentId, the ID of the student
-     * @return the list of skills for the student
-     */
-    public ArrayList<Skills> getListOfStudentSkills(String studentId){
-        listOfSkills = new ArrayList<>();
-        rs = dataServices.selectStudentSkillsAll(studentId);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    Skills skills = new Skills(rs.getString("skill"), (UUID) rs.getObject("skill_id"));
-                    listOfSkills.add(skills);
-                }
-            } catch (Exception e) {
-                Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, e);
-            }
-        }
-        return listOfSkills;
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 }

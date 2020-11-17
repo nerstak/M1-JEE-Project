@@ -44,15 +44,6 @@ public abstract class DataServices {
     }
 
     /**
-     * Select student's skill
-     * @param studentId ID of the student
-     * @return result set of the query
-     */
-    public ResultSet selectStudentSkillsAll(String studentId) {
-        return getResultSet(studentId, DB_SELECT_STUDENTS_SKILLS_ALL);
-    }
-
-    /**
      * Get ResultSet of a parameterised query
      * @param parameter Parameter (SQL.Types.OTHER, UUID)
      * @param query Query
