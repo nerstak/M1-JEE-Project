@@ -11,6 +11,9 @@ import java.io.IOException;
 import static utils.Constants.HOME_PAGE;
 import static utils.Constants.LOGIN_PAGE;
 
+/**
+ * Logs out an user
+ */
 @WebServlet(name = "Logout")
 public class Logout extends HttpServlet {
     private HttpSession session;
@@ -24,6 +27,13 @@ public class Logout extends HttpServlet {
         processRequest(request,response);
     }
 
+    /**
+     * Process the log out request, no matter what the method is
+     * @param request Request
+     * @param response Response
+     * @throws ServletException ServletException
+     * @throws IOException IOException
+     */
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         session = request.getSession();
         session.removeAttribute("tutor");

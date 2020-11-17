@@ -59,7 +59,6 @@
                 <input type="submit" value="Search">
             </form>
 
-            <%-- todo replace false by ${empty listOfInternship} --%>
             <c:choose>
                 <c:when test="${empty listOfInternship}">
                     <div>
