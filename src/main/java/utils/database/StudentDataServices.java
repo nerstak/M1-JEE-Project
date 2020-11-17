@@ -9,8 +9,11 @@ import java.util.logging.Logger;
 
 import static utils.Constants.DB_UPDATE_STUDENT;
 
-public class StudentData extends DataServices {
-    public StudentData(String login, String pwd, String connectionUrl) {
+/**
+ * Class of interaction with database, for Students
+ */
+public class StudentDataServices extends DataServices {
+    public StudentDataServices(String login, String pwd, String connectionUrl) {
         super(login, pwd, connectionUrl);
     }
 

@@ -9,8 +9,11 @@ import java.util.logging.Logger;
 
 import static utils.Constants.DB_SELECT_SINGLE_TUTOR;
 
-public class TutorData extends DataServices{
-    public TutorData(String login, String pwd, String connectionUrl) {
+/**
+ * Class of interaction with database, for TutorData
+ */
+public class TutorDataServices extends DataServices{
+    public TutorDataServices(String login, String pwd, String connectionUrl) {
         super(login, pwd, connectionUrl);
     }
 
