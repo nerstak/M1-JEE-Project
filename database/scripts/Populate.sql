@@ -4,7 +4,7 @@ VALUES ('Jean', 'Pierre', 'jean.pierre@efrei.net', 'password'),
        ('John', 'Lennon', 'john.lennon@efrei.net', 'password'),
        ('Murphy', 'Cooper', 'murphy.cooper@efrei.net', 'password');
 
-INSERT INTO student (firstname, name, email, "group", linkedin_profile, tutor_id)
+INSERT INTO student (firstname, name, email, student_group, linkedin_profile, tutor_id)
 VALUES ('Andy', 'Warhol', 'andy.warhol@efrei.net', 'A', 'https://www.linkedin.com/in/andy-wahrol-15',
         (SELECT tutor_id FROM tutor WHERE email = 'jean.pierre@efrei.net')),
        ('Ada', 'Lovelace', 'ada.lovelace@efrei.net', 'B', 'https://www.linkedin.com/in/ada-lovelace-1564',
