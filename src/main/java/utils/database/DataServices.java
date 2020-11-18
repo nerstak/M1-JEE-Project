@@ -72,7 +72,7 @@ public abstract class DataServices {
         student.setName(rs.getString("name"));
         student.setFirstName(rs.getString("firstname"));
         student.setEmail(rs.getString("email"));
-        student.setGroup(rs.getString("group"));
+        student.setGroup(rs.getString("student_group"));
         student.setLinkedinProfile(rs.getString("linkedin_profile"));
         return student;
     }

@@ -16,7 +16,7 @@ CREATE TABLE student
     name             varchar,
     firstname        varchar,
     email            varchar,
-    "group"          varchar,
+    student_group    varchar,
     linkedin_profile varchar,
     tutor_id         UUID
 );
