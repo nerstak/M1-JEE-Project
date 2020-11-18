@@ -122,5 +122,6 @@ form input[type="text"]:disabled {
     --color-textmain-lighttheme : rgba(0,0,0, 0.87);
     --color-textmedium-lighttheme : rgba(0,0,0, 0.6);
     --color-textdisable-lighttheme : rgba(0,0,0, 0.3);
-    --color-red : #e61a23;
+    --color-red : #c4242c;
+    --color-green : #61c33c;
 }
