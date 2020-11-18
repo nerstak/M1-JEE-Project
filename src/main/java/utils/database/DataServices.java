@@ -220,4 +220,24 @@ public abstract class DataServices {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Disable auto commits on a list of DataServices
+     * @param dataServices List of DataServices
+     */
+    public static void disableAutoCommits(DataServices... dataServices){
+        for (DataServices dt : dataServices) {
+            dt.disableAutoCommit();
+        }
+    }
+
+    /**
+     * Commit request on a list of DataServices
+     * @param dataServices List of DataServices
+     */
+    public static void commitRequest(DataServices... dataServices){
+        for (DataServices dt : dataServices) {
+            dt.commitRequest();
+        }
+    }
 }

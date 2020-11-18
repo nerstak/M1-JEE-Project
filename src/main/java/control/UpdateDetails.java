@@ -80,12 +80,12 @@ public class UpdateDetails extends ServletModel{
         String mds = request.getParameter("mds");
 
         //Disable the autocommit of the dataservices in case of error
-        disableAutoCommits(internshipDataServices, companyDataServices);
+        DataServices.disableAutoCommits(internshipDataServices, companyDataServices);
         int rowAffectedInternship = internshipDataServices.updateInternshipFromCompanyDetailsPage(internshipId, Date.valueOf(begin), Date.valueOf(end), mds);
         int rowAffectedCompany = companyDataServices.updateCompany(companyId, companyName, companyAddress);
 
         if ((rowAffectedCompany == 1) && (rowAffectedInternship == 1)){ //if all the data has been updates => commit the request
-            commitRequest(internshipDataServices, companyDataServices);
+            DataServices.commitRequest(internshipDataServices, companyDataServices);
             return true;
         }else{ //rollback
             return false;
@@ -129,14 +129,14 @@ public class UpdateDetails extends ServletModel{
         String titleId = request.getParameter("titleId");
         String title = request.getParameter("reportTitle");
 
-        disableAutoCommits(internshipDataServices, finalReportDataServices, commentsDataServices);
+        DataServices.disableAutoCommits(internshipDataServices, finalReportDataServices, commentsDataServices);
 
         int rowAffectedInternship = internshipDataServices.updateInternshipDescription(internshipId, description);
         int rowAffectedFinalReport = finalReportDataServices.updateTitleReport(titleId, title);
         int rowAffectedComments = commentsDataServices.updateComments(commentsId, studentComments, tutorComments);
 
         if (((rowAffectedFinalReport == 1) && (rowAffectedInternship == 1)) && (rowAffectedComments == 1)){
-            commitRequest(internshipDataServices, finalReportDataServices, commentsDataServices);
+            DataServices.commitRequest(internshipDataServices, finalReportDataServices, commentsDataServices);
             return true;
         }else{
             return false;
@@ -167,17 +167,5 @@ public class UpdateDetails extends ServletModel{
         }
         request.setAttribute("internshipData", internshipDataServices.getInternshipDetailed(internshipId));
         request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
-    }
-
-    private void disableAutoCommits(DataServices... dataServices){
-        for (DataServices dt : dataServices) {
-            dt.disableAutoCommit();
-        }
-    }
-
-    private void commitRequest(DataServices... dataServices){
-        for (DataServices dt : dataServices) {
-            dt.commitRequest();
-        }
     }
 }
