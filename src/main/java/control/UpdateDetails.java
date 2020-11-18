@@ -13,8 +13,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.UUID;
 
-import static utils.Constants.ERR_FAILED_UPDATE_DB;
-import static utils.Constants.SUCCESS_BD;
+import static utils.Constants.*;
 
 public class UpdateDetails extends ServletModel{
     private InternshipDataServices internshipDataServices;
@@ -43,6 +42,7 @@ public class UpdateDetails extends ServletModel{
                     request.setAttribute("message", ERR_FAILED_UPDATE_DB);
                 }
                 request.setAttribute("internshipData", internshipDataServices.getInternshipDetailed(internshipId));
+                request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
                 break;
             case "internship":
                 updateInternship(request);
