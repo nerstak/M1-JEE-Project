@@ -7,29 +7,22 @@
     flex: 1 1 auto; /*Take all remaining space*/
     padding: 64px 10%;
 
-    /*Grid display*/
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    gap: 32px 15%;
-    grid-template-areas:
-            "info-company info-students"
-            "info-internship info-internship"
-            "info-skills info-keywords";
+
 }
 
-.info-company { grid-area: info-company; }
-.info-students { grid-area: info-students; }
-.info-internship { grid-area: info-internship; }
-.info-skills { grid-area: info-skills; }
-.info-keywords { grid-area: info-keywords; }
+.wrapper-flex{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 64px;
+    margin-bottom: 64px;
+}
 
-.main-info > div{
+.wrapper-flex > div{
+    flex: 1;
     padding: 32px;
-    /*border: 2px solid var(--color-main);*/
     border-radius: 32px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-
 }
 
 
