@@ -13,6 +13,10 @@ public class Constants {
     /* Errors */
     public static final String ERR_INV_CRED_MESS = "Invalid credentials!";
     public static final String ERR_MISSING_FIELD = "At least one field is missing";
+    public static final String ERR_FAILED_UPDATE_DB = "The database could not be updated";
+
+    /*Information*/
+    public static final String SUCCESS_BD = "The database has been updated";
 
     /* Database interactions */
     /* SELECT */
@@ -29,10 +33,13 @@ public class Constants {
     public static final String DB_SELECT_STUDENTS_SKILLS_ALL = "SELECT STS.skill_id as skill_id, skills.skill as skill FROM  student_to_skills as STS inner join skills on skills.skill_id = STS.skill_id where STS.student_id =  ?";
 
     /* UPDATE */
-    public static final String DB_UPDATE_COMMENTS = "UPDATE comments SET supervisor_comm = ?, student_comm = ? WHERE internship_id = ?";
+    public static final String DB_UPDATE_COMMENTS = "UPDATE comments SET supervisor_comm = ?, student_comm = ? WHERE comments_id = ?";
     public static final String DB_UPDATE_COMPANY = "UPDATE company SET name = ?, address = ? WHERE company_id = ?";
     public static final String DB_UPDATE_FINAL_REPORT = "UPDATE final_report SET title = ?, report = ? WHERE internship_id = ?";
     public static final String DB_UPDATE_MARKS = "UPDATE marks SET tech = ?, communication = ? WHERE internship_id = ?";
     public static final String DB_UPDATE_STUDENT = "UPDATE student SET name = ?, firstname = ?, email = ?, linkedin_profile = ?, student_group = ? WHERE student_id = ?";
     public static final String DB_UPDATE_VISIT = "UPDATE visit SET done = ?, planned = ?, visit_report = ? WHERE internship_id = ?";
+    public static final String DB_UPDATE_INTERNSHIP_DETAILS_COMPANY = "UPDATE internship SET beginning = ?, ending = ?, intern_supervisor = ? WHERE internship_id = ?";
+    public static final String DB_UPDATE_INTERNSHIP_DESCRIPTION = "UPDATE internship SET description = ? WHERE internship_id = ?";
+    public static final String DB_UPDATE_REPORT_TITLE = "UPDATE final_report SET title = ? WHERE final_report_id = ?";
 }

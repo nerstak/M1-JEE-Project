@@ -87,6 +87,24 @@
     margin-right: 0;
 }
 
+button[type="submit"]{
+    padding: 8px;
+    border : 2px solid var(--color-main);
+    background: transparent;
+    border-radius: 8px;
+    height: 40px;
+    width: 128px;
+    font-size: 20px;
+    line-height: 16px;
+
+}
+
+button[type="submit"]:hover{
+    cursor: pointer;
+    background: var(--color-main);
+    color: white;
+}
+
 /*3 input on the same line */
 .div-input-third{
     display: flex;
@@ -105,16 +123,12 @@
     height: 152px;
     padding: 8px;
     border: 2px var(--color-textdisable-lighttheme) solid;
-
 }
 
 .div-input-third > div textarea:focus{
     outline: none;
     border: 2px var(--color-main) solid;
-
 }
-
-
 
 /*List data*/
 .list-data {
@@ -130,6 +144,31 @@
     margin-bottom: 8px;
     color: white;
     border-radius: 8px;
+}
+
+.details_message_error, .details_message_success
+{
+    margin-top: 20px;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.details_message_success{
+    fill: var(--color-green);
+    /*color: var(--color-green);*/
+}
+
+.details_message_error{
+    fill: var(--color-red);
+    /*color: var(--color-red);*/
+}
+
+.details_message_success svg, .details_message_error svg{
+    height: 50px;
+    width: 50px;
+    margin-right: 16px;
 }
 
 @media (min-width: 0px) and (max-width: 480px) {

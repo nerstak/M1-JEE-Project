@@ -23,6 +23,11 @@
         <servlet-class>control.Details</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>UpdateDetails</servlet-name>
+        <servlet-class>control.UpdateDetails</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -44,7 +49,10 @@
         <url-pattern>/Details</url-pattern>
     </servlet-mapping>
 
-
+    <servlet-mapping>
+        <servlet-name>UpdateDetails</servlet-name>
+        <url-pattern>/UpdateDetails</url-pattern>
+    </servlet-mapping>
 
     <!-- Define taglib -->
     <jsp-config>

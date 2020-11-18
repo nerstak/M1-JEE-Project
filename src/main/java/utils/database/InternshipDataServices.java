@@ -3,6 +3,7 @@ package utils.database;
 import model.InternshipData;
 import model.Tutor;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -10,8 +11,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static utils.Constants.DB_SELECT_INTERNSHIPS;
-import static utils.Constants.DB_SELECT_INTERNSHIP_DETAILED;
+import static utils.Constants.*;
 
 /**
  * Class of interaction with database, for InternshipData
@@ -115,5 +115,42 @@ public class InternshipDataServices extends DataServices {
      */
     public ResultSet selectInternshipDetailed(String internshipId) {
         return getResultSet(internshipId, DB_SELECT_INTERNSHIP_DETAILED);
+    }
+
+
+    /**
+     * Update partially the internship
+     * @param internshipId, the ID of the internship
+     * @param begin, begin date of internship
+     * @param end, end date of internship
+     * @param mds, intern supervisor
+     * @return number of rows affected
+     */
+    public int updateInternshipFromCompanyDetailsPage(String internshipId, Date begin, Date end, String mds ) {
+        try {
+            ps = con.prepareStatement(DB_UPDATE_INTERNSHIP_DETAILS_COMPANY);
+            ps.setDate(1, begin);
+            ps.setDate(2, end);
+            ps.setString(3, mds);
+            ps.setObject(4, internshipId, Types.OTHER);
+
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return 0;
+    }
+
+    public int updateInternshipDescription(String internshipId, String description ) {
+        try {
+            ps = con.prepareStatement(DB_UPDATE_INTERNSHIP_DESCRIPTION);
+            ps.setString(1, description);
+            ps.setObject(2, internshipId, Types.OTHER);
+
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return 0;
     }
 }
