@@ -12,6 +12,12 @@ public class FinalReportDataServices extends DataServices {
         super(login, pwd, connectionUrl);
     }
 
+    /**
+     * Update the title of the report
+     * @param titleId, the title's ID
+     * @param titleReport, the title
+     * @return number of rows affected
+     */
     public int updateTitleReport(String titleId, String titleReport ) {
         try {
             ps = con.prepareStatement(DB_UPDATE_REPORT_TITLE);

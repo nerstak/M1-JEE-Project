@@ -1,7 +1,6 @@
 package control;
 
 
-import model.InternshipData;
 import model.Student;
 import utils.database.*;
 

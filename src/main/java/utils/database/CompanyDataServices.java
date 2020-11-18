@@ -13,6 +13,13 @@ public class CompanyDataServices extends DataServices{
         super(login, pwd, connectionUrl);
     }
 
+    /**
+     * Update the company
+     * @param companyId, the company Id
+     * @param name, the name of the company
+     * @param address, the address of the company
+     * @return the number of rows affected
+     */
     public int updateCompany(String companyId, String name, String address){
         try {
             // Database interaction

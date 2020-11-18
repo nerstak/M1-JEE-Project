@@ -176,7 +176,7 @@ public abstract class DataServices {
     }
 
     /**
-     * Active l'autocommit des requêtes
+     * Enable autocommit
      */
     public void enableAutoCommit(){
         try {
@@ -188,7 +188,7 @@ public abstract class DataServices {
 
 
     /**
-     * Desactive l'autocommit des requêtes
+     * Disable auto commit
      */
     public void disableAutoCommit(){
         try {
@@ -200,7 +200,7 @@ public abstract class DataServices {
 
 
     /**
-     * Commit les requêtes
+     * Commit request
      */
     public void commitRequest(){
         try {
@@ -211,7 +211,7 @@ public abstract class DataServices {
     }
 
     /**
-     * Rollback les requêtes
+     * Rollback request
      */
     public void rollbackRequest(){
         try {

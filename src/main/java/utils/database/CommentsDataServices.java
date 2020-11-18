@@ -12,6 +12,13 @@ public class CommentsDataServices extends DataServices {
         super(login, pwd, connectionUrl);
     }
 
+    /**
+     * update the comments table
+     * @param commentsId, the id of the comment
+     * @param commentStudent, the student's comment
+     * @param commentsSupervisor, the tutor's comment
+     * @return the number of row affected
+     */
     public int updateComments(String commentsId, String commentStudent, String commentsSupervisor) {
         try {
             ps = con.prepareStatement(DB_UPDATE_COMMENTS);
