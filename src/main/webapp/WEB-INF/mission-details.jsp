@@ -162,8 +162,8 @@
                         <div class="input-left">
                             <label>Skills</label>
                             <input type="text">
+                            <button type="submit" value="skills" name="updateDetails">Add</button>
                         </div>
-                        <button type="submit" value="skills" name="updateDetails">Add</button>
                     </div>
                 </form>
                 <div class="list-data">
@@ -187,8 +187,8 @@
                         <div class="input-left">
                             <label>Keywords</label>
                             <input type="text">
+                            <button type="submit" value="keywords" name="updateDetails">Add</button>
                         </div>
-                        <button type="submit" value="keywords" name="updateDetails">Keywords</button>
                     </div>
                 </form>
                 <div class="list-data">
