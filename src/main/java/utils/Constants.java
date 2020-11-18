@@ -33,7 +33,7 @@ public class Constants {
     public static final String DB_SELECT_STUDENTS_SKILLS_ALL = "SELECT STS.skill_id as skill_id, skills.skill as skill FROM  student_to_skills as STS inner join skills on skills.skill_id = STS.skill_id where STS.student_id =  ?";
 
     /* UPDATE */
-    public static final String DB_UPDATE_COMMENTS = "UPDATE comments SET supervisor_comm = ?, student_comm = ? WHERE internship_id = ?";
+    public static final String DB_UPDATE_COMMENTS = "UPDATE comments SET supervisor_comm = ?, student_comm = ? WHERE comments_id = ?";
     public static final String DB_UPDATE_COMPANY = "UPDATE company SET name = ?, address = ? WHERE company_id = ?";
     public static final String DB_UPDATE_FINAL_REPORT = "UPDATE final_report SET title = ?, report = ? WHERE internship_id = ?";
     public static final String DB_UPDATE_MARKS = "UPDATE marks SET tech = ?, communication = ? WHERE internship_id = ?";

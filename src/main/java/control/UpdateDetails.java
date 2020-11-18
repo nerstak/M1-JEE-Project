@@ -3,10 +3,7 @@ package control;
 
 import model.InternshipData;
 import model.Student;
-import utils.database.CompanyDataServices;
-import utils.database.FinalReportDataServices;
-import utils.database.InternshipDataServices;
-import utils.database.StudentDataServices;
+import utils.database.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +19,7 @@ public class UpdateDetails extends ServletModel{
     private StudentDataServices studentDataServices;
     private CompanyDataServices companyDataServices;
     private FinalReportDataServices finalReportDataServices;
+    private CommentsDataServices commentsDataServices;
     private boolean successRequest;
 
     @Override
@@ -31,6 +29,7 @@ public class UpdateDetails extends ServletModel{
         studentDataServices = new StudentDataServices(dbUser, dbPwd, dbUrl);
         finalReportDataServices = new FinalReportDataServices(dbUser, dbPwd, dbUrl);
         companyDataServices = new CompanyDataServices(dbUser, dbPwd, dbUrl);
+        commentsDataServices = new CommentsDataServices(dbUser, dbPwd, dbUrl);
 
     }
 
@@ -61,7 +60,14 @@ public class UpdateDetails extends ServletModel{
                 request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
                 break;
             case "internship":
-                updateInternship(request);
+                successRequest = updateInternship(request);
+                if (successRequest){
+                    request.setAttribute("message", SUCCESS_BD);
+                }else{
+                    request.setAttribute("message", ERR_FAILED_UPDATE_DB);
+                }
+                request.setAttribute("internshipData", internshipDataServices.getInternshipDetailed(internshipId));
+                request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
                 break;
             case "keywords":
 //                TODO to be done
@@ -123,7 +129,7 @@ public class UpdateDetails extends ServletModel{
         return (studentDataServices.updateStudent(student) == 1);
     }
 
-    private void updateInternship(HttpServletRequest request){
+    private boolean updateInternship(HttpServletRequest request){
         String description = request.getParameter("description");
         String tutorComments = request.getParameter("tutorComments");
         String studentComments = request.getParameter("studentComments");
@@ -132,12 +138,23 @@ public class UpdateDetails extends ServletModel{
         String titleId = request.getParameter("titleId");
         String title = request.getParameter("reportTitle");
 
-        internshipDataServices.updateInternshipDescription(internshipId, description);
+        internshipDataServices.disableAutoCommit();
+        commentsDataServices.disableAutoCommit();
+        finalReportDataServices.disableAutoCommit();
+        int rowAffectedInternship = internshipDataServices.updateInternshipDescription(internshipId, description);
 
-        finalReportDataServices.updateTitleReport(titleId, title);
+        int rowAffectedFinalReport = finalReportDataServices.updateTitleReport(titleId, title);
 
+        int rowAffectedComments = commentsDataServices.updateComments(commentsId, studentComments, tutorComments);
 
-
+        if (((rowAffectedFinalReport == 1) && (rowAffectedInternship == 1)) && (rowAffectedComments == 1)){
+            internshipDataServices.commitRequest();
+            finalReportDataServices.commitRequest();
+            commentsDataServices.commitRequest();
+            return true;
+        }else{
+            return false;
+        }
 
     }
 

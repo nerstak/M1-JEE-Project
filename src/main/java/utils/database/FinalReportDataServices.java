@@ -5,7 +5,7 @@ import java.sql.Types;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static utils.Constants.DB_UPDATE_INTERNSHIP_DESCRIPTION;
+import static utils.Constants.DB_UPDATE_REPORT_TITLE;
 
 public class FinalReportDataServices extends DataServices {
     public FinalReportDataServices(String login, String pwd, String connectionUrl) {
@@ -14,7 +14,7 @@ public class FinalReportDataServices extends DataServices {
 
     public int updateTitleReport(String titleId, String titleReport ) {
         try {
-            ps = con.prepareStatement(DB_UPDATE_INTERNSHIP_DESCRIPTION);
+            ps = con.prepareStatement(DB_UPDATE_REPORT_TITLE);
             ps.setString(1, titleReport);
             ps.setObject(2, titleId, Types.OTHER);
 
