@@ -174,4 +174,50 @@ public abstract class DataServices {
 
         return finalReport;
     }
+
+    /**
+     * Active l'autocommit des requêtes
+     */
+    public void enableAutoCommit(){
+        try {
+            con.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Desactive l'autocommit des requêtes
+     */
+    public void disableAutoCommit(){
+        try {
+            con.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Commit les requêtes
+     */
+    public void commitRequest(){
+        try {
+            con.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Rollback les requêtes
+     */
+    public void rollbackRequest(){
+        try {
+            con.rollback();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -84,11 +84,14 @@ public class UpdateDetails extends ServletModel{
 
         //Do the request
 
+        internshipDataServices.disableAutoCommit();
+        companyDataServices.disableAutoCommit();
         int rowAffectedInternship = internshipDataServices.updateInternshipDetailsPage(internshipId, Date.valueOf(begin), Date.valueOf(end), mds);
-
         int rowAffectedCompany = companyDataServices.updateCompany(companyId, companyName, companyAddress);
 
         if ((rowAffectedCompany == 1) && (rowAffectedInternship == 1)){
+            internshipDataServices.commitRequest();
+            companyDataServices.commitRequest();
             return true;
         }else{
             return false;
