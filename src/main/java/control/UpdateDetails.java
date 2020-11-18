@@ -42,6 +42,13 @@ public class UpdateDetails extends ServletModel{
         switch (detailsSubmitButton){
             case "company":
                 successRequest = updateCompany(request);
+                if (successRequest){
+                    request.setAttribute("message", SUCCESS_BD);
+                }else{
+                    request.setAttribute("message", ERR_FAILED_UPDATE_DB);
+                }
+                request.setAttribute("internshipData", internshipDataServices.getInternshipDetailed(internshipId));
+                request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
                 break;
             case "student":
                 successRequest = updateStudent(request);
