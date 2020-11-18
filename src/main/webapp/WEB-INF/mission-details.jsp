@@ -34,11 +34,10 @@
     create arraylist woth internshipData + name du boutton
     add it to button value
 --%>
-
+    <c:if test="${not empty message}">
+        <h1>${message}</h1>
+    </c:if>
     <main class="main-info">
-        <c:if test="${not empty message}">
-            <h1>${message}</h1>
-        </c:if>
         <jsp:useBean id="internshipData" class="model.InternshipData" scope="request"/>
         <div class="info-company">
             <h2>Company</h2>

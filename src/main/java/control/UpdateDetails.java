@@ -30,44 +30,23 @@ public class UpdateDetails extends ServletModel{
         finalReportDataServices = new FinalReportDataServices(dbUser, dbPwd, dbUrl);
         companyDataServices = new CompanyDataServices(dbUser, dbPwd, dbUrl);
         commentsDataServices = new CommentsDataServices(dbUser, dbPwd, dbUrl);
-
     }
 
     //TODO validation des données reçues des formulaires
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Get the name of the button that call the servlet
         String detailsSubmitButton = request.getParameter("updateDetails");
         String internshipId = request.getParameter("internshipId");
         switch (detailsSubmitButton){
             case "company":
                 successRequest = updateCompany(request);
-                if (successRequest){
-                    request.setAttribute("message", SUCCESS_BD);
-                }else{
-                    request.setAttribute("message", ERR_FAILED_UPDATE_DB);
-                }
-                request.setAttribute("internshipData", internshipDataServices.getInternshipDetailed(internshipId));
-                request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
                 break;
             case "student":
                 successRequest = updateStudent(request);
-                if (successRequest){
-                    request.setAttribute("message", SUCCESS_BD);
-                }else{
-                    request.setAttribute("message", ERR_FAILED_UPDATE_DB);
-                }
-                request.setAttribute("internshipData", internshipDataServices.getInternshipDetailed(internshipId));
-                request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
                 break;
             case "internship":
                 successRequest = updateInternship(request);
-                if (successRequest){
-                    request.setAttribute("message", SUCCESS_BD);
-                }else{
-                    request.setAttribute("message", ERR_FAILED_UPDATE_DB);
-                }
-                request.setAttribute("internshipData", internshipDataServices.getInternshipDetailed(internshipId));
-                request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
                 break;
             case "keywords":
 //                TODO to be done
@@ -78,39 +57,47 @@ public class UpdateDetails extends ServletModel{
             default:
                 break;
         }
+        redirectToDetailsPage(request, response, internshipId);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 
-
+    /**
+     * Get the information from the form and update the company and internship tables
+     * @param request, servlet request
+     * @return true if the database has been updated
+     */
     private boolean updateCompany(HttpServletRequest request){
         //Get data from form
+            //Company
         String companyName = request.getParameter("companyName");
         String companyId = request.getParameter("companyId");
         String companyAddress = request.getParameter("companyAddress");
-
+            //Internship
         String internshipId = request.getParameter("internshipId");
         String begin = request.getParameter("begin");
         String end = request.getParameter("end");
         String mds = request.getParameter("mds");
 
-        //Do the request
-
-        internshipDataServices.disableAutoCommit();
-        companyDataServices.disableAutoCommit();
+        //Disable the autocommit of the dataservices in case of error
+        disableAutoCommits(internshipDataServices, companyDataServices);
         int rowAffectedInternship = internshipDataServices.updateInternshipFromCompanyDetailsPage(internshipId, Date.valueOf(begin), Date.valueOf(end), mds);
         int rowAffectedCompany = companyDataServices.updateCompany(companyId, companyName, companyAddress);
 
-        if ((rowAffectedCompany == 1) && (rowAffectedInternship == 1)){
-            internshipDataServices.commitRequest();
-            companyDataServices.commitRequest();
+        if ((rowAffectedCompany == 1) && (rowAffectedInternship == 1)){ //if all the data has been updates => commit the request
+            commitRequest(internshipDataServices, companyDataServices);
             return true;
-        }else{
+        }else{ //rollback
             return false;
         }
     }
 
+    /**
+     * Get the information from the form and update the student table
+     * @param request, servlet request
+     * @return true if the database has been updated
+     */
     private boolean updateStudent(HttpServletRequest request){
         UUID studentId = UUID.fromString(request.getParameter("studentId"));
         String group = request.getParameter("group");
@@ -129,6 +116,11 @@ public class UpdateDetails extends ServletModel{
         return (studentDataServices.updateStudent(student) == 1);
     }
 
+    /**
+     * Get the information from the form and update the student, comments and internship table
+     * @param request, servlet request
+     * @return true if the database has been updated
+     */
     private boolean updateInternship(HttpServletRequest request){
         String description = request.getParameter("description");
         String tutorComments = request.getParameter("tutorComments");
@@ -138,24 +130,18 @@ public class UpdateDetails extends ServletModel{
         String titleId = request.getParameter("titleId");
         String title = request.getParameter("reportTitle");
 
-        internshipDataServices.disableAutoCommit();
-        commentsDataServices.disableAutoCommit();
-        finalReportDataServices.disableAutoCommit();
+        disableAutoCommits(internshipDataServices, finalReportDataServices, commentsDataServices);
+
         int rowAffectedInternship = internshipDataServices.updateInternshipDescription(internshipId, description);
-
         int rowAffectedFinalReport = finalReportDataServices.updateTitleReport(titleId, title);
-
         int rowAffectedComments = commentsDataServices.updateComments(commentsId, studentComments, tutorComments);
 
         if (((rowAffectedFinalReport == 1) && (rowAffectedInternship == 1)) && (rowAffectedComments == 1)){
-            internshipDataServices.commitRequest();
-            finalReportDataServices.commitRequest();
-            commentsDataServices.commitRequest();
+            commitRequest(internshipDataServices, finalReportDataServices, commentsDataServices);
             return true;
         }else{
             return false;
         }
-
     }
 
     private void updateSkills(HttpServletRequest request){
@@ -166,7 +152,33 @@ public class UpdateDetails extends ServletModel{
 
     }
 
-    private InternshipData getInternshipDataDetails(String internshipId){
-        return internshipDataServices.getInternshipDetailed(internshipId);
+    /**
+     * Redirect to details jsp
+     * @param request, the request
+     * @param response, response
+     * @param internshipId, the ID of the concerned internship
+     * @throws ServletException
+     * @throws IOException
+     */
+    private void redirectToDetailsPage(HttpServletRequest request, HttpServletResponse response, String internshipId) throws ServletException, IOException {
+        if (successRequest){
+            request.setAttribute("message", SUCCESS_BD);
+        }else{
+            request.setAttribute("message", ERR_FAILED_UPDATE_DB);
+        }
+        request.setAttribute("internshipData", internshipDataServices.getInternshipDetailed(internshipId));
+        request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
+    }
+
+    private void disableAutoCommits(DataServices... dataServices){
+        for (DataServices dt : dataServices) {
+            dt.disableAutoCommit();
+        }
+    }
+
+    private void commitRequest(DataServices... dataServices){
+        for (DataServices dt : dataServices) {
+            dt.commitRequest();
+        }
     }
 }
