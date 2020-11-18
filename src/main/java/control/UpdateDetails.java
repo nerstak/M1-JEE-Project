@@ -1,6 +1,7 @@
 package control;
 
 
+import model.InternshipData;
 import model.Student;
 import utils.database.InternshipDataServices;
 import utils.database.StudentDataServices;
@@ -10,26 +11,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.UUID;
+
+import static utils.Constants.ERR_FAILED_UPDATE_DB;
+import static utils.Constants.SUCCESS_BD;
 
 public class UpdateDetails extends ServletModel{
-
+    private InternshipDataServices internshipDataServices;
+    private StudentDataServices studentDataServices;
 
     @Override
     public void init() {
         super.init();
-        InternshipDataServices internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
-        StudentDataServices studentDataServices = new StudentDataServices(dbUser, dbPwd, dbUrl);
+        internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
+        studentDataServices = new StudentDataServices(dbUser, dbPwd, dbUrl);
 
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String detailsSubmitButton = request.getParameter("updateDetails");
+        String internshipId = request.getParameter("internshipId");
         switch (detailsSubmitButton){
             case "company":
                 updateCompany(request);
                 break;
             case "student":
-                updateStudent(request);
+                boolean success = updateStudent(request);
+                if (success){
+                    request.setAttribute("message", SUCCESS_BD);
+                }else{
+                    request.setAttribute("message", ERR_FAILED_UPDATE_DB);
+                }
+                request.setAttribute("internshipData", internshipDataServices.getInternshipDetailed(internshipId));
                 break;
             case "internship":
                 updateInternship(request);
@@ -58,12 +71,22 @@ public class UpdateDetails extends ServletModel{
 
     }
 
-    private void updateStudent(HttpServletRequest request){
-        String studentId = request.getParameter("studentId");
+    private boolean updateStudent(HttpServletRequest request){
+        UUID studentId = UUID.fromString(request.getParameter("studentId"));
         String group = request.getParameter("group");
         String firstName =  request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String linkedin = request.getParameter("linkedin");
+        String email = request.getParameter("email");
+        Student student = new Student();
+        student.setStudentId(studentId);
+        student.setGroup(group);
+        student.setLinkedinProfile(linkedin);
+        student.setFirstName(firstName);
+        student.setName(lastName);
+        student.setEmail(email);
+
+        return (studentDataServices.updateStudent(student) == 1);
     }
 
     private void updateInternship(HttpServletRequest request){
@@ -81,4 +104,7 @@ public class UpdateDetails extends ServletModel{
 
     }
 
+    private InternshipData getInternshipDataDetails(String internshipId){
+        return internshipDataServices.getInternshipDetailed(internshipId);
+    }
 }

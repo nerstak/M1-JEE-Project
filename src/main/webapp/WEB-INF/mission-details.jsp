@@ -92,9 +92,19 @@
                     </div>
                 </div>
                 <div class="div-input-full">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" value="${internshipData.student.email}">
+                </div>
+                <div class="div-input-full">
                     <label for="linkedin">Linkedin Profile</label>
                     <input type="text" id="linkedin" name="linkedin" value="${internshipData.student.linkedinProfile}">
                 </div>
+                <div>
+                    <input type="hidden" name="internshipId" value="${internshipData.internship.internship}">
+                </div>
+                <c:if test="${not empty message}">
+                    <p>${message}</p>
+                </c:if>
                 <button type="submit" value="student" name="updateDetails">Modify</button>
             </form>
         </div>
