@@ -1,7 +1,6 @@
 package utils.database;
 
 import model.InternshipData;
-import model.Student;
 import model.Tutor;
 
 import java.sql.Date;
@@ -9,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -128,13 +126,26 @@ public class InternshipDataServices extends DataServices {
      * @param mds, intern supervisor
      * @return number of rows affected
      */
-    public int updateInternshipDetailsPage(String internshipId, Date begin, Date end, String mds ) {
+    public int updateInternshipFromCompanyDetailsPage(String internshipId, Date begin, Date end, String mds ) {
         try {
-            ps = con.prepareStatement(DB_UPDATE_INTERNSHIP_DETAILS);
+            ps = con.prepareStatement(DB_UPDATE_INTERNSHIP_DETAILS_COMPANY);
             ps.setDate(1, begin);
             ps.setDate(2, end);
             ps.setString(3, mds);
             ps.setObject(4, internshipId, Types.OTHER);
+
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return 0;
+    }
+
+    public int updateInternshipDescription(String internshipId, String description ) {
+        try {
+            ps = con.prepareStatement(DB_UPDATE_INTERNSHIP_DESCRIPTION);
+            ps.setString(1, description);
+            ps.setObject(2, internshipId, Types.OTHER);
 
             return ps.executeUpdate();
         } catch (SQLException e) {

@@ -1,12 +1,10 @@
 package control;
 
 
-import model.Company;
-import model.Internship;
 import model.InternshipData;
 import model.Student;
-import utils.DateParser;
 import utils.database.CompanyDataServices;
+import utils.database.FinalReportDataServices;
 import utils.database.InternshipDataServices;
 import utils.database.StudentDataServices;
 
@@ -23,6 +21,7 @@ public class UpdateDetails extends ServletModel{
     private InternshipDataServices internshipDataServices;
     private StudentDataServices studentDataServices;
     private CompanyDataServices companyDataServices;
+    private FinalReportDataServices finalReportDataServices;
     private boolean successRequest;
 
     @Override
@@ -30,6 +29,7 @@ public class UpdateDetails extends ServletModel{
         super.init();
         internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
         studentDataServices = new StudentDataServices(dbUser, dbPwd, dbUrl);
+        finalReportDataServices = new FinalReportDataServices(dbUser, dbPwd, dbUrl);
         companyDataServices = new CompanyDataServices(dbUser, dbPwd, dbUrl);
 
     }
@@ -93,7 +93,7 @@ public class UpdateDetails extends ServletModel{
 
         internshipDataServices.disableAutoCommit();
         companyDataServices.disableAutoCommit();
-        int rowAffectedInternship = internshipDataServices.updateInternshipDetailsPage(internshipId, Date.valueOf(begin), Date.valueOf(end), mds);
+        int rowAffectedInternship = internshipDataServices.updateInternshipFromCompanyDetailsPage(internshipId, Date.valueOf(begin), Date.valueOf(end), mds);
         int rowAffectedCompany = companyDataServices.updateCompany(companyId, companyName, companyAddress);
 
         if ((rowAffectedCompany == 1) && (rowAffectedInternship == 1)){
@@ -127,6 +127,17 @@ public class UpdateDetails extends ServletModel{
         String description = request.getParameter("description");
         String tutorComments = request.getParameter("tutorComments");
         String studentComments = request.getParameter("studentComments");
+        String commentsId = request.getParameter("commentsId");
+        String internshipId = request.getParameter("internshipId");
+        String titleId = request.getParameter("titleId");
+        String title = request.getParameter("reportTitle");
+
+        internshipDataServices.updateInternshipDescription(internshipId, description);
+
+        finalReportDataServices.updateTitleReport(titleId, title);
+
+
+
 
     }
 

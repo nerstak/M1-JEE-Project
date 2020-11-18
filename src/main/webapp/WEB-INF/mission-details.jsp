@@ -132,6 +132,10 @@
                         <textarea name="studentComments" id="studentComments" form="info-company-form">${internshipData.comments.studentComm}</textarea>
                     </div>
                 </div>
+                <input type="hidden" name="internshipId" value="${internshipData.internship.internship}">
+                <input type="hidden" name="titleId" value="${internshipData.finalReport.finalReportId}">
+                <input type="hidden" name="commentsId" value="${internshipData.comments.commentsId}">
+
                 <button type="submit" value="internship" name="updateDetails">Modify</button>
             </form>
         </div>
