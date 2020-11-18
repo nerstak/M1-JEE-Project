@@ -6,6 +6,7 @@ import model.Internship;
 import model.InternshipData;
 import model.Student;
 import utils.DateParser;
+import utils.database.CompanyDataServices;
 import utils.database.InternshipDataServices;
 import utils.database.StudentDataServices;
 
@@ -21,6 +22,7 @@ import static utils.Constants.*;
 public class UpdateDetails extends ServletModel{
     private InternshipDataServices internshipDataServices;
     private StudentDataServices studentDataServices;
+    private CompanyDataServices companyDataServices;
     private boolean successRequest;
 
     @Override
@@ -28,6 +30,7 @@ public class UpdateDetails extends ServletModel{
         super.init();
         internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
         studentDataServices = new StudentDataServices(dbUser, dbPwd, dbUrl);
+        companyDataServices = new CompanyDataServices(dbUser, dbPwd, dbUrl);
 
     }
 
@@ -69,23 +72,27 @@ public class UpdateDetails extends ServletModel{
 
 
     private boolean updateCompany(HttpServletRequest request){
+        //Get data from form
         String companyName = request.getParameter("companyName");
         String companyId = request.getParameter("companyId");
         String companyAddress = request.getParameter("companyAddress");
-        Company company = new Company();
-        company.setCompanyId(UUID.fromString(companyId));
-        company.setAddress(companyAddress);
-        company.setName(companyName);
-
 
         String internshipId = request.getParameter("internshipId");
         String begin = request.getParameter("begin");
         String end = request.getParameter("end");
         String mds = request.getParameter("mds");
 
-        internshipDataServices.updateInternshipDetailsPage(internshipId, Date.valueOf(begin), Date.valueOf(end), mds);
+        //Do the request
 
-        return false;
+        int rowAffectedInternship = internshipDataServices.updateInternshipDetailsPage(internshipId, Date.valueOf(begin), Date.valueOf(end), mds);
+
+        int rowAffectedCompany = companyDataServices.updateCompany(companyId, companyName, companyAddress);
+
+        if ((rowAffectedCompany == 1) && (rowAffectedInternship == 1)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     private boolean updateStudent(HttpServletRequest request){

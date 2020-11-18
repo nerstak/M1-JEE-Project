@@ -1,6 +1,7 @@
 package utils.database;
 
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,23 +13,18 @@ public class CompanyDataServices extends DataServices{
         super(login, pwd, connectionUrl);
     }
 
-    public boolean updateCompany(UUID companyId, String name, String address){
+    public int updateCompany(String companyId, String name, String address){
         try {
             // Database interaction
             ps = con.prepareStatement(DB_UPDATE_COMPANY);
             ps.setString(1, name);
             ps.setString(2, address);
-            ps.setObject(3, companyId);
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected == 1){
-                return true;
-            }else{
-                return false;
-            }
+            ps.setObject(3, companyId, Types.OTHER);
+            return ps.executeUpdate();
         } catch (SQLException e) {
             Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);
-            return false;
         }
+        return 0;
     }
 
 
