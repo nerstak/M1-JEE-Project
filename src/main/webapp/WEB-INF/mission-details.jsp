@@ -36,6 +36,9 @@
 --%>
 
     <main class="main-info">
+        <c:if test="${not empty message}">
+            <h1>${message}</h1>
+        </c:if>
         <jsp:useBean id="internshipData" class="model.InternshipData" scope="request"/>
         <div class="info-company">
             <h2>Company</h2>
@@ -64,6 +67,8 @@
                     <label for="companyAddress">Address</label>
                     <input type="text" id="companyAddress" name="companyAddress" value="${internshipData.company.address}" >
                 </div>
+                <input type="hidden" name="internshipId" value="${internshipData.internship.internship}">
+                <input type="hidden" name="companyId" value="${internshipData.company.companyId}">
                 <button type="submit" value="company" name="updateDetails">Modify</button>
             </form>
         </div>
@@ -99,12 +104,7 @@
                     <label for="linkedin">Linkedin Profile</label>
                     <input type="text" id="linkedin" name="linkedin" value="${internshipData.student.linkedinProfile}">
                 </div>
-                <div>
-                    <input type="hidden" name="internshipId" value="${internshipData.internship.internship}">
-                </div>
-                <c:if test="${not empty message}">
-                    <p>${message}</p>
-                </c:if>
+                <input type="hidden" name="internshipId" value="${internshipData.internship.internship}">
                 <button type="submit" value="student" name="updateDetails">Modify</button>
             </form>
         </div>

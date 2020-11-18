@@ -1,8 +1,11 @@
 package control;
 
 
+import model.Company;
+import model.Internship;
 import model.InternshipData;
 import model.Student;
+import utils.DateParser;
 import utils.database.InternshipDataServices;
 import utils.database.StudentDataServices;
 
@@ -10,7 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
+import java.sql.Date;
 import java.util.UUID;
 
 import static utils.Constants.*;
@@ -18,6 +21,7 @@ import static utils.Constants.*;
 public class UpdateDetails extends ServletModel{
     private InternshipDataServices internshipDataServices;
     private StudentDataServices studentDataServices;
+    private boolean successRequest;
 
     @Override
     public void init() {
@@ -27,16 +31,18 @@ public class UpdateDetails extends ServletModel{
 
     }
 
+    //TODO validation des données reçues des formulaires
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String detailsSubmitButton = request.getParameter("updateDetails");
         String internshipId = request.getParameter("internshipId");
         switch (detailsSubmitButton){
             case "company":
-                updateCompany(request);
+                successRequest = updateCompany(request);
                 break;
             case "student":
-                boolean success = updateStudent(request);
-                if (success){
+                successRequest = updateStudent(request);
+                if (successRequest){
                     request.setAttribute("message", SUCCESS_BD);
                 }else{
                     request.setAttribute("message", ERR_FAILED_UPDATE_DB);
@@ -62,13 +68,24 @@ public class UpdateDetails extends ServletModel{
     }
 
 
-    private void updateCompany(HttpServletRequest request){
+    private boolean updateCompany(HttpServletRequest request){
         String companyName = request.getParameter("companyName");
-        String mds = request.getParameter("mds");
-        String begin =  request.getParameter("begin");
-        String end = request.getParameter("end");
+        String companyId = request.getParameter("companyId");
         String companyAddress = request.getParameter("companyAddress");
+        Company company = new Company();
+        company.setCompanyId(UUID.fromString(companyId));
+        company.setAddress(companyAddress);
+        company.setName(companyName);
 
+
+        String internshipId = request.getParameter("internshipId");
+        String begin = request.getParameter("begin");
+        String end = request.getParameter("end");
+        String mds = request.getParameter("mds");
+
+        internshipDataServices.updateInternshipDetailsPage(internshipId, Date.valueOf(begin), Date.valueOf(end), mds);
+
+        return false;
     }
 
     private boolean updateStudent(HttpServletRequest request){
