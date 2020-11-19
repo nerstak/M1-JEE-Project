@@ -21,7 +21,7 @@
 </head>
 <body class="main-body">
     <header class="navbar">
-        <img class="logo-efrei" src="${pageContext.request.contextPath}/Image/Logo-Efrei-2017-Fr-Web.png" alt="efrei">
+        <a href="Homepage"><img class="logo-efrei" src="${pageContext.request.contextPath}/Image/Logo-Efrei-2017-Fr-Web.png" alt="efrei"></a>
         <div class="navbar-menu">
             <jsp:useBean id="tutor" class="model.Tutor" scope="session"/>
             <p>

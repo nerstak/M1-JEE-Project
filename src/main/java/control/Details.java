@@ -44,11 +44,11 @@ public class Details extends ServletModel {
         } else if (internshipSubmit.equals("modify")) {
 
         } else {
-            //todo je pense qu'il n'y a plus la liste des internship à renvoyer
-            request.getRequestDispatcher(HOME_PAGE).forward(request, response);
+            response.sendRedirect("Homepage");
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.sendRedirect("Homepage");
     }
 }

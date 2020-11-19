@@ -23,11 +23,23 @@ public class Login extends ServletModel {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
+        session = request.getSession();
+
+        if(session.getAttribute("tutor") != null) {
+            response.sendRedirect("Homepage");
+        } else {
+            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Only for post request
+        session = request.getSession();
+
+        if(session.getAttribute("tutor") != null) {
+            response.sendRedirect("Homepage");
+        }
+
         Tutor tutor = new Tutor();
         tutor.setEmail(request.getParameter("login"));
         tutor.setPwd(request.getParameter("pwd"));
@@ -38,7 +50,6 @@ public class Login extends ServletModel {
         }
 
         if (tutorDataServices.selectTutor(tutor)) {
-            session = request.getSession();
             session.setAttribute("tutor", tutor);
             response.sendRedirect("Homepage");
         } else {
