@@ -195,12 +195,16 @@
                     </div>
                 </form>
                 <div class="list-data">
-                    <p>Etranger</p>
-                    <p>Remunéré</p>
-                    <p>Labo</p>
-                    <p>Long</p>
-                    <p>Cool</p>
-                    <p>Bonus</p>
+                    <c:choose>
+                        <c:when test="${empty listOfInternshipKeywords}">
+                            <h2>No skills registered</h2>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach items="${listOfInternshipKeywords}" var="keywords">
+                                <p>${keywords.keyword}</p>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
