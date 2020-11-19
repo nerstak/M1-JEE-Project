@@ -26,7 +26,7 @@
             <p>
                 ${tutor.firstName}${" "}${tutor.name}
             </p>
-            <p>Logout</p>
+            <a href="Logout">Logout</a>
         </div>
     </header>
 
