@@ -36,7 +36,6 @@ public class InternshipDataServices extends DataServices {
         listOfInternshipData = new ArrayList<>();
         rs = selectListInternships(tutor.getTutorId().toString(), year, name, keyword);
 
-
         try {
             while (rs != null && rs.next()) {
                 InternshipData i = new InternshipData();

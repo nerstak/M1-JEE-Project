@@ -25,7 +25,7 @@ public class SkillsDataServices extends DataServices {
      * Get the list of all skills
      * @return List of skills
      */
-    private ArrayList<Skills> getListOfSkills() {
+    public ArrayList<Skills> getListOfSkills() {
         listOfSkills = new ArrayList<>();
         rs = selectResultSet(DB_SELECT_SKILLS);
 

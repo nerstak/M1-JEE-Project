@@ -15,8 +15,10 @@
                       user-scalable=yes">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/mission-details.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/all.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/autocomplete.css" type="text/css">
 
     <title>Mission details</title>
+    <script src="${pageContext.request.contextPath}/JS/autocompleteFunctions.js" ></script>
 </head>
 <body>
     <header class="navbar">
@@ -157,11 +159,13 @@
         <div class="wrapper-flex">
             <div class="info-skills">
                 <h2>Skills</h2>
-                <form class="info-company-form" action="UpdateDetails" method="post" name="updateDetails">
+                <form class="info-company-form" action="UpdateDetails" method="post" name="updateDetails" autocomplete="off">
                     <div class="div-input-button">
                         <div class="input-left">
-                            <label for="skill">Skills</label>
-                            <input type="text" id="skill" name="skill">
+                            <div class="autocomplete">
+                                <label for="skillInput">Skills</label>
+                                <input type="text" id="skillInput" name="skill">
+                            </div>
                             <input type="hidden" name="studentId" value="${internshipData.student.studentId}">
                             <input type="hidden" name="internshipId" value="${internshipData.internship.internship}">
                             <button type="submit" value="skills" name="updateDetails">Add</button>
@@ -184,11 +188,13 @@
 
             <div class="info-keywords">
                 <h2>Keyword</h2>
-                <form class="info-company-form" action="UpdateDetails" method="post" name="updateDetails">
+                <form class="info-company-form" action="UpdateDetails" method="post" name="updateDetails" autocomplete="off">
                     <div class="div-input-button">
                         <div class="input-left">
-                            <label for="keyword">Keywords</label>
-                            <input type="text" id="keyword" name="keyword">
+                            <div class="autocomplete">
+                                <label for="keywordInput">Keywords</label>
+                                <input type="text" id="keywordInput" name="keyword">
+                            </div>
                             <input type="hidden" name="internshipId" value="${internshipData.internship.internship}">
                             <button type="submit" value="keywords" name="updateDetails">Add</button>
                         </div>
@@ -209,5 +215,19 @@
             </div>
         </div>
     </main>
+<script>
+    var skills = new Array();
+    <c:forEach items="${listOfSkills}" var="skill">
+        skills.push("${skill.skill}");
+    </c:forEach>
+
+    var keywords = new Array();
+    <c:forEach items="${listOfKeywords}" var="keyword">
+        keywords.push("${keyword.keyword}");
+    </c:forEach>
+
+    autocomplete(document.getElementById("skillInput"),skills);
+    autocomplete(document.getElementById("keywordInput"),keywords);
+</script>
 </body>
 </html>
