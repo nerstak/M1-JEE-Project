@@ -85,6 +85,17 @@ public class SkillsDataServices extends DataServices {
         return getResultSet(skill, DB_SELECT_A_SKILL);
     }
 
+
+    public ResultSet selectAStudentToSkillCouple(String studentId, String skillId){
+        return getResultSetCouple(studentId, skillId, DB_SELECT_A_STUDENT_TO_SKILL_COUPLE);
+    }
+
+    /**
+     * Insert into student_to_skill table the skill id and the student id
+     * @param studentId, the student id
+     * @param skillIdDb, the skill id
+     * @return number of row affected
+     */
     public int insertIntoStudentToSkill(String studentId, String skillIdDb){
         try {
             ps = con.prepareStatement(DB_INSERT_INTO_STUDENT_TO_SKILL);
@@ -98,6 +109,12 @@ public class SkillsDataServices extends DataServices {
         return 0;
     }
 
+    /**
+     * Insert into skill, a skill
+     * @param skillId, the skill id
+     * @param skill, the skill
+     * @return, the number of rows affected
+     */
     public int insertIntoSkill(UUID skillId, String skill){
         try {
             ps = con.prepareStatement(DB_INSERT_INTO_SKILLS);

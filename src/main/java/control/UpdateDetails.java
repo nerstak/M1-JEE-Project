@@ -160,13 +160,16 @@ public class UpdateDetails extends ServletModel{
             try {
                 if(resultSet.next()){ //if the skill is already in the DB
                     String skillIdDb = resultSet.getString("skill_id");
-
-
-
-                    //Insert the Skill_id + student_id inside the Student_to_skill table
-                    if (skillsDataServices.insertIntoStudentToSkill(studentId, skillIdDb) == 1){//If row is added to the db => commit the request
-                        DataServices.commitRequest(skillsDataServices);
-                        return true;
+                    //Check if the skill is already linked to the student
+                    resultSet = skillsDataServices.selectAStudentToSkillCouple(studentId, skillIdDb);
+                    if(resultSet != null){
+                        if(!resultSet.next()){
+                            //Insert the Skill_id + student_id inside the Student_to_skill table
+                            if (skillsDataServices.insertIntoStudentToSkill(studentId, skillIdDb) == 1){//If row is added to the db => commit the request
+                                DataServices.commitRequest(skillsDataServices);
+                                return true;
+                            }
+                        }
                     }
                 }else{
                     //Add the skill inside Skills + add couple Id inside Student_to_skill

@@ -61,6 +61,25 @@ public abstract class DataServices {
     }
 
     /**
+     * Get ResultSet of a parameterised query with 2 IDs
+     * @param id1 Parameter (SQL.Types.OTHER, UUID)
+     * @param id2 Parameter (SQL.Types.OTHER, UUID)
+     * @param query Query
+     * @return ResultSet (may be null)
+     */
+    protected ResultSet getResultSetCouple(String id1, String id2, String query) {
+        try {
+            ps = con.prepareStatement(query);
+            ps.setObject(1, id1, Types.OTHER);
+            ps.setObject(2, id2, Types.OTHER);
+            return ps.executeQuery();
+        } catch (SQLException e) {
+            Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;
+    }
+
+    /**
      * Create a student model from internal ResultSet
      * @return Student created
      * @throws SQLException Error when getting columns
