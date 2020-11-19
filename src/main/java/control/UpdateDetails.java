@@ -149,6 +149,11 @@ public class UpdateDetails extends ServletModel{
         }
     }
 
+    /**
+     * Get the information from the form and update the skill and student_to_skills table
+     * @param request, servlet request
+     * @return true if the database has been updated
+     */
     private boolean updateSkills(HttpServletRequest request)  {
         //Get the skill from the form
         String skill = request.getParameter("skill");
