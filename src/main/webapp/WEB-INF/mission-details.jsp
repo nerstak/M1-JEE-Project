@@ -137,7 +137,7 @@
                     <div class="div-input-third">
                         <div class="input-left">
                             <label for="description">Description</label>
-                            <textarea name="description" id="description" form="info-company-form">${internshipData.internship.desciption}"</textarea>
+                            <textarea name="description" id="description" form="info-company-form">${internshipData.internship.desciption}</textarea>
                         </div>
                         <div class="input-right">
                             <label for="tutorComments">Tutor's comment</label>
