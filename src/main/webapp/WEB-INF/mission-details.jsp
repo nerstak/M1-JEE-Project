@@ -160,8 +160,10 @@
                 <form class="info-company-form" action="UpdateDetails" method="post" name="updateDetails">
                     <div class="div-input-button">
                         <div class="input-left">
-                            <label>Skills</label>
-                            <input type="text">
+                            <label for="skill">Skills</label>
+                            <input type="text" id="skill" name="skill">
+                            <input type="hidden" name="studentId" value="${internshipData.student.studentId}">
+                            <input type="hidden" name="internshipId" value="${internshipData.internship.internship}">
                             <button type="submit" value="skills" name="updateDetails">Add</button>
                         </div>
                     </div>
@@ -185,19 +187,24 @@
                 <form class="info-company-form" action="UpdateDetails" method="post" name="updateDetails">
                     <div class="div-input-button">
                         <div class="input-left">
-                            <label>Keywords</label>
-                            <input type="text">
+                            <label for="keyword">Keywords</label>
+                            <input type="text" id="keyword" name="keyword">
+                            <input type="hidden" name="internshipId" value="${internshipData.internship.internship}">
                             <button type="submit" value="keywords" name="updateDetails">Add</button>
                         </div>
                     </div>
                 </form>
                 <div class="list-data">
-                    <p>Etranger</p>
-                    <p>Remunéré</p>
-                    <p>Labo</p>
-                    <p>Long</p>
-                    <p>Cool</p>
-                    <p>Bonus</p>
+                    <c:choose>
+                        <c:when test="${empty listOfInternshipKeywords}">
+                            <h2>No skills registered</h2>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach items="${listOfInternshipKeywords}" var="keywords">
+                                <p>${keywords.keyword}</p>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
