@@ -1,6 +1,7 @@
 package control;
 
 
+import model.InternshipData;
 import model.Student;
 import utils.database.*;
 
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.UUID;
 
 import static utils.Constants.*;
@@ -19,7 +22,9 @@ public class UpdateDetails extends ServletModel{
     private CompanyDataServices companyDataServices;
     private FinalReportDataServices finalReportDataServices;
     private CommentsDataServices commentsDataServices;
+    private SkillsDataServices skillsDataServices;
     private boolean successRequest;
+    private InternshipData internshipData;
 
     @Override
     public void init() {
@@ -29,6 +34,7 @@ public class UpdateDetails extends ServletModel{
         finalReportDataServices = new FinalReportDataServices(dbUser, dbPwd, dbUrl);
         companyDataServices = new CompanyDataServices(dbUser, dbPwd, dbUrl);
         commentsDataServices = new CommentsDataServices(dbUser, dbPwd, dbUrl);
+        skillsDataServices = new SkillsDataServices(dbUser, dbPwd, dbUrl);
     }
 
     //TODO validation des données reçues des formulaires
@@ -51,7 +57,7 @@ public class UpdateDetails extends ServletModel{
 //                TODO to be done
                 break;
             case "skills":
-//                TODO to be done
+                successRequest = updateSkills(request);
                 break;
             default:
                 break;
@@ -143,8 +149,40 @@ public class UpdateDetails extends ServletModel{
         }
     }
 
-    private void updateSkills(HttpServletRequest request){
+    private boolean updateSkills(HttpServletRequest request)  {
+        String skill = request.getParameter("skill");
+        String studentId = request.getParameter("studentId");
 
+        ResultSet resultSet = skillsDataServices.selectASkill(skill);
+        DataServices.disableAutoCommits(skillsDataServices);
+        //todo tester si le student_id djàa dans student_to_skill
+        if (resultSet != null){
+            try {
+                if(resultSet.next()){ //if the skill is already in the DB
+                    String skillIdDb = resultSet.getString("skill_id");
+
+
+
+                    //Insert the Skill_id + student_id inside the Student_to_skill table
+                    if (skillsDataServices.insertIntoStudentToSkill(studentId, skillIdDb) == 1){//If row is added to the db => commit the request
+                        DataServices.commitRequest(skillsDataServices);
+                        return true;
+                    }
+                }else{
+                    //Add the skill inside Skills + add couple Id inside Student_to_skill
+                    UUID skillId = UUID.randomUUID();
+                    if  ((skillsDataServices.insertIntoSkill(skillId, skill) == 1) && (skillsDataServices.insertIntoStudentToSkill(studentId, skillId.toString())) == 1){
+                        DataServices.commitRequest(skillsDataServices);
+                        return true;
+                    }
+                }
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return false;
     }
 
     private void updateKeywords(HttpServletRequest request){
@@ -165,7 +203,9 @@ public class UpdateDetails extends ServletModel{
         }else{
             request.setAttribute("message", ERR_FAILED_UPDATE_DB);
         }
-        request.setAttribute("internshipData", internshipDataServices.getInternshipDetailed(internshipId));
+        internshipData = internshipDataServices.getInternshipDetailed(internshipId);
+        request.setAttribute("internshipData", internshipData);
+        request.setAttribute("listOfStudentSkills", skillsDataServices.getStudentSkillsAll(internshipData.getStudent()));
         request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
     }
 }

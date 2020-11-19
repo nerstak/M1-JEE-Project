@@ -5,13 +5,14 @@ import model.Skills;
 import model.Student;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static utils.Constants.DB_SELECT_SKILLS;
-import static utils.Constants.DB_SELECT_STUDENTS_SKILLS_ALL;
+import static utils.Constants.*;
 
 public class SkillsDataServices extends DataServices {
     private ArrayList<Skills> listOfSkills;
@@ -74,4 +75,41 @@ public class SkillsDataServices extends DataServices {
     private ResultSet selectStudentSkillsAll(String studentId) {
         return getResultSet(studentId, DB_SELECT_STUDENTS_SKILLS_ALL);
     }
+
+    /**
+     * Search if a skill is inside the databse
+     * @param skill, the skill to search
+     * @return result set of the query
+     */
+    public ResultSet selectASkill(String skill) {
+        return getResultSet(skill, DB_SELECT_A_SKILL);
+    }
+
+    public int insertIntoStudentToSkill(String studentId, String skillIdDb){
+        try {
+            ps = con.prepareStatement(DB_INSERT_INTO_STUDENT_TO_SKILL);
+            ps.setObject(1, studentId, Types.OTHER);
+            ps.setObject(2, skillIdDb, Types.OTHER);
+
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return 0;
+    }
+
+    public int insertIntoSkill(UUID skillId, String skill){
+        try {
+            ps = con.prepareStatement(DB_INSERT_INTO_SKILLS);
+            ps.setObject(1, skillId, Types.OTHER);
+            ps.setString(2, skill);
+
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return 0;
+    }
+
+
 }
