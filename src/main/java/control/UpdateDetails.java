@@ -150,7 +150,10 @@ public class UpdateDetails extends ServletModel{
     }
 
     private boolean updateSkills(HttpServletRequest request)  {
+        //Get the skill from the form
         String skill = request.getParameter("skill");
+        //Capitalize the first letter
+        skill = skill.substring(0, 1).toUpperCase() + skill.substring(1).toLowerCase();
         String studentId = request.getParameter("studentId");
 
         ResultSet resultSet = skillsDataServices.selectASkill(skill);
