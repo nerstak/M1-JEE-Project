@@ -2,6 +2,7 @@ package control;
 
 import model.*;
 import utils.database.InternshipDataServices;
+import utils.database.KeywordsDataServices;
 import utils.database.SkillsDataServices;
 
 import javax.servlet.ServletException;
@@ -21,12 +22,14 @@ public class Details extends ServletModel {
 
     private InternshipDataServices internshipDataServices;
     private SkillsDataServices skillsDataServices;
+    private KeywordsDataServices keywordsDataServices;
 
     @Override
     public void init() {
         super.init();
         internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
         skillsDataServices = new SkillsDataServices(dbUser, dbPwd, dbUrl);
+        keywordsDataServices = new KeywordsDataServices(dbUser, dbPwd, dbUrl);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,8 +41,9 @@ public class Details extends ServletModel {
 
             //Set request attributes
             request.setAttribute("internshipData", internshipData);
-            request.setAttribute("listOfStudentSkills",
-                    skillsDataServices.getStudentSkillsAll(internshipData.getStudent()));
+            request.setAttribute("listOfStudentSkills", skillsDataServices.getStudentSkillsAll(internshipData.getStudent()));
+            request.setAttribute("listOfInternshipKeywords", keywordsDataServices.getInternshipKeywordsAll(internshipData.getInternship().getInternship().toString()));
+
             request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
         } else if (internshipSubmit.equals("modify")) {
 

@@ -31,6 +31,7 @@ public class Constants {
     public static final String DB_SELECT_STUDENT_SKILLS = "SELECT * FROM students_skills WHERE student_id = ?";
     public static final String DB_SELECT_STUDENTS_WITH_SKILL = "SELECT * FROM students_skills WHERE skill_id = ?";
     public static final String DB_SELECT_STUDENTS_SKILLS_ALL = "SELECT STS.skill_id as skill_id, skills.skill as skill FROM  student_to_skills as STS inner join skills on skills.skill_id = STS.skill_id where STS.student_id =  ?";
+    public static final String DB_SELECT_INTERNSHIP_KEYWORDS_ALL = "SELECT ITK.keyword_id as keyword_id, k.keyword as keyword FROM  internship_to_keywords as ITK inner join keywords k on ITK.keyword_id = k.keyword_id  where ITK.internship_id =  ?";
     public static final String DB_SELECT_A_SKILL = "SELECT * FROM skills WHERE skill = ?";
     public static final String DB_SELECT_A_STUDENT_TO_SKILL_COUPLE = "SELECT * FROM student_to_skills WHERE student_id = ? AND skill_id = ?";
 
