@@ -23,6 +23,7 @@ function autocomplete(inp, arr) {
         a.setAttribute("class", "autocomplete-items");
         this.parentNode.appendChild(a);
 
+
         for (i = 0; i < arr.length; i++) {
             // Check if the item starts with the same letters as the text field value
             if (arr[i].substr(0, val.length).toUpperCase() === val.toUpperCase()) {
@@ -30,11 +31,18 @@ function autocomplete(inp, arr) {
                 b = document.createElement("DIV");
 
                 // Matching letters bold
-                b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                b.innerHTML += arr[i].substr(val.length);
+                let strong = document.createElement('strong');
+                let textStrong = document.createTextNode(arr[i].substr(0, val.length));
+                strong.appendChild(textStrong)
+                let textNormal = document.createTextNode(arr[i].substr(val.length));
+                b.appendChild(strong);
+                b.appendChild(textNormal);
 
                 // Keep in memory current item value
-                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                let input = document.createElement('input');
+                input.setAttribute('type','hidden');
+                input.setAttribute('value',arr[i]);
+                b.appendChild(input);
 
                 // Function when we click
                 b.addEventListener("click", function (e) {
