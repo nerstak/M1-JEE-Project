@@ -23,6 +23,7 @@ public class UpdateDetails extends ServletModel{
     private FinalReportDataServices finalReportDataServices;
     private CommentsDataServices commentsDataServices;
     private SkillsDataServices skillsDataServices;
+    private KeywordsDataServices keywordsDataServices;
     private boolean successRequest;
     private InternshipData internshipData;
 
@@ -35,6 +36,7 @@ public class UpdateDetails extends ServletModel{
         companyDataServices = new CompanyDataServices(dbUser, dbPwd, dbUrl);
         commentsDataServices = new CommentsDataServices(dbUser, dbPwd, dbUrl);
         skillsDataServices = new SkillsDataServices(dbUser, dbPwd, dbUrl);
+        keywordsDataServices = new KeywordsDataServices(dbUser, dbPwd, dbUrl);
     }
 
     //TODO validation des données reçues des formulaires
@@ -54,7 +56,7 @@ public class UpdateDetails extends ServletModel{
                 successRequest = updateInternship(request);
                 break;
             case "keywords":
-//                TODO to be done
+                successRequest = updateKeywords(request);
                 break;
             case "skills":
                 successRequest = updateSkills(request);
@@ -163,7 +165,6 @@ public class UpdateDetails extends ServletModel{
 
         ResultSet resultSet = skillsDataServices.selectASkill(skill);
         DataServices.disableAutoCommits(skillsDataServices);
-        //todo tester si le student_id djàa dans student_to_skill
         if (resultSet != null){
             try {
                 if(resultSet.next()){ //if the skill is already in the DB
@@ -196,8 +197,45 @@ public class UpdateDetails extends ServletModel{
         return false;
     }
 
-    private void updateKeywords(HttpServletRequest request){
+    private boolean updateKeywords(HttpServletRequest request){
+        //Get the skill from the form
+        String keyword = request.getParameter("keyword");
+        //Capitalize the first letter
+        keyword = keyword.substring(0, 1).toUpperCase() + keyword.substring(1).toLowerCase();
+        String internshipId = request.getParameter("internshipId");
 
+        ResultSet resultSet = keywordsDataServices.selectAKeyword(keyword);
+        DataServices.disableAutoCommits(keywordsDataServices);
+        if (resultSet != null){
+            try {
+                if(resultSet.next()){ //if the keyword is already in the DB
+                    String keywordId = resultSet.getString("keyword_id");
+                    //Check if the skill is already linked to the student
+                    resultSet = keywordsDataServices.selectAInternshipToKeywordsCouple(internshipId, keywordId);
+                    if(resultSet != null){
+                        if(!resultSet.next()){
+                            //Insert the Skill_id + student_id inside the Student_to_skill table
+                            if (keywordsDataServices.insertIntoInternshipToKeywords(internshipId, keywordId) == 1){//If row is added to the db => commit the request
+                                DataServices.commitRequest(keywordsDataServices);
+                                return true;
+                            }
+                        }
+                    }
+                }else{
+                    //Add the skill inside Skills + add couple Id inside Student_to_skill
+                    UUID keywordId = UUID.randomUUID();
+                    if  ((keywordsDataServices.insertIntoKeyword(keywordId, keyword) == 1) && (keywordsDataServices.insertIntoInternshipToKeywords(internshipId, keywordId.toString())) == 1){
+                        DataServices.commitRequest(keywordsDataServices);
+                        return true;
+                    }
+                }
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return false;
     }
 
     /**
@@ -217,6 +255,8 @@ public class UpdateDetails extends ServletModel{
         internshipData = internshipDataServices.getInternshipDetailed(internshipId);
         request.setAttribute("internshipData", internshipData);
         request.setAttribute("listOfStudentSkills", skillsDataServices.getStudentSkillsAll(internshipData.getStudent()));
+        request.setAttribute("listOfInternshipKeywords", keywordsDataServices.getInternshipKeywordsAll(internshipData.getInternship().getInternship().toString()));
+
         request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
     }
 }

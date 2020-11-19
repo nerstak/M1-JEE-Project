@@ -34,7 +34,8 @@ public class Constants {
     public static final String DB_SELECT_INTERNSHIP_KEYWORDS_ALL = "SELECT ITK.keyword_id as keyword_id, k.keyword as keyword FROM  internship_to_keywords as ITK inner join keywords k on ITK.keyword_id = k.keyword_id  where ITK.internship_id =  ?";
     public static final String DB_SELECT_A_SKILL = "SELECT * FROM skills WHERE skill = ?";
     public static final String DB_SELECT_A_STUDENT_TO_SKILL_COUPLE = "SELECT * FROM student_to_skills WHERE student_id = ? AND skill_id = ?";
-
+    public static final String DB_SELECT_A_KEYWORD = "SELECT * FROM keywords WHERE keyword = ?";
+    public static final String DB_SELECT_A_INTERNSHIP_TO_KEYWORDS_COUPLE = "SELECT * FROM internship_to_keywords WHERE internship_id = ? AND keyword_id = ?";
 
 
     /* UPDATE */
@@ -51,4 +52,6 @@ public class Constants {
     /*INSERT INTO*/
     public static final String DB_INSERT_INTO_STUDENT_TO_SKILL = "INSERT INTO student_to_skills(student_id, skill_id) VALUES (?, ?)";
     public static final String DB_INSERT_INTO_SKILLS = "INSERT INTO skills(skill_id, skill) VALUES (?, ?)";
+    public static final String DB_INSERT_INTO_INTERNSHIP_TO_KEYWORDS = "INSERT INTO internship_to_keywords(internship_id, keyword_id) VALUES (?, ?)";
+    public static final String DB_INSERT_INTO_KEYWORDS = "INSERT INTO keywords(keyword_id, keyword) VALUES (?, ?)";
 }

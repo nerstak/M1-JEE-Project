@@ -7,6 +7,8 @@ import model.Skills;
 import model.Student;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -50,7 +52,7 @@ public class KeywordsDataServices extends DataServices {
      */
     public ArrayList<Keywords> getInternshipKeywordsAll(String internshipId) {
         listOfKeywords = new ArrayList<>();
-        rs = selectStudentSkillsAll(internshipId);
+        rs = selectInternshipKeywordsAll(internshipId);
 
         // Formatting into a regular array
         if (rs != null) {
@@ -72,7 +74,61 @@ public class KeywordsDataServices extends DataServices {
      * @param internshipId, ID of the internship
      * @return result set of the query
      */
-    private ResultSet selectStudentSkillsAll(String internshipId) {
+    private ResultSet selectInternshipKeywordsAll(String internshipId) {
         return getResultSet(internshipId, DB_SELECT_INTERNSHIP_KEYWORDS_ALL);
     }
+
+
+    /**
+     * Search if a keyword is inside the databse
+     * @param keyword, the keyword to search
+     * @return result set of the query
+     */
+    public ResultSet selectAKeyword(String keyword) {
+        return getResultSet(keyword, DB_SELECT_A_KEYWORD);
+    }
+
+
+    public ResultSet selectAInternshipToKeywordsCouple(String internshipId, String keywordId){
+        return getResultSetCouple(internshipId, keywordId, DB_SELECT_A_INTERNSHIP_TO_KEYWORDS_COUPLE);
+    }
+
+    /**
+     * Insert into internship_to_keywords table the keyword id and the internship id
+     * @param internshipId, the student id
+     * @param keywordIdDb, the skill id
+     * @return number of row affected
+     */
+    public int insertIntoInternshipToKeywords(String internshipId, String keywordIdDb){
+        try {
+            ps = con.prepareStatement(DB_INSERT_INTO_INTERNSHIP_TO_KEYWORDS);
+            ps.setObject(1, internshipId, Types.OTHER);
+            ps.setObject(2, keywordIdDb, Types.OTHER);
+
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return 0;
+    }
+
+    /**
+     * Insert into keywords, a keyword
+     * @param keywordId, the keyword id
+     * @param keyword, the keyword
+     * @return, the number of rows affected
+     */
+    public int insertIntoKeyword(UUID keywordId, String keyword){
+        try {
+            ps = con.prepareStatement(DB_INSERT_INTO_KEYWORDS);
+            ps.setObject(1, keywordId, Types.OTHER);
+            ps.setString(2, keyword);
+
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return 0;
+    }
+
 }

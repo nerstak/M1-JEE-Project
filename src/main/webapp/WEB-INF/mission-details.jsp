@@ -164,7 +164,6 @@
                             <input type="text" id="skill" name="skill">
                             <input type="hidden" name="studentId" value="${internshipData.student.studentId}">
                             <input type="hidden" name="internshipId" value="${internshipData.internship.internship}">
-
                             <button type="submit" value="skills" name="updateDetails">Add</button>
                         </div>
                     </div>
@@ -188,8 +187,9 @@
                 <form class="info-company-form" action="UpdateDetails" method="post" name="updateDetails">
                     <div class="div-input-button">
                         <div class="input-left">
-                            <label>Keywords</label>
-                            <input type="text">
+                            <label for="keyword">Keywords</label>
+                            <input type="text" id="keyword" name="keyword">
+                            <input type="hidden" name="internshipId" value="${internshipData.internship.internship}">
                             <button type="submit" value="keywords" name="updateDetails">Add</button>
                         </div>
                     </div>
