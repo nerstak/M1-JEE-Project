@@ -254,6 +254,8 @@ public class UpdateDetails extends ServletModel{
         }
         internshipData = internshipDataServices.getInternshipDetailed(internshipId);
         request.setAttribute("internshipData", internshipData);
+        request.setAttribute("listOfSkills", skillsDataServices.getListOfSkills());
+        request.setAttribute("listOfKeywords",keywordsDataServices.getListOfKeywords());
         request.setAttribute("listOfStudentSkills", skillsDataServices.getStudentSkillsAll(internshipData.getStudent()));
         request.setAttribute("listOfInternshipKeywords", keywordsDataServices.getInternshipKeywordsAll(internshipData.getInternship().getInternship().toString()));
 
