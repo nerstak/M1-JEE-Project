@@ -89,8 +89,10 @@ public class UpdateDetails extends ServletModel{
         String mds = request.getParameter("mds");
 
         //Check if all data are not empty
-        if (ProcessString.areStringEmpty(companyId, internshipId, begin, end, mds, companyAddress, companyName))
+        if (ProcessString.areStringEmpty(companyId, internshipId, begin, end, mds, companyAddress, companyName)){
+            request.setAttribute("message", ERR_EMPTY_FIELDS);
             return false;
+        }
 
         //Disable the autocommit of the dataservices in case of error
         DataServices.disableAutoCommits(internshipDataServices, companyDataServices);
@@ -126,8 +128,10 @@ public class UpdateDetails extends ServletModel{
         student.setEmail(email);
 
         //Check if data are empty (expect linkedin url)
-        if(ProcessString.areStringEmpty(studentId.toString(), firstName, lastName, email, group))
+        if(ProcessString.areStringEmpty(studentId.toString(), firstName, lastName, email, group)){
+            request.setAttribute("message", ERR_EMPTY_FIELDS);
             return false;
+        }
 
         return (studentDataServices.updateStudent(student) == 1);
     }
@@ -148,8 +152,11 @@ public class UpdateDetails extends ServletModel{
 
 
         //Check if data(IDs) are empty
-        if(ProcessString.areStringEmpty(titleId, commentsId, internshipId))
+        if(ProcessString.areStringEmpty(titleId, commentsId, internshipId)){
+            request.setAttribute("message", ERR_EMPTY_FIELDS);
             return false;
+        }
+
 
         DataServices.disableAutoCommits(internshipDataServices, finalReportDataServices, commentsDataServices);
 
@@ -175,8 +182,10 @@ public class UpdateDetails extends ServletModel{
         String skill = request.getParameter("skill");
 
         //Check if skill is empty
-        if (skill.isEmpty())
+        if (skill.isEmpty()){
+            request.setAttribute("message", ERR_EMPTY_FIELDS);
             return false;
+        }
 
         //Capitalize the first letter
         skill = ProcessString.capitalizeAndLowerCase(skill);
@@ -226,8 +235,10 @@ public class UpdateDetails extends ServletModel{
         String keyword = request.getParameter("keyword");
 
         //Check if skill is empty
-        if (keyword.isEmpty())
+        if (keyword.isEmpty()){
+            request.setAttribute("message", ERR_EMPTY_FIELDS);
             return false;
+        }
 
         //Capitalize the first letter
         keyword = ProcessString.capitalizeAndLowerCase(keyword);
@@ -279,7 +290,9 @@ public class UpdateDetails extends ServletModel{
         if (successRequest){
             request.setAttribute("message", SUCCESS_BD);
         }else{
-            request.setAttribute("message", ERR_FAILED_UPDATE_DB);
+            if(request.getAttribute("message") == null){
+                request.setAttribute("message", ERR_FAILED_UPDATE_DB);
+            }
         }
         internshipData = internshipDataServices.getInternshipDetailed(internshipId);
         request.setAttribute("internshipData", internshipData);
