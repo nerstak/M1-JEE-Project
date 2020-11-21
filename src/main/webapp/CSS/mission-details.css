@@ -5,9 +5,7 @@
 
 .main-info{
     flex: 1 1 auto; /*Take all remaining space*/
-    padding: 64px 10%;
-
-
+    padding: 32px 10%;
 }
 /*Wrapper for display flex*/
 .wrapper-flex{
@@ -57,7 +55,7 @@
 /*2 inputs on the same line*/
 .div-input-half{
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
 
@@ -141,6 +139,7 @@ button[type="submit"]:hover{
 .details_message_error, .details_message_success
 {
     margin-top: 20px;
+    padding: 0 32px;
     justify-content: center;
     display: flex;
     flex-direction: row;
@@ -149,12 +148,10 @@ button[type="submit"]:hover{
 
 .details_message_success{
     fill: var(--color-green);
-    /*color: var(--color-green);*/
 }
 
 .details_message_error{
     fill: var(--color-red);
-    /*color: var(--color-red);*/
 }
 
 .details_message_success svg, .details_message_error svg{
