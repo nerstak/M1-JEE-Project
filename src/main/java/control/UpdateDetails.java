@@ -3,6 +3,7 @@ package control;
 
 import model.InternshipData;
 import model.Student;
+import utils.ProcessString;
 import utils.database.*;
 
 import javax.servlet.ServletException;
@@ -87,6 +88,18 @@ public class UpdateDetails extends ServletModel{
         String end = request.getParameter("end");
         String mds = request.getParameter("mds");
 
+        //Check if all data are not empty
+        if (ProcessString.areStringEmpty(companyId, internshipId, begin, end, mds, companyAddress, companyName)){
+            request.setAttribute("message", ERR_EMPTY_FIELDS);
+            return false;
+        }
+
+        //Check if all data are not empty
+        if (ProcessString.isDateBefore(end, begin)){
+            request.setAttribute("message", ERR_DATE_AFTER);
+            return false;
+        }
+
         //Disable the autocommit of the dataservices in case of error
         DataServices.disableAutoCommits(internshipDataServices, companyDataServices);
         int rowAffectedInternship = internshipDataServices.updateInternshipFromCompanyDetailsPage(internshipId, Date.valueOf(begin), Date.valueOf(end), mds);
@@ -120,6 +133,12 @@ public class UpdateDetails extends ServletModel{
         student.setName(lastName);
         student.setEmail(email);
 
+        //Check if data are empty (expect linkedin url)
+        if(ProcessString.areStringEmpty(studentId.toString(), firstName, lastName, email, group)){
+            request.setAttribute("message", ERR_EMPTY_FIELDS);
+            return false;
+        }
+
         return (studentDataServices.updateStudent(student) == 1);
     }
 
@@ -136,6 +155,14 @@ public class UpdateDetails extends ServletModel{
         String internshipId = request.getParameter("internshipId");
         String titleId = request.getParameter("titleId");
         String title = request.getParameter("reportTitle");
+
+
+        //Check if data(IDs) are empty
+        if(ProcessString.areStringEmpty(titleId, commentsId, internshipId)){
+            request.setAttribute("message", ERR_EMPTY_FIELDS);
+            return false;
+        }
+
 
         DataServices.disableAutoCommits(internshipDataServices, finalReportDataServices, commentsDataServices);
 
@@ -159,8 +186,15 @@ public class UpdateDetails extends ServletModel{
     private boolean updateSkills(HttpServletRequest request)  {
         //Get the skill from the form
         String skill = request.getParameter("skill");
+
+        //Check if skill is empty
+        if (skill.isEmpty()){
+            request.setAttribute("message", ERR_EMPTY_FIELDS);
+            return false;
+        }
+
         //Capitalize the first letter
-        skill = skill.substring(0, 1).toUpperCase() + skill.substring(1).toLowerCase();
+        skill = ProcessString.capitalizeAndLowerCase(skill);
         String studentId = request.getParameter("studentId");
 
         ResultSet resultSet = skillsDataServices.selectASkill(skill);
@@ -197,11 +231,23 @@ public class UpdateDetails extends ServletModel{
         return false;
     }
 
+    /**
+     * Get the information from the form and update the keyword and internship_to_keywords table
+     * @param request, servlet request
+     * @return true if the database has been updated
+     */
     private boolean updateKeywords(HttpServletRequest request){
         //Get the skill from the form
         String keyword = request.getParameter("keyword");
+
+        //Check if skill is empty
+        if (keyword.isEmpty()){
+            request.setAttribute("message", ERR_EMPTY_FIELDS);
+            return false;
+        }
+
         //Capitalize the first letter
-        keyword = keyword.substring(0, 1).toUpperCase() + keyword.substring(1).toLowerCase();
+        keyword = ProcessString.capitalizeAndLowerCase(keyword);
         String internshipId = request.getParameter("internshipId");
 
         ResultSet resultSet = keywordsDataServices.selectAKeyword(keyword);
@@ -250,7 +296,9 @@ public class UpdateDetails extends ServletModel{
         if (successRequest){
             request.setAttribute("message", SUCCESS_BD);
         }else{
-            request.setAttribute("message", ERR_FAILED_UPDATE_DB);
+            if(request.getAttribute("message") == null){
+                request.setAttribute("message", ERR_FAILED_UPDATE_DB);
+            }
         }
         internshipData = internshipDataServices.getInternshipDetailed(internshipId);
         request.setAttribute("internshipData", internshipData);
