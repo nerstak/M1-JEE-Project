@@ -3,6 +3,7 @@ package control;
 
 import model.InternshipData;
 import model.Student;
+import utils.ProcessString;
 import utils.database.*;
 
 import javax.servlet.ServletException;
@@ -88,7 +89,7 @@ public class UpdateDetails extends ServletModel{
         String mds = request.getParameter("mds");
 
         //Check if all data are not empty
-        if (dataAreEmpty(companyId, internshipId, begin, end, mds, companyAddress, companyName))
+        if (ProcessString.areStringEmpty(companyId, internshipId, begin, end, mds, companyAddress, companyName))
             return false;
 
         //Disable the autocommit of the dataservices in case of error
@@ -125,7 +126,7 @@ public class UpdateDetails extends ServletModel{
         student.setEmail(email);
 
         //Check if data are empty (expect linkedin url)
-        if(dataAreEmpty(studentId.toString(), firstName, lastName, email, group))
+        if(ProcessString.areStringEmpty(studentId.toString(), firstName, lastName, email, group))
             return false;
 
         return (studentDataServices.updateStudent(student) == 1);
@@ -147,7 +148,7 @@ public class UpdateDetails extends ServletModel{
 
 
         //Check if data(IDs) are empty
-        if(dataAreEmpty(titleId, commentsId, internshipId))
+        if(ProcessString.areStringEmpty(titleId, commentsId, internshipId))
             return false;
 
         DataServices.disableAutoCommits(internshipDataServices, finalReportDataServices, commentsDataServices);
@@ -174,11 +175,11 @@ public class UpdateDetails extends ServletModel{
         String skill = request.getParameter("skill");
 
         //Check if skill is empty
-        if (dataAreEmpty(skill))
+        if (skill.isEmpty())
             return false;
 
         //Capitalize the first letter
-        skill = skill.substring(0, 1).toUpperCase() + skill.substring(1).toLowerCase();
+        skill = ProcessString.capitalizeAndLowerCase(skill);
         String studentId = request.getParameter("studentId");
 
         ResultSet resultSet = skillsDataServices.selectASkill(skill);
@@ -225,11 +226,11 @@ public class UpdateDetails extends ServletModel{
         String keyword = request.getParameter("keyword");
 
         //Check if skill is empty
-        if (dataAreEmpty(keyword))
+        if (keyword.isEmpty())
             return false;
 
         //Capitalize the first letter
-        keyword = keyword.substring(0, 1).toUpperCase() + keyword.substring(1).toLowerCase();
+        keyword = ProcessString.capitalizeAndLowerCase(keyword);
         String internshipId = request.getParameter("internshipId");
 
         ResultSet resultSet = keywordsDataServices.selectAKeyword(keyword);
@@ -288,17 +289,5 @@ public class UpdateDetails extends ServletModel{
         request.setAttribute("listOfInternshipKeywords", keywordsDataServices.getInternshipKeywordsAll(internshipData.getInternship().getInternship().toString()));
 
         request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
-    }
-
-    /**
-     * Check if a set of string are empty or not
-     * @param data, an array of string to check
-     * @return true if at least one string is empty, else return false
-     */
-    private boolean dataAreEmpty(String... data){
-        for (String str : data) {
-            if(str.isEmpty()) return true;
-        }
-        return false;
     }
 }
