@@ -94,6 +94,12 @@ public class UpdateDetails extends ServletModel{
             return false;
         }
 
+        //Check if all data are not empty
+        if (ProcessString.isDateBefore(end, begin)){
+            request.setAttribute("message", ERR_DATE_AFTER);
+            return false;
+        }
+
         //Disable the autocommit of the dataservices in case of error
         DataServices.disableAutoCommits(internshipDataServices, companyDataServices);
         int rowAffectedInternship = internshipDataServices.updateInternshipFromCompanyDetailsPage(internshipId, Date.valueOf(begin), Date.valueOf(end), mds);
