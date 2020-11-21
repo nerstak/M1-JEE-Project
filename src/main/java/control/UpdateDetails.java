@@ -87,6 +87,10 @@ public class UpdateDetails extends ServletModel{
         String end = request.getParameter("end");
         String mds = request.getParameter("mds");
 
+        //Check if all data are not empty
+        if (dataAreEmpty(companyId, internshipId, begin, end, mds, companyAddress, companyName))
+            return false;
+
         //Disable the autocommit of the dataservices in case of error
         DataServices.disableAutoCommits(internshipDataServices, companyDataServices);
         int rowAffectedInternship = internshipDataServices.updateInternshipFromCompanyDetailsPage(internshipId, Date.valueOf(begin), Date.valueOf(end), mds);
@@ -120,6 +124,10 @@ public class UpdateDetails extends ServletModel{
         student.setName(lastName);
         student.setEmail(email);
 
+        //Check if data are empty (expect linkedin url)
+        if(dataAreEmpty(studentId.toString(), firstName, lastName, email, group))
+            return false;
+
         return (studentDataServices.updateStudent(student) == 1);
     }
 
@@ -136,6 +144,11 @@ public class UpdateDetails extends ServletModel{
         String internshipId = request.getParameter("internshipId");
         String titleId = request.getParameter("titleId");
         String title = request.getParameter("reportTitle");
+
+
+        //Check if data(IDs) are empty
+        if(dataAreEmpty(titleId, commentsId, internshipId))
+            return false;
 
         DataServices.disableAutoCommits(internshipDataServices, finalReportDataServices, commentsDataServices);
 
@@ -159,6 +172,11 @@ public class UpdateDetails extends ServletModel{
     private boolean updateSkills(HttpServletRequest request)  {
         //Get the skill from the form
         String skill = request.getParameter("skill");
+
+        //Check if skill is empty
+        if (dataAreEmpty(skill))
+            return false;
+
         //Capitalize the first letter
         skill = skill.substring(0, 1).toUpperCase() + skill.substring(1).toLowerCase();
         String studentId = request.getParameter("studentId");
@@ -197,9 +215,19 @@ public class UpdateDetails extends ServletModel{
         return false;
     }
 
+    /**
+     * Get the information from the form and update the keyword and internship_to_keywords table
+     * @param request, servlet request
+     * @return true if the database has been updated
+     */
     private boolean updateKeywords(HttpServletRequest request){
         //Get the skill from the form
         String keyword = request.getParameter("keyword");
+
+        //Check if skill is empty
+        if (dataAreEmpty(keyword))
+            return false;
+
         //Capitalize the first letter
         keyword = keyword.substring(0, 1).toUpperCase() + keyword.substring(1).toLowerCase();
         String internshipId = request.getParameter("internshipId");
@@ -260,5 +288,17 @@ public class UpdateDetails extends ServletModel{
         request.setAttribute("listOfInternshipKeywords", keywordsDataServices.getInternshipKeywordsAll(internshipData.getInternship().getInternship().toString()));
 
         request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
+    }
+
+    /**
+     * Check if a set of string are empty or not
+     * @param data, an array of string to check
+     * @return true if at least one string is empty, else return false
+     */
+    private boolean dataAreEmpty(String... data){
+        for (String str : data) {
+            if(str.isEmpty()) return true;
+        }
+        return false;
     }
 }
