@@ -48,7 +48,7 @@ public class Details extends ServletModel {
 
             request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
         } else if (internshipSubmit.equals("modify")) {
-
+            updateInternship(request);
         } else {
             response.sendRedirect("Homepage");
         }
@@ -57,4 +57,58 @@ public class Details extends ServletModel {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.sendRedirect("Homepage");
     }
+
+    private void updateInternship(HttpServletRequest request){
+        //Student
+        String studentGroup = request.getParameter("studentGroup");
+        String studentFirstname = request.getParameter("studentFirstname");
+        String studentName = request.getParameter("studentName");
+        String studentId = request.getParameter("studentId");
+
+
+        //Visit
+        String visitPlanned = request.getParameter("visitPlanned")== null
+                ? "false"
+                : "true";
+        String visitDone = request.getParameter("visitDone")== null
+                ? "false"
+                : "true";
+        String visitId = request.getParameter("visitId");
+
+        //Marks
+        String commMark = request.getParameter("commMark");
+        String techMark = request.getParameter("techMark");
+        String marksId = request.getParameter("marksId");
+
+        //Internship
+        String beginingDate = request.getParameter("beginingDate");
+        String endDate = request.getParameter("endDate");
+        String supervisor = request.getParameter("supervisor");
+        String defense = request.getParameter("defense")== null
+                ? "false"
+                : "true";
+        String webSurvey = request.getParameter("webSurvey")== null
+                ? "false"
+                : "true";
+        String companyEval = request.getParameter("companyEval")== null
+                ? "false"
+                : "true";
+        String cdc = request.getParameter("cdc") == null
+                ? "false"
+                : "true";
+        String internshipId = request.getParameter("internshipId");
+
+        //todo get reports inside the list of internship (homepage servlet)
+        //Report
+//        String report = request.getParameter("releasedReport").equals("on")
+//                ? "true"
+//                : "false";
+//        String reportId = request.getParameter("finalReportId");
+
+
+
+
+
+    }
+
 }

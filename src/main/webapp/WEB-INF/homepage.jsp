@@ -110,6 +110,10 @@
                                             <input type="submit" value="modify" name="internshipSubmit"/>
                                         </div>
                                     </span>
+                                <input type="hidden" value="${Internship.marks.marksId}" name="marksId">
+                                <input type="hidden" value="${Internship.student.studentId}" name="studentId">
+                                <input type="hidden" value="${Internship.visit.visitID}" name="visitId">
+                                <input type="hidden" value="${Internship.finalReport.finalReportId}" name="finalReportId">
                                 <span class="homepage-cell"><input name="internshipId" type="text"
                                                                    value="${Internship.internship.internship}"
                                                                    readonly/></span>
@@ -139,8 +143,6 @@
                                                                    value="${Internship.internship.end}"/></span>
                                 <span class="homepage-cell"><input name="supervisor" type="text"
                                                                    value="${Internship.internship.internSupervisor}"/></span>
-                                <span class="homepage-cell"><input name="companyAddress" type="text"
-                                                                   value="${Internship.company.address}"/></span>
                                 <span class="homepage-cell"><input name="techMark" type="text"
                                                                    value="${Internship.marks.tech}"/></span>
                                 <span class="homepage-cell"><input name="commMark" type="text"

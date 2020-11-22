@@ -41,8 +41,11 @@ public class Login extends ServletModel {
         }
 
         Tutor tutor = new Tutor();
-        tutor.setEmail(request.getParameter("login"));
-        tutor.setPwd(request.getParameter("pwd"));
+//        tutor.setEmail(request.getParameter("login"));
+//        tutor.setPwd(request.getParameter("pwd"));
+        tutor.setEmail("jean.pierre@efrei.net");
+        tutor.setPwd("password");
+
 
         if (tutor.getEmail().isEmpty() || tutor.getPwd().isEmpty()) {
             request.setAttribute("errorMessage", ERR_MISSING_FIELD);
