@@ -58,7 +58,12 @@ public class Details extends ServletModel {
 
             request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
         } else if (internshipSubmit.equals("modify")) {
-            updateAllData(request);
+            if(updateAllData(request)){
+                response.sendRedirect("Homepage");
+
+            }else{
+                response.sendRedirect("Homepage");
+            }
         } else {
             response.sendRedirect("Homepage");
         }
@@ -68,27 +73,24 @@ public class Details extends ServletModel {
         response.sendRedirect("Homepage");
     }
 
-    private void updateAllData(HttpServletRequest request){
-       if (updateStudent(request)){
-           System.out.println("Student done");
-       }
+    private boolean updateAllData(HttpServletRequest request){
+        DataServices.disableAutoCommits(studentDataServices, marksDataServices, visitDataServices, internshipDataServices);
 
-        if (updateMarks(request)){
-            System.out.println("Marks done");
+        if (!updateStudent(request)){
+            return false;
         }
 
-        if (updateVisit(request)){
-            System.out.println("Visit done");
+        if (!updateMarks(request)){
+            return false;
         }
 
-        if (updateInternship(request)){
-            System.out.println("Internship done");
+        if (!updateVisit(request)){
+            return false;
         }
 
-
-
-
-
+        if (!updateInternship(request)){
+            return false;
+        }
 
 
         //todo get reports inside the list of internship (homepage servlet)
@@ -98,6 +100,8 @@ public class Details extends ServletModel {
 //                : "false";
 //        String reportId = request.getParameter("finalReportId");
 
+        DataServices.commitRequest(studentDataServices, marksDataServices, visitDataServices, internshipDataServices);
+        return true;
 
     }
 
@@ -107,6 +111,10 @@ public class Details extends ServletModel {
         String studentFirstname = request.getParameter("studentFirstname");
         String studentName = request.getParameter("studentName");
         String studentId = request.getParameter("studentId");
+
+        if(ProcessString.areStringEmpty(studentFirstname, studentGroup, studentName, studentId)){
+            return false;
+        }
 
         int rowAffectedCompany = studentDataServices.updateNamesGroup(studentName, studentFirstname, studentGroup, studentId);
         return (rowAffectedCompany == 1);
@@ -118,6 +126,10 @@ public class Details extends ServletModel {
         String commMark = request.getParameter("commMark");
         String techMark = request.getParameter("techMark");
         String marksId = request.getParameter("marksId");
+
+        if(ProcessString.areStringEmpty(commMark, techMark, marksId)){
+            return false;
+        }
 
         int rowAffectedCompany = marksDataServices.updateMarks(techMark, commMark, marksId);
         return (rowAffectedCompany == 1);
@@ -132,6 +144,10 @@ public class Details extends ServletModel {
                 ? "false"
                 : "true";
         String visitId = request.getParameter("visitId");
+
+        if(ProcessString.areStringEmpty(visitDone, visitPlanned, visitId)){
+            return false;
+        }
 
         int rowAffectedCompany = visitDataServices.updateVisit(visitDone, visitPlanned, visitId);
         return (rowAffectedCompany == 1);
@@ -155,6 +171,10 @@ public class Details extends ServletModel {
                 ? "false"
                 : "true";
         String internshipId = request.getParameter("internshipId");
+
+        if((ProcessString.areStringEmpty(beginingDate, endDate, supervisor, defense, webSurvey, companyEval, cdc, internshipId)) || (ProcessString.isDateBefore(endDate, beginingDate))) {
+            return false;
+        }
 
         int rowAffectedCompany = internshipDataServices.updateInternshipFromHomepage(
                 Date.valueOf(beginingDate), Date.valueOf(endDate),
