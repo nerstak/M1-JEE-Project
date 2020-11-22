@@ -152,4 +152,23 @@ public class InternshipDataServices extends DataServices {
         }
         return 0;
     }
+
+    public int updateInternshipFromHomepage(Date begin, Date end, String supervisor, String defense, String web_survey, String company_eval, String cdc, String internshipId) {
+        try {
+            ps = con.prepareStatement(DB_UPDATE_INTERNSHIP_HOMEPAGE);
+            ps.setDate(1, begin);
+            ps.setDate(2, end);
+            ps.setString(3, supervisor);
+            ps.setBoolean(4, Boolean.parseBoolean(defense));
+            ps.setBoolean(5, Boolean.parseBoolean(web_survey));
+            ps.setBoolean(6, Boolean.parseBoolean(company_eval));
+            ps.setBoolean(7, Boolean.parseBoolean(cdc));
+            ps.setObject(8, internshipId, Types.OTHER);
+
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return 0;
+    }
 }

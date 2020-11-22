@@ -51,6 +51,7 @@ public class Constants {
     public static final String DB_UPDATE_VISIT_PART = "UPDATE visit SET done = ?, planned = ? WHERE visit_id = ?";
     public static final String DB_UPDATE_INTERNSHIP_DETAILS_COMPANY = "UPDATE internship SET beginning = ?, ending = ?, intern_supervisor = ? WHERE internship_id = ?";
     public static final String DB_UPDATE_INTERNSHIP_DESCRIPTION = "UPDATE internship SET description = ? WHERE internship_id = ?";
+    public static final String DB_UPDATE_INTERNSHIP_HOMEPAGE = "UPDATE internship SET beginning = ?, ending = ?, intern_supervisor = ?, defense = ?, web_survey= ?, company_eval = ?, cdc = ? WHERE internship_id = ?";
     public static final String DB_UPDATE_REPORT_TITLE = "UPDATE final_report SET title = ? WHERE final_report_id = ?";
 
 

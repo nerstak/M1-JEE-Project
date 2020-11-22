@@ -2,6 +2,7 @@ package control;
 
 import model.*;
 import utils.MarksDataServices;
+import utils.ProcessString;
 import utils.database.*;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 
 import static utils.Constants.*;
 
@@ -79,28 +81,15 @@ public class Details extends ServletModel {
             System.out.println("Visit done");
         }
 
+        if (updateInternship(request)){
+            System.out.println("Internship done");
+        }
 
 
 
 
 
-        //Internship
-        String beginingDate = request.getParameter("beginingDate");
-        String endDate = request.getParameter("endDate");
-        String supervisor = request.getParameter("supervisor");
-        String defense = request.getParameter("defense")== null
-                ? "false"
-                : "true";
-        String webSurvey = request.getParameter("webSurvey")== null
-                ? "false"
-                : "true";
-        String companyEval = request.getParameter("companyEval")== null
-                ? "false"
-                : "true";
-        String cdc = request.getParameter("cdc") == null
-                ? "false"
-                : "true";
-        String internshipId = request.getParameter("internshipId");
+
 
         //todo get reports inside the list of internship (homepage servlet)
         //Report
@@ -145,6 +134,32 @@ public class Details extends ServletModel {
         String visitId = request.getParameter("visitId");
 
         int rowAffectedCompany = visitDataServices.updateVisit(visitDone, visitPlanned, visitId);
+        return (rowAffectedCompany == 1);
+    }
+
+    private boolean updateInternship(HttpServletRequest request){
+        //Internship
+        String beginingDate = request.getParameter("beginingDate");
+        String endDate = request.getParameter("endDate");
+        String supervisor = request.getParameter("supervisor");
+        String defense = request.getParameter("defense")== null
+                ? "false"
+                : "true";
+        String webSurvey = request.getParameter("webSurvey")== null
+                ? "false"
+                : "true";
+        String companyEval = request.getParameter("companyEval")== null
+                ? "false"
+                : "true";
+        String cdc = request.getParameter("cdc") == null
+                ? "false"
+                : "true";
+        String internshipId = request.getParameter("internshipId");
+
+        int rowAffectedCompany = internshipDataServices.updateInternshipFromHomepage(
+                Date.valueOf(beginingDate), Date.valueOf(endDate),
+                supervisor, defense, webSurvey, companyEval, cdc, internshipId);
+
         return (rowAffectedCompany == 1);
     }
 }
