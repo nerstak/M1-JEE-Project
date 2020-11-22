@@ -40,7 +40,6 @@ public class UpdateDetails extends ServletModel{
         keywordsDataServices = new KeywordsDataServices(dbUser, dbPwd, dbUrl);
     }
 
-    //TODO validation des données reçues des formulaires
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Get the name of the button that call the servlet

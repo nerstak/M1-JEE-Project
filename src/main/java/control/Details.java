@@ -59,9 +59,12 @@ public class Details extends ServletModel {
             request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
         } else if (internshipSubmit.equals("modify")) {
             if(updateAllData(request)){
+                //Todo add succes bd update message + display it in homepage
+                //Call homepage servlet to retrieve all data
                 response.sendRedirect("Homepage");
-
             }else{
+                //Todo add error bd update message + display it in homepage
+                //Call homepage servlet to retrieve all data
                 response.sendRedirect("Homepage");
             }
         } else {
@@ -73,9 +76,16 @@ public class Details extends ServletModel {
         response.sendRedirect("Homepage");
     }
 
+    /**
+     * Update all data for one internship
+     * @param request, http request object
+     * @return true if the db is updated
+     */
     private boolean updateAllData(HttpServletRequest request){
+        //Disable all data services
         DataServices.disableAutoCommits(studentDataServices, marksDataServices, visitDataServices, internshipDataServices);
 
+        //Check if update is done, if it not return false
         if (!updateStudent(request)){
             return false;
         }
@@ -93,18 +103,25 @@ public class Details extends ServletModel {
         }
 
 
-        //todo get reports inside the list of internship (homepage servlet)
+        //todo : add reports info to each internship (in InternshipDataServices)
+        //todo : update report info in the bdd
         //Report
 //        String report = request.getParameter("releasedReport").equals("on")
 //                ? "true"
 //                : "false";
 //        String reportId = request.getParameter("finalReportId");
 
+
+        //Commit all request in the db
         DataServices.commitRequest(studentDataServices, marksDataServices, visitDataServices, internshipDataServices);
         return true;
-
     }
 
+    /**
+     * Update the student
+     * @param request, http request object
+     * @return true if the db is updated
+     */
     private boolean updateStudent(HttpServletRequest request){
         //Student
         String studentGroup = request.getParameter("studentGroup");
@@ -120,7 +137,11 @@ public class Details extends ServletModel {
         return (rowAffectedCompany == 1);
     }
 
-
+    /**
+     * Update the marks
+     * @param request, http request object
+     * @return true if the db is updated
+     */
     private boolean updateMarks(HttpServletRequest request){
         //Marks
         String commMark = request.getParameter("commMark");
@@ -135,6 +156,11 @@ public class Details extends ServletModel {
         return (rowAffectedCompany == 1);
     }
 
+    /**
+     * Update the visit
+     * @param request, http request object
+     * @return true if the db is updated
+     */
     private boolean updateVisit(HttpServletRequest request){
         //Visit
         String visitPlanned = request.getParameter("visitPlanned")== null
@@ -153,6 +179,11 @@ public class Details extends ServletModel {
         return (rowAffectedCompany == 1);
     }
 
+    /**
+     * Update the internship
+     * @param request, http request object
+     * @return true if the db is updated
+     */
     private boolean updateInternship(HttpServletRequest request){
         //Internship
         String beginingDate = request.getParameter("beginingDate");
@@ -172,6 +203,7 @@ public class Details extends ServletModel {
                 : "true";
         String internshipId = request.getParameter("internshipId");
 
+        //Check if all data are not empty and begin date is before end date
         if((ProcessString.areStringEmpty(beginingDate, endDate, supervisor, defense, webSurvey, companyEval, cdc, internshipId)) || (ProcessString.isDateBefore(endDate, beginingDate))) {
             return false;
         }
