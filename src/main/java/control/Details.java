@@ -152,6 +152,14 @@ public class Details extends ServletModel {
             return false;
         }
 
+        if((Integer.parseInt(commMark) < 0) || (Integer.parseInt(commMark) > 20)){
+            return false;
+        }
+
+        if((Integer.parseInt(techMark) < 0) || (Integer.parseInt(techMark) > 20)){
+            return false;
+        }
+
         int rowAffectedCompany = marksDataServices.updateMarks(techMark, commMark, marksId);
         return (rowAffectedCompany == 1);
     }
