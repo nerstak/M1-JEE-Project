@@ -25,6 +25,7 @@ public class Details extends ServletModel {
     private StudentDataServices studentDataServices;
     private FinalReportDataServices finalReportDataServices;
     private MarksDataServices marksDataServices;
+    private VisitDataServices visitDataServices;
     private boolean successRequest;
 
     @Override
@@ -36,6 +37,7 @@ public class Details extends ServletModel {
         studentDataServices = new StudentDataServices(dbUser, dbPwd, dbUrl);
         finalReportDataServices = new FinalReportDataServices(dbUser, dbPwd, dbUrl);
         marksDataServices = new MarksDataServices(dbUser, dbPwd, dbUrl);
+        visitDataServices = new VisitDataServices(dbUser, dbPwd, dbUrl);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -73,15 +75,12 @@ public class Details extends ServletModel {
             System.out.println("Marks done");
         }
 
+        if (updateVisit(request)){
+            System.out.println("Visit done");
+        }
 
-        //Visit
-        String visitPlanned = request.getParameter("visitPlanned")== null
-                ? "false"
-                : "true";
-        String visitDone = request.getParameter("visitDone")== null
-                ? "false"
-                : "true";
-        String visitId = request.getParameter("visitId");
+
+
 
 
 
@@ -132,6 +131,20 @@ public class Details extends ServletModel {
         String marksId = request.getParameter("marksId");
 
         int rowAffectedCompany = marksDataServices.updateMarks(techMark, commMark, marksId);
+        return (rowAffectedCompany == 1);
+    }
+
+    private boolean updateVisit(HttpServletRequest request){
+        //Visit
+        String visitPlanned = request.getParameter("visitPlanned")== null
+                ? "false"
+                : "true";
+        String visitDone = request.getParameter("visitDone")== null
+                ? "false"
+                : "true";
+        String visitId = request.getParameter("visitId");
+
+        int rowAffectedCompany = visitDataServices.updateVisit(visitDone, visitPlanned, visitId);
         return (rowAffectedCompany == 1);
     }
 }
