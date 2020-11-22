@@ -98,7 +98,6 @@
                             <span class="homepage-cell">Begin date</span>
                             <span class="homepage-cell">End date</span>
                             <span class="homepage-cell">M.d.S</span>
-                            <span class="homepage-cell">Address</span>
                             <span class="homepage-cell">Tech note</span>
                             <span class="homepage-cell">Comm note</span>
                         </div>

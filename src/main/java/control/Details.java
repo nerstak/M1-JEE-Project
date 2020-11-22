@@ -1,6 +1,7 @@
 package control;
 
 import model.*;
+import utils.MarksDataServices;
 import utils.database.*;
 
 import javax.servlet.ServletException;
@@ -23,6 +24,7 @@ public class Details extends ServletModel {
     private KeywordsDataServices keywordsDataServices;
     private StudentDataServices studentDataServices;
     private FinalReportDataServices finalReportDataServices;
+    private MarksDataServices marksDataServices;
     private boolean successRequest;
 
     @Override
@@ -33,6 +35,7 @@ public class Details extends ServletModel {
         keywordsDataServices = new KeywordsDataServices(dbUser, dbPwd, dbUrl);
         studentDataServices = new StudentDataServices(dbUser, dbPwd, dbUrl);
         finalReportDataServices = new FinalReportDataServices(dbUser, dbPwd, dbUrl);
+        marksDataServices = new MarksDataServices(dbUser, dbPwd, dbUrl);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -51,7 +54,7 @@ public class Details extends ServletModel {
 
             request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
         } else if (internshipSubmit.equals("modify")) {
-            updateInternship(request);
+            updateAllData(request);
         } else {
             response.sendRedirect("Homepage");
         }
@@ -61,10 +64,14 @@ public class Details extends ServletModel {
         response.sendRedirect("Homepage");
     }
 
-    private void updateInternship(HttpServletRequest request){
+    private void updateAllData(HttpServletRequest request){
        if (updateStudent(request)){
            System.out.println("Student done");
        }
+
+        if (updateMarks(request)){
+            System.out.println("Marks done");
+        }
 
 
         //Visit
@@ -76,10 +83,7 @@ public class Details extends ServletModel {
                 : "true";
         String visitId = request.getParameter("visitId");
 
-        //Marks
-        String commMark = request.getParameter("commMark");
-        String techMark = request.getParameter("techMark");
-        String marksId = request.getParameter("marksId");
+
 
         //Internship
         String beginingDate = request.getParameter("beginingDate");
@@ -120,4 +124,14 @@ public class Details extends ServletModel {
         return (rowAffectedCompany == 1);
     }
 
+
+    private boolean updateMarks(HttpServletRequest request){
+        //Marks
+        String commMark = request.getParameter("commMark");
+        String techMark = request.getParameter("techMark");
+        String marksId = request.getParameter("marksId");
+
+        int rowAffectedCompany = marksDataServices.updateMarks(techMark, commMark, marksId);
+        return (rowAffectedCompany == 1);
+    }
 }
