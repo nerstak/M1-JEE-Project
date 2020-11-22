@@ -1,9 +1,7 @@
 package control;
 
 import model.*;
-import utils.database.InternshipDataServices;
-import utils.database.KeywordsDataServices;
-import utils.database.SkillsDataServices;
+import utils.database.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,6 +21,9 @@ public class Details extends ServletModel {
     private InternshipDataServices internshipDataServices;
     private SkillsDataServices skillsDataServices;
     private KeywordsDataServices keywordsDataServices;
+    private StudentDataServices studentDataServices;
+    private FinalReportDataServices finalReportDataServices;
+    private boolean successRequest;
 
     @Override
     public void init() {
@@ -30,6 +31,8 @@ public class Details extends ServletModel {
         internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
         skillsDataServices = new SkillsDataServices(dbUser, dbPwd, dbUrl);
         keywordsDataServices = new KeywordsDataServices(dbUser, dbPwd, dbUrl);
+        studentDataServices = new StudentDataServices(dbUser, dbPwd, dbUrl);
+        finalReportDataServices = new FinalReportDataServices(dbUser, dbPwd, dbUrl);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -59,11 +62,9 @@ public class Details extends ServletModel {
     }
 
     private void updateInternship(HttpServletRequest request){
-        //Student
-        String studentGroup = request.getParameter("studentGroup");
-        String studentFirstname = request.getParameter("studentFirstname");
-        String studentName = request.getParameter("studentName");
-        String studentId = request.getParameter("studentId");
+       if (updateStudent(request)){
+           System.out.println("Student done");
+       }
 
 
         //Visit
@@ -106,9 +107,17 @@ public class Details extends ServletModel {
 //        String reportId = request.getParameter("finalReportId");
 
 
+    }
 
+    private boolean updateStudent(HttpServletRequest request){
+        //Student
+        String studentGroup = request.getParameter("studentGroup");
+        String studentFirstname = request.getParameter("studentFirstname");
+        String studentName = request.getParameter("studentName");
+        String studentId = request.getParameter("studentId");
 
-
+        int rowAffectedCompany = studentDataServices.updateNamesGroup(studentName, studentFirstname, studentGroup, studentId);
+        return (rowAffectedCompany == 1);
     }
 
 }
