@@ -83,7 +83,7 @@ public class Details extends ServletModel {
      */
     private boolean updateAllData(HttpServletRequest request){
         //Disable all data services
-        DataServices.disableAutoCommits(studentDataServices, marksDataServices, visitDataServices, internshipDataServices);
+        DataServices.disableAutoCommits(studentDataServices, marksDataServices, visitDataServices, internshipDataServices, finalReportDataServices);
 
         //Check if update is done, if it not return false
         if (!updateStudent(request)){
@@ -102,17 +102,13 @@ public class Details extends ServletModel {
             return false;
         }
 
-
-        //todo : update report info in the bdd
-        //Report
-        String report = request.getParameter("releasedReport") == null
-                ? "false"
-                : "true";
-        String reportId = request.getParameter("finalReportId");
+        if (!updateFinalReport(request)){
+            return false;
+        }
 
 
         //Commit all request in the db
-        DataServices.commitRequest(studentDataServices, marksDataServices, visitDataServices, internshipDataServices);
+        DataServices.commitRequest(studentDataServices, marksDataServices, visitDataServices, internshipDataServices, finalReportDataServices);
         return true;
     }
 
@@ -132,8 +128,8 @@ public class Details extends ServletModel {
             return false;
         }
 
-        int rowAffectedCompany = studentDataServices.updateNamesGroup(studentName, studentFirstname, studentGroup, studentId);
-        return (rowAffectedCompany == 1);
+        int rowAffected = studentDataServices.updateNamesGroup(studentName, studentFirstname, studentGroup, studentId);
+        return (rowAffected == 1);
     }
 
     /**
@@ -159,8 +155,8 @@ public class Details extends ServletModel {
             return false;
         }
 
-        int rowAffectedCompany = marksDataServices.updateMarks(techMark, commMark, marksId);
-        return (rowAffectedCompany == 1);
+        int rowAffected = marksDataServices.updateMarks(techMark, commMark, marksId);
+        return (rowAffected == 1);
     }
 
     /**
@@ -182,8 +178,8 @@ public class Details extends ServletModel {
             return false;
         }
 
-        int rowAffectedCompany = visitDataServices.updateVisit(visitDone, visitPlanned, visitId);
-        return (rowAffectedCompany == 1);
+        int rowAffected = visitDataServices.updateVisit(visitDone, visitPlanned, visitId);
+        return (rowAffected == 1);
     }
 
     /**
@@ -215,10 +211,28 @@ public class Details extends ServletModel {
             return false;
         }
 
-        int rowAffectedCompany = internshipDataServices.updateInternshipFromHomepage(
+        int rowAffected = internshipDataServices.updateInternshipFromHomepage(
                 Date.valueOf(beginingDate), Date.valueOf(endDate),
                 supervisor, defense, webSurvey, companyEval, cdc, internshipId);
 
-        return (rowAffectedCompany == 1);
+        return (rowAffected == 1);
+    }
+
+
+    private boolean updateFinalReport(HttpServletRequest request){
+        //todo : update report info in the bdd
+        //Report
+        String report = request.getParameter("releasedReport") == null
+                ? "false"
+                : "true";
+        String reportId = request.getParameter("finalReportId");
+
+        if (ProcessString.areStringEmpty(report, reportId)){
+            return false;
+        }
+
+        int rowAffected = finalReportDataServices.updateReportBool(report, reportId);
+
+        return (rowAffected == 1);
     }
 }
