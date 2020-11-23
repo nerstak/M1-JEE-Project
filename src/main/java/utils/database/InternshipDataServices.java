@@ -46,7 +46,7 @@ public class InternshipDataServices extends DataServices {
                 i.setCompany(createCompany());
                 i.setVisit(createVisit());
                 i.setMarks(createMarks());
-
+                i.setFinalReport(createFinalReport());
                 listOfInternshipData.add(i);
             }
         } catch (SQLException e) {

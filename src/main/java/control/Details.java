@@ -103,13 +103,12 @@ public class Details extends ServletModel {
         }
 
 
-        //todo : add reports info to each internship (in InternshipDataServices)
         //todo : update report info in the bdd
         //Report
-//        String report = request.getParameter("releasedReport").equals("on")
-//                ? "true"
-//                : "false";
-//        String reportId = request.getParameter("finalReportId");
+        String report = request.getParameter("releasedReport") == null
+                ? "false"
+                : "true";
+        String reportId = request.getParameter("finalReportId");
 
 
         //Commit all request in the db

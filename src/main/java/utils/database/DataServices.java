@@ -190,6 +190,7 @@ public abstract class DataServices {
         finalReport.setFinalReportId(UUID.fromString(rs.getString("final_report_id")));
         finalReport.setReport(rs.getBoolean("report"));
         finalReport.setTitle(rs.getString("title"));
+        finalReport.setInternshipId(UUID.fromString(rs.getString("internship_id")));
 
         return finalReport;
     }
