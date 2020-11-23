@@ -60,6 +60,10 @@
             <url-pattern>*.jsp</url-pattern>
             <include-prelude>/WEB-INF/taglibjstl.jsp</include-prelude>
         </jsp-property-group>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
     </jsp-config>
 
     <welcome-file-list>
