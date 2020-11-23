@@ -34,7 +34,6 @@
 </header>
 <main class="homepage-main">
     <div class="homepage-main-content">
-        <!--Todo replace 12 by the real number -->
         <h1>Extranet myEfrei - ${fn:length(listOfInternship)}
             <c:choose>
                 <c:when test="${fn:length(listOfInternship) > 1}">

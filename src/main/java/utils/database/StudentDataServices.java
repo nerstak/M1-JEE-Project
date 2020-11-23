@@ -40,6 +40,14 @@ public class StudentDataServices extends DataServices {
         return 0;
     }
 
+    /**
+     * Update last name, first name, group
+     * @param lastName, the last name of the student
+     * @param firstName, the first name of the student
+     * @param group, the group of the student
+     * @param id, the id of the student
+     * @return number of rows affected
+     */
     public int updateNamesGroup(String lastName, String firstName, String group, String id){
         try {
             ps = con.prepareStatement(DB_UPDATE_STUDENT_NAME_GROUP);

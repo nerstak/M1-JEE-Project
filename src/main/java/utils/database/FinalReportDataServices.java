@@ -32,6 +32,12 @@ public class FinalReportDataServices extends DataServices {
         return 0;
     }
 
+    /**
+     * Update the report
+     * @param report, has the been report been released
+     * @param reportId, the report id
+     * @return the number of rows affected
+     */
     public int updateReportBool(String report, String reportId){
         try {
             ps = con.prepareStatement(DB_UPDATE_REPORT_BOOLEAN);
