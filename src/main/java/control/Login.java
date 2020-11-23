@@ -44,6 +44,8 @@ public class Login extends ServletModel {
         tutor.setEmail(request.getParameter("login"));
         tutor.setPwd(request.getParameter("pwd"));
 
+
+
         if (tutor.getEmail().isEmpty() || tutor.getPwd().isEmpty()) {
             request.setAttribute("errorMessage", ERR_MISSING_FIELD);
             request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); //redirect to welcome if ok

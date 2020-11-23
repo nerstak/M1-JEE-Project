@@ -5,6 +5,7 @@ import java.sql.Types;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static utils.Constants.DB_UPDATE_REPORT_BOOLEAN;
 import static utils.Constants.DB_UPDATE_REPORT_TITLE;
 
 public class FinalReportDataServices extends DataServices {
@@ -31,4 +32,16 @@ public class FinalReportDataServices extends DataServices {
         return 0;
     }
 
+    public int updateReportBool(String report, String reportId){
+        try {
+            ps = con.prepareStatement(DB_UPDATE_REPORT_BOOLEAN);
+            ps.setBoolean(1, Boolean.parseBoolean(report));
+            ps.setObject(2, reportId, Types.OTHER);
+
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return 0;
+    }
 }

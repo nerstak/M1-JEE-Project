@@ -44,12 +44,17 @@ public class Constants {
     public static final String DB_UPDATE_COMMENTS = "UPDATE comments SET supervisor_comm = ?, student_comm = ? WHERE comments_id = ?";
     public static final String DB_UPDATE_COMPANY = "UPDATE company SET name = ?, address = ? WHERE company_id = ?";
     public static final String DB_UPDATE_FINAL_REPORT = "UPDATE final_report SET title = ?, report = ? WHERE internship_id = ?";
-    public static final String DB_UPDATE_MARKS = "UPDATE marks SET tech = ?, communication = ? WHERE internship_id = ?";
+    public static final String DB_UPDATE_MARK = "UPDATE marks SET tech = ?, communication = ? WHERE marks_id = ?";
     public static final String DB_UPDATE_STUDENT = "UPDATE student SET name = ?, firstname = ?, email = ?, linkedin_profile = ?, student_group = ? WHERE student_id = ?";
+    public static final String DB_UPDATE_STUDENT_NAME_GROUP = "UPDATE student SET name = ?, firstname = ?, student_group = ? WHERE student_id = ?";
     public static final String DB_UPDATE_VISIT = "UPDATE visit SET done = ?, planned = ?, visit_report = ? WHERE internship_id = ?";
+    public static final String DB_UPDATE_VISIT_PART = "UPDATE visit SET done = ?, planned = ? WHERE visit_id = ?";
     public static final String DB_UPDATE_INTERNSHIP_DETAILS_COMPANY = "UPDATE internship SET beginning = ?, ending = ?, intern_supervisor = ? WHERE internship_id = ?";
     public static final String DB_UPDATE_INTERNSHIP_DESCRIPTION = "UPDATE internship SET description = ? WHERE internship_id = ?";
+    public static final String DB_UPDATE_INTERNSHIP_HOMEPAGE = "UPDATE internship SET beginning = ?, ending = ?, intern_supervisor = ?, defense = ?, web_survey= ?, company_eval = ?, cdc = ? WHERE internship_id = ?";
     public static final String DB_UPDATE_REPORT_TITLE = "UPDATE final_report SET title = ? WHERE final_report_id = ?";
+    public static final String DB_UPDATE_REPORT_BOOLEAN = "UPDATE final_report SET report = ? WHERE final_report_id = ?";
+
 
     /*INSERT INTO*/
     public static final String DB_INSERT_INTO_STUDENT_TO_SKILL = "INSERT INTO student_to_skills(student_id, skill_id) VALUES (?, ?)";
