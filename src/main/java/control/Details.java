@@ -1,7 +1,7 @@
 package control;
 
 import model.*;
-import utils.MarksDataServices;
+import utils.database.MarksDataServices;
 import utils.ProcessString;
 import utils.database.*;
 
@@ -28,7 +28,6 @@ public class Details extends ServletModel {
     private FinalReportDataServices finalReportDataServices;
     private MarksDataServices marksDataServices;
     private VisitDataServices visitDataServices;
-    private boolean successRequest;
 
     @Override
     public void init() {
@@ -58,13 +57,7 @@ public class Details extends ServletModel {
 
             request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
         } else if (internshipSubmit.equals("modify")) {
-            if(updateAllData(request)){
-                //Call homepage servlet to retrieve all data
-                response.sendRedirect("Homepage");
-            }else{
-                //Call homepage servlet to retrieve all data
-                response.sendRedirect("Homepage");
-            }
+            response.sendRedirect("Homepage");
         } else {
             response.sendRedirect("Homepage");
         }
@@ -183,7 +176,7 @@ public class Details extends ServletModel {
      */
     private boolean updateInternship(HttpServletRequest request){
         //Internship
-        String beginingDate = request.getParameter("beginingDate");
+        String beginningDate = request.getParameter("beginningDate");
         String endDate = request.getParameter("endDate");
         String supervisor = request.getParameter("supervisor");
         String defense = request.getParameter("defense")== null
@@ -201,12 +194,12 @@ public class Details extends ServletModel {
         String internshipId = request.getParameter("internshipId");
 
         //Check if all data are not empty and begin date is before end date
-        if((ProcessString.areStringEmpty(beginingDate, endDate, supervisor, defense, webSurvey, companyEval, cdc, internshipId)) || (ProcessString.isDateBefore(endDate, beginingDate))) {
+        if((ProcessString.areStringEmpty(beginningDate, endDate, supervisor, defense, webSurvey, companyEval, cdc, internshipId)) || (ProcessString.isDateBefore(endDate, beginningDate))) {
             return false;
         }
 
         int rowAffected = internshipDataServices.updateInternshipFromHomepage(
-                Date.valueOf(beginingDate), Date.valueOf(endDate),
+                Date.valueOf(beginningDate), Date.valueOf(endDate),
                 supervisor, defense, webSurvey, companyEval, cdc, internshipId);
 
         return (rowAffected == 1);
@@ -214,7 +207,7 @@ public class Details extends ServletModel {
 
     /**
      * Update the report table
-     * @param request, htto request
+     * @param request, http request
      * @return true if the database has been updated
      */
     private boolean updateFinalReport(HttpServletRequest request){

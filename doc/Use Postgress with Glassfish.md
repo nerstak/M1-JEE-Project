@@ -12,7 +12,7 @@
 
 6. Hit next and for datasource classname select `org.postgresql.ds.PGConnectionPoolDataSource`
 
-7. In the additional properties, fill the following lines : DatabaseName, Password, PortNumber = 5432, ServerName = localhost, User. User and password are corresponding to user that will access databasename
+7. In the additional properties, fill the following lines : DatabaseName, Password, PortNumber = 5432, ServerName = localhost, User. User and password are corresponding to user that will access databasename.
 
 8. Click finish and ping.
 

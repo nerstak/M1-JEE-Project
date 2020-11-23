@@ -113,7 +113,7 @@ public class SkillsDataServices extends DataServices {
      * Insert into skill, a skill
      * @param skillId, the skill id
      * @param skill, the skill
-     * @return, the number of rows affected
+     * @return Number of rows affected
      */
     public int insertIntoSkill(UUID skillId, String skill){
         try {

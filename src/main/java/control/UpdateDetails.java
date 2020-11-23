@@ -288,8 +288,8 @@ public class UpdateDetails extends ServletModel{
      * @param request, the request
      * @param response, response
      * @param internshipId, the ID of the concerned internship
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException ServletException
+     * @throws IOException IOException
      */
     private void redirectToDetailsPage(HttpServletRequest request, HttpServletResponse response, String internshipId) throws ServletException, IOException {
         if (successRequest){

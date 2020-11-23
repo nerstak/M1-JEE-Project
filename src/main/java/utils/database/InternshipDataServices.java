@@ -167,7 +167,7 @@ public class InternshipDataServices extends DataServices {
      * @param defense, has the defense been done
      * @param web_survey, has the web survey been completed
      * @param company_eval, has the company eval been completed
-     * @param cdc
+     * @param cdc internship agreement
      * @param internshipId, the internship id
      * @return number of rows affected
      */

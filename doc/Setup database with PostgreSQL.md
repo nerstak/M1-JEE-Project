@@ -6,7 +6,7 @@ For the first time, you need to follow every step. After that, you'll only need 
 
 ## User setup
 
-You need to create an user (`adm`) to interact with the database.  We assume that you know how to run script to PostgreSQL engine through the shell or the IDE.
+You need to create a user (`adm`) to interact with the database.  We assume that you know how to run script to PostgreSQL engine through the shell or the IDE.
 
 Run the script `User Setup.sql` while being connected to Postgres database.
 

@@ -70,7 +70,7 @@
                     <div class="div-input-half">
                         <div class="input-left">
                             <label for="begin">Begin</label>
-                            <input type="date" id="begin" name="begin" value="${internshipData.internship.begining}">
+                            <input type="date" id="begin" name="begin" value="${internshipData.internship.beginning}">
                         </div>
                         <div class="input-right">
                             <label for="end">End</label>
@@ -137,7 +137,7 @@
                     <div class="div-input-third">
                         <div class="input-left">
                             <label for="description">Description</label>
-                            <textarea name="description" id="description" form="info-company-form">${internshipData.internship.desciption}</textarea>
+                            <textarea name="description" id="description" form="info-company-form">${internshipData.internship.description}</textarea>
                         </div>
                         <div class="input-right">
                             <label for="tutorComments">Tutor's comment</label>

@@ -77,7 +77,7 @@ public class KeywordsDataServices extends DataServices {
 
 
     /**
-     * Search if a keyword is inside the databse
+     * Search if a keyword is inside the database
      * @param keyword, the keyword to search
      * @return result set of the query
      */
@@ -113,7 +113,7 @@ public class KeywordsDataServices extends DataServices {
      * Insert into keywords, a keyword
      * @param keywordId, the keyword id
      * @param keyword, the keyword
-     * @return, the number of rows affected
+     * @return Number of rows affected
      */
     public int insertIntoKeyword(UUID keywordId, String keyword){
         try {

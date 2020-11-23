@@ -1,11 +1,4 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Vincent
-  Date: 05/11/2020
-  Time: 10:50
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,8 +43,8 @@
             <div class="homepage-selector-select">
                 <label for="year">Year</label>
                 <select name="year" id="year">
-                    <c:forEach var="year" begin="0" end="5" step="1">
-                        <option value="${2020 - year}">${2020 - year}</option>
+                    <c:forEach var="year" begin="0" end="7" step="1">
+                        <option value="${2022 - year}">${2022 - year}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -135,8 +128,8 @@
                                                                    type="checkbox" ${Internship.visit.planned == true ? 'checked' : ''}/></span>
                                 <span class="homepage-cell"><input name="visitDone"
                                                                    type="checkbox" ${Internship.visit.done == true ? 'checked' : ''}/></span>
-                                <span class="homepage-cell"><input name="beginingDate" type="date"
-                                                                   value="${Internship.internship.begining}"/></span>
+                                <span class="homepage-cell"><input name="beginningDate" type="date"
+                                                                   value="${Internship.internship.beginning}"/></span>
                                 <span class="homepage-cell"><input name="endDate" type="date"
                                                                    value="${Internship.internship.end}"/></span>
                                 <span class="homepage-cell"><input name="supervisor" type="text"

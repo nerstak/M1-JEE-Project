@@ -103,10 +103,10 @@ public abstract class DataServices {
         Internship internship = new Internship();
 
         internship.setInternship(UUID.fromString(rs.getString("internship_id")));
-        internship.setDesciption(rs.getString("description"));
+        internship.setDescription(rs.getString("description"));
         internship.setMidInternInfo(rs.getBoolean("mid_intern_info"));
         internship.setWebSurvey(rs.getBoolean("web_survey"));
-        internship.setBegining(rs.getDate("beginning"));
+        internship.setBeginning(rs.getDate("beginning"));
         internship.setEnd(rs.getDate("ending"));
         internship.setCdc(rs.getBoolean("cdc"));
         internship.setDefense(rs.getBoolean("defense"));
