@@ -166,15 +166,15 @@ SELECT S.*,
 
 
 FROM student S
-         LEFT JOIN internship I
+         JOIN internship I
                    ON S.student_id = I.student_id
          JOIN company C
               ON I.company_id = C.company_id
-         LEFT JOIN visit V
+         JOIN visit V
                    ON I.internship_id = V.internship_id
-         LEFT JOIN marks M
+         JOIN marks M
                    ON I.internship_id = M.internship_id
-         LEFT JOIN final_report Fr
+         JOIN final_report Fr
                    ON Fr.internship_id = I.internship_id
 
 ORDER BY (I.beginning) DESC);
@@ -183,7 +183,7 @@ CREATE VIEW internships_data_details AS
 (
 SELECT S.*, C.comments_id, C.student_comm, C.supervisor_comm
 FROM internships_data S
-         LEFT JOIN comments C
+         JOIN comments C
                    ON S.internship_id = C.internship_id
     );
 
