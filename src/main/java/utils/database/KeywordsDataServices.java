@@ -1,10 +1,7 @@
 package utils.database;
 
 import control.Homepage;
-import model.Internship;
 import model.Keywords;
-import model.Skills;
-import model.Student;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

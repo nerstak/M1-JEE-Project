@@ -1,7 +1,5 @@
 package utils.database;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.logging.Level;

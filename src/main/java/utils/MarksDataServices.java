@@ -1,7 +1,5 @@
 package utils;
 
-import model.Internship;
-import model.Student;
 import utils.database.DataServices;
 
 import java.sql.SQLException;

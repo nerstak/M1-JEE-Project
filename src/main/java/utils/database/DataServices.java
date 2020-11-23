@@ -1,14 +1,12 @@
 package utils.database;
 
 import model.*;
-import model.InternshipData;
 
 import java.sql.*;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static utils.Constants.*;
 
 /**
  * Mother-class of interaction with database
