@@ -8,9 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static utils.Constants.HOME_PAGE;
-import static utils.Constants.LOGIN_PAGE;
-
 /**
  * Logs out an user
  */

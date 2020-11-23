@@ -1,7 +1,5 @@
 package utils.database;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.logging.Level;
@@ -14,6 +12,13 @@ public class VisitDataServices extends DataServices {
         super(login, pwd, connectionUrl);
     }
 
+    /**
+     * Update the visit table
+     * @param done, done column
+     * @param planned, planned column
+     * @param visitId, the visit id
+     * @return number of rows affected
+     */
     public int updateVisit(String done, String planned, String visitId ) {
         try {
             ps = con.prepareStatement(DB_UPDATE_VISIT_PART);

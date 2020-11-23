@@ -59,11 +59,9 @@ public class Details extends ServletModel {
             request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
         } else if (internshipSubmit.equals("modify")) {
             if(updateAllData(request)){
-                //Todo add succes bd update message + display it in homepage
                 //Call homepage servlet to retrieve all data
                 response.sendRedirect("Homepage");
             }else{
-                //Todo add error bd update message + display it in homepage
                 //Call homepage servlet to retrieve all data
                 response.sendRedirect("Homepage");
             }
@@ -106,7 +104,6 @@ public class Details extends ServletModel {
             return false;
         }
 
-
         //Commit all request in the db
         DataServices.commitRequest(studentDataServices, marksDataServices, visitDataServices, internshipDataServices, finalReportDataServices);
         return true;
@@ -128,8 +125,7 @@ public class Details extends ServletModel {
             return false;
         }
 
-        int rowAffected = studentDataServices.updateNamesGroup(studentName, studentFirstname, studentGroup, studentId);
-        return (rowAffected == 1);
+        return (studentDataServices.updateNamesGroup(studentName, studentFirstname, studentGroup, studentId) == 1);
     }
 
     /**
@@ -155,8 +151,7 @@ public class Details extends ServletModel {
             return false;
         }
 
-        int rowAffected = marksDataServices.updateMarks(techMark, commMark, marksId);
-        return (rowAffected == 1);
+        return (marksDataServices.updateMarks(techMark, commMark, marksId) == 1);
     }
 
     /**
@@ -178,8 +173,7 @@ public class Details extends ServletModel {
             return false;
         }
 
-        int rowAffected = visitDataServices.updateVisit(visitDone, visitPlanned, visitId);
-        return (rowAffected == 1);
+        return (visitDataServices.updateVisit(visitDone, visitPlanned, visitId) == 1);
     }
 
     /**
@@ -218,9 +212,12 @@ public class Details extends ServletModel {
         return (rowAffected == 1);
     }
 
-
+    /**
+     * Update the report table
+     * @param request, htto request
+     * @return true if the database has been updated
+     */
     private boolean updateFinalReport(HttpServletRequest request){
-        //todo : update report info in the bdd
         //Report
         String report = request.getParameter("releasedReport") == null
                 ? "false"
@@ -231,8 +228,6 @@ public class Details extends ServletModel {
             return false;
         }
 
-        int rowAffected = finalReportDataServices.updateReportBool(report, reportId);
-
-        return (rowAffected == 1);
+        return (finalReportDataServices.updateReportBool(report, reportId) == 1);
     }
 }

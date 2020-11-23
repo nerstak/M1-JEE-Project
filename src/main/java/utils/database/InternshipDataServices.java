@@ -140,6 +140,12 @@ public class InternshipDataServices extends DataServices {
         return 0;
     }
 
+    /**
+     * Update the description of the internship
+     * @param internshipId the internship ID
+     * @param description description of the ID
+     * @return number of rows affected
+     */
     public int updateInternshipDescription(String internshipId, String description ) {
         try {
             ps = con.prepareStatement(DB_UPDATE_INTERNSHIP_DESCRIPTION);
@@ -153,6 +159,18 @@ public class InternshipDataServices extends DataServices {
         return 0;
     }
 
+    /**
+     * Update internship
+     * @param begin, begin date
+     * @param end, end date
+     * @param supervisor, supervisor of the intern in the company
+     * @param defense, has the defense been done
+     * @param web_survey, has the web survey been completed
+     * @param company_eval, has the company eval been completed
+     * @param cdc
+     * @param internshipId, the internship id
+     * @return number of rows affected
+     */
     public int updateInternshipFromHomepage(Date begin, Date end, String supervisor, String defense, String web_survey, String company_eval, String cdc, String internshipId) {
         try {
             ps = con.prepareStatement(DB_UPDATE_INTERNSHIP_HOMEPAGE);

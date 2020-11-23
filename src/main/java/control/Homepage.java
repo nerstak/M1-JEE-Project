@@ -41,7 +41,6 @@ public class Homepage extends ServletModel {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO: Should we keep this post method?
         processRequest(request, response);
     }
 
