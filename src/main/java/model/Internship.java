@@ -5,10 +5,10 @@ import java.util.UUID;
 
 public class Internship {
     private UUID internship;
-    private String desciption;
+    private String description;
     private boolean webSurvey;
     private boolean midInternInfo;
-    private Date begining;
+    private Date beginning;
     private Date end;
     private String internSupervisor;
     private UUID StudentId;
@@ -49,12 +49,12 @@ public class Internship {
         this.internship = internship;
     }
 
-    public String getDesciption() {
-        return desciption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesciption(String desciption) {
-        this.desciption = desciption;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public boolean isWebSurvey() {
@@ -73,12 +73,12 @@ public class Internship {
         this.midInternInfo = midInternInfo;
     }
 
-    public Date getBegining() {
-        return begining;
+    public Date getBeginning() {
+        return beginning;
     }
 
-    public void setBegining(Date begining) {
-        this.begining = begining;
+    public void setBeginning(Date beginning) {
+        this.beginning = beginning;
     }
 
     public Date getEnd() {

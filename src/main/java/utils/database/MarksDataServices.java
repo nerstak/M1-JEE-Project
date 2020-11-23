@@ -1,4 +1,4 @@
-package utils;
+package utils.database;
 
 import utils.database.DataServices;
 
@@ -8,7 +8,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static utils.Constants.DB_UPDATE_MARK;
-import static utils.Constants.DB_UPDATE_STUDENT;
 
 public class MarksDataServices extends DataServices {
     public MarksDataServices(String login, String pwd, String connectionUrl) {

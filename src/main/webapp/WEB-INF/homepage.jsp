@@ -1,16 +1,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Vincent
-  Date: 05/11/2020
-  Time: 10:50
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="height=device-height,
                       width=device-width, initial-scale=1.0,
                       minimum-scale=1.0, maximum-scale=1.0,
@@ -50,8 +43,15 @@
             <div class="homepage-selector-select">
                 <label for="year">Year</label>
                 <select name="year" id="year">
-                    <c:forEach var="year" begin="0" end="5" step="1">
-                        <option value="${2020 - year}">${2020 - year}</option>
+                    <c:forEach var="year" begin="0" end="7" step="1">
+                    <option value="${2022 - year}"
+                            <c:choose>
+                                <c:when test="${searchedYear == 2022 - year}">
+                                        selected="selected"
+                                </c:when>
+                            </c:choose>
+
+                        >${2022 - year}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -60,13 +60,25 @@
                 <select name="keywords" id="keywords">
                     <option value="%">-</option>
                     <c:forEach items="${listOfKeywords}" var="keyword">
-                        <option value="${keyword.keyword}">${keyword.keyword}</option>
+                        <option value="${keyword.keyword}"
+                            <c:choose>
+                                <c:when test="${searchedKeyword == keyword.keyword}">
+                                    selected="selected"
+                                </c:when>
+                            </c:choose>
+                        >${keyword.keyword}</option>
                     </c:forEach>
                 </select>
             </div>
             <div class="homepage-selector-select">
                 <label for="search-name">Name</label>
-                <input type="text" name="search-name" id="search-name">
+                <input type="text" name="search-name" id="search-name"
+                    <c:choose>
+                        <c:when test="${not empty searchedName}">
+                               value="${searchedName}"
+                        </c:when>
+                    </c:choose>
+                >
             </div>
             <input type="submit" value="Search">
         </form>
@@ -135,8 +147,8 @@
                                                                    type="checkbox" ${Internship.visit.planned == true ? 'checked' : ''}/></span>
                                 <span class="homepage-cell"><input name="visitDone"
                                                                    type="checkbox" ${Internship.visit.done == true ? 'checked' : ''}/></span>
-                                <span class="homepage-cell"><input name="beginingDate" type="date"
-                                                                   value="${Internship.internship.begining}"/></span>
+                                <span class="homepage-cell"><input name="beginningDate" type="date"
+                                                                   value="${Internship.internship.beginning}"/></span>
                                 <span class="homepage-cell"><input name="endDate" type="date"
                                                                    value="${Internship.internship.end}"/></span>
                                 <span class="homepage-cell"><input name="supervisor" type="text"

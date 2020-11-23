@@ -22,8 +22,6 @@ import static utils.Constants.HOME_PAGE;
 @WebServlet(name = "Homepage")
 public class Homepage extends ServletModel {
     private HttpSession session;
-    private ArrayList<Skills> listOfSkills;
-    private ArrayList<Keywords> listOfKeywords;
 
     private InternshipDataServices internshipDataServices;
     private KeywordsDataServices keywordsDataServices;
@@ -63,11 +61,16 @@ public class Homepage extends ServletModel {
             if (name == null) {
                 name = "";
             }
+
             keyword = request.getParameter("keywords");
             if (keyword == null) {
                 keyword = "%";
             }
+
             request.setAttribute("listOfInternship", internshipDataServices.getListInternships(tutor, year, name, keyword));
+            request.setAttribute("searchedYear", year);
+            request.setAttribute("searchedKeyword", keyword);
+            request.setAttribute("searchedName", name);
 
             request.getRequestDispatcher(HOME_PAGE).forward(request, response);
         } else {
