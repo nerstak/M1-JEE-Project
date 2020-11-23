@@ -57,6 +57,7 @@ public class Details extends ServletModel {
 
             request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
         } else if (internshipSubmit.equals("modify")) {
+            updateAllData(request);
             response.sendRedirect("Homepage");
         } else {
             response.sendRedirect("Homepage");
