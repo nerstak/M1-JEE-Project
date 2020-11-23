@@ -163,3 +163,5 @@ buildNumber.properties
 M1-JEE-Project.iml
 nb-configuration.xml
 /.gradle/
+.vscode/csak-timelog.json
+sonarqube/
