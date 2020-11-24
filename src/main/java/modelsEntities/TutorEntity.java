@@ -1,6 +1,8 @@
 package modelsEntities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -9,14 +11,15 @@ import java.util.Objects;
         @NamedQuery(name = "Tutor.SelectSingleTutor", query = "SELECT t FROM TutorEntity t WHERE t.email  = :email AND t.pwd = :pwd")
 )
 public class TutorEntity {
+    @Id
+    @Column(name = "tutor_id", nullable = false)
     private String tutorId;
     private String name;
     private String firstname;
     private String pwd;
     private String email;
 
-    @Id
-    @Column(name = "tutor_id", nullable = false)
+
     public String getTutorId() {
         return tutorId;
     }
@@ -24,6 +27,11 @@ public class TutorEntity {
     public void setTutorId(String tutorId) {
         this.tutorId = tutorId;
     }
+
+    @OneToMany(mappedBy="tutorEntity")
+    private List<StudentEntity> students = new ArrayList<>();
+
+    public List getListStudents() { return students; }
 
     @Basic
     @Column(name = "name", nullable = true, length = -1)

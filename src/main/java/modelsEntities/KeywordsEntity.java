@@ -1,16 +1,19 @@
 package modelsEntities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "keywords", schema = "public", catalog = "st2eedb")
 public class KeywordsEntity {
+    @Id
+    @Column(name = "keyword_id", nullable = false)
     private String keywordId;
     private String keyword;
 
-    @Id
-    @Column(name = "keyword_id", nullable = false)
+
     public String getKeywordId() {
         return keywordId;
     }
@@ -28,6 +31,14 @@ public class KeywordsEntity {
     public void setKeyword(String keyword) {
         this.keyword = keyword;
     }
+
+    @ManyToMany
+    @JoinTable( name = "internship_to_keywords",
+            joinColumns = @JoinColumn( name = "keyword_id" ),
+            inverseJoinColumns = @JoinColumn( name = "internship_id" ) )
+    private List<InternshipEntity> internships = new ArrayList<>();
+
+    public List getListInternships() { return internships; }
 
     @Override
     public boolean equals(Object o) {

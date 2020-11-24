@@ -6,13 +6,18 @@ import java.util.Objects;
 @Entity
 @Table(name = "marks", schema = "public", catalog = "st2eedb")
 public class MarksEntity {
+    @Id
+    @Column(name = "marks_id", nullable = false)
     private String marksId;
     private Integer tech;
     private Integer communication;
     private String internshipId;
 
-    @Id
-    @Column(name = "marks_id", nullable = false)
+
+    @OneToOne
+    @JoinColumn( name="internship_id", nullable=true )
+    private InternshipEntity internshipEntity;
+
     public String getMarksId() {
         return marksId;
     }
@@ -40,6 +45,8 @@ public class MarksEntity {
     public void setCommunication(Integer communication) {
         this.communication = communication;
     }
+
+
 
     @Basic
     @Column(name = "internship_id", nullable = true)

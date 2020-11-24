@@ -6,14 +6,15 @@ import java.util.Objects;
 @Entity
 @Table(name = "visit", schema = "public", catalog = "st2eedb")
 public class VisitEntity {
+    @Id
+    @Column(name = "visit_id", nullable = false)
     private String visitId;
     private Boolean done;
     private Boolean planned;
     private Boolean visitReport;
     private String internshipId;
 
-    @Id
-    @Column(name = "visit_id", nullable = false)
+
     public String getVisitId() {
         return visitId;
     }
@@ -52,6 +53,12 @@ public class VisitEntity {
         this.visitReport = visitReport;
     }
 
+
+    @OneToOne
+    @JoinColumn( name="internship_id", nullable=true )
+    private InternshipEntity internshipEntity;
+
+    /*
     @Basic
     @Column(name = "internship_id", nullable = true)
     public String getInternshipId() {
@@ -61,7 +68,7 @@ public class VisitEntity {
     public void setInternshipId(String internshipId) {
         this.internshipId = internshipId;
     }
-
+*/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

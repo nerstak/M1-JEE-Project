@@ -6,12 +6,13 @@ import java.util.Objects;
 @Entity
 @Table(name = "company", schema = "public", catalog = "st2eedb")
 public class CompanyEntity {
+    @Id
+    @Column(name = "company_id", nullable = false)
     private String companyId;
     private String name;
     private String address;
 
-    @Id
-    @Column(name = "company_id", nullable = false)
+
     public String getCompanyId() {
         return companyId;
     }

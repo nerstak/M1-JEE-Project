@@ -6,13 +6,18 @@ import java.util.Objects;
 @Entity
 @Table(name = "final_report", schema = "public", catalog = "st2eedb")
 public class FinalReportEntity {
+    @Id
+    @Column(name = "final_report_id", nullable = false)
     private String finalReportId;
     private String title;
     private Boolean report;
     private String internshipId;
 
-    @Id
-    @Column(name = "final_report_id", nullable = false)
+    @OneToOne
+    @JoinColumn( name="internship_id", nullable=true )
+    InternshipEntity internshipEntity;
+
+
     public String getFinalReportId() {
         return finalReportId;
     }
@@ -40,7 +45,7 @@ public class FinalReportEntity {
     public void setReport(Boolean report) {
         this.report = report;
     }
-
+/*
     @Basic
     @Column(name = "internship_id", nullable = true)
     public String getInternshipId() {
@@ -49,7 +54,7 @@ public class FinalReportEntity {
 
     public void setInternshipId(String internshipId) {
         this.internshipId = internshipId;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {

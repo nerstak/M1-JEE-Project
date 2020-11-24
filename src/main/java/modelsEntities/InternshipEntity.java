@@ -2,26 +2,92 @@ package modelsEntities;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "internship", schema = "public", catalog = "st2eedb")
+@NamedQueries(
+        @NamedQuery(name="Internship.SelectList", query = "SELECT i FROM InternshipEntity i JOIN FETCH i.studentEntity s WHERE s.tutorEntity.tutorId LIKE :tutor")
+)
 public class InternshipEntity {
+    @Id    @Column(name = "internship_id", nullable = false)
     private String internshipId;
+
+    @Basic    @Column(name = "description", nullable = true, length = -1)
     private String description;
+
+    @Basic    @Column(name = "web_survey", nullable = true)
     private Boolean webSurvey;
+
+    @Basic    @Column(name = "mid_intern_info", nullable = true)
     private Boolean midInternInfo;
+
+    @Basic    @Column(name = "beginning", nullable = true)
     private Date beginning;
+
+    @Basic    @Column(name = "ending", nullable = true)
     private Date ending;
-    private String studentId;
-    private String companyId;
+
+//    @Basic    @Column(name = "student_id", nullable = true)
+//    private String studentId;
+//
+//    @Basic    @Column(name = "company_id", nullable = true)
+//    private String companyId;
+
+    @Basic    @Column(name = "cdc", nullable = true)
     private Boolean cdc;
+
+    @Basic    @Column(name = "company_eval", nullable = true)
     private Boolean companyEval;
+
+    @Basic    @Column(name = "defense", nullable = true)
     private Boolean defense;
+
+    @Basic    @Column(name = "intern_supervisor", nullable = true, length = -1)
     private String internSupervisor;
 
-    @Id
-    @Column(name = "internship_id", nullable = false)
+    @OneToOne( mappedBy = "InternshipEntity" )
+    private MarksEntity marksEntity;
+
+    @OneToOne( mappedBy = "InternshipEntity" )
+    private CommentsEntity commentsEntity;
+
+    @OneToOne( mappedBy = "InternshipEntity" )
+    private FinalReportEntity finalReportEntity;
+
+    @OneToOne( mappedBy = "InternshipEntity" )
+    private VisitEntity visitEntity;
+
+    @ManyToOne  @JoinColumn( name="company_id" )
+    private CompanyEntity companyEntity;
+
+    @ManyToOne  @JoinColumn( name="student_id" )
+    private StudentEntity studentEntity;
+
+    @ManyToMany
+    @JoinTable( name = "internship_to_keywords",
+            joinColumns = @JoinColumn( name = "internship_id" ),
+            inverseJoinColumns = @JoinColumn( name = "keyword_id" ) )
+    private List<KeywordsEntity> keywords = new ArrayList<>();
+
+
+    public FinalReportEntity getFinalReport() {return finalReportEntity;}
+
+    public CommentsEntity getComments() {return commentsEntity;}
+
+    public MarksEntity getMarks() {return marksEntity;}
+
+    public VisitEntity getVisit() {return visitEntity;}
+
+    public StudentEntity getStudent() {return studentEntity;}
+
+
+    public CompanyEntity getCompany() {return companyEntity;}
+
+    public List getListKeywords() {return keywords;}
+
     public String getInternshipId() {
         return internshipId;
     }
@@ -30,8 +96,6 @@ public class InternshipEntity {
         this.internshipId = internshipId;
     }
 
-    @Basic
-    @Column(name = "description", nullable = true, length = -1)
     public String getDescription() {
         return description;
     }
@@ -40,8 +104,6 @@ public class InternshipEntity {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "web_survey", nullable = true)
     public Boolean getWebSurvey() {
         return webSurvey;
     }
@@ -50,8 +112,7 @@ public class InternshipEntity {
         this.webSurvey = webSurvey;
     }
 
-    @Basic
-    @Column(name = "mid_intern_info", nullable = true)
+
     public Boolean getMidInternInfo() {
         return midInternInfo;
     }
@@ -60,8 +121,6 @@ public class InternshipEntity {
         this.midInternInfo = midInternInfo;
     }
 
-    @Basic
-    @Column(name = "beginning", nullable = true)
     public Date getBeginning() {
         return beginning;
     }
@@ -70,8 +129,6 @@ public class InternshipEntity {
         this.beginning = beginning;
     }
 
-    @Basic
-    @Column(name = "ending", nullable = true)
     public Date getEnding() {
         return ending;
     }
@@ -80,28 +137,22 @@ public class InternshipEntity {
         this.ending = ending;
     }
 
-    @Basic
-    @Column(name = "student_id", nullable = true)
-    public String getStudentId() {
-        return studentId;
-    }
+//    public String getStudentId() {
+//        return studentId;
+//    }
+//
+//    public void setStudentId(String studentId) {
+//        this.studentId = studentId;
+//    }
+//
+//    public String getCompanyId() {
+//        return companyId;
+//    }
+//
+//    public void setCompanyId(String companyId) {
+//        this.companyId = companyId;
+//    }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
-    }
-
-    @Basic
-    @Column(name = "company_id", nullable = true)
-    public String getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(String companyId) {
-        this.companyId = companyId;
-    }
-
-    @Basic
-    @Column(name = "cdc", nullable = true)
     public Boolean getCdc() {
         return cdc;
     }
@@ -110,8 +161,6 @@ public class InternshipEntity {
         this.cdc = cdc;
     }
 
-    @Basic
-    @Column(name = "company_eval", nullable = true)
     public Boolean getCompanyEval() {
         return companyEval;
     }
@@ -120,8 +169,6 @@ public class InternshipEntity {
         this.companyEval = companyEval;
     }
 
-    @Basic
-    @Column(name = "defense", nullable = true)
     public Boolean getDefense() {
         return defense;
     }
@@ -130,8 +177,6 @@ public class InternshipEntity {
         this.defense = defense;
     }
 
-    @Basic
-    @Column(name = "intern_supervisor", nullable = true, length = -1)
     public String getInternSupervisor() {
         return internSupervisor;
     }
@@ -151,8 +196,8 @@ public class InternshipEntity {
                 Objects.equals(midInternInfo, that.midInternInfo) &&
                 Objects.equals(beginning, that.beginning) &&
                 Objects.equals(ending, that.ending) &&
-                Objects.equals(studentId, that.studentId) &&
-                Objects.equals(companyId, that.companyId) &&
+//                Objects.equals(studentId, that.studentId) &&
+//                Objects.equals(companyId, that.companyId) &&
                 Objects.equals(cdc, that.cdc) &&
                 Objects.equals(companyEval, that.companyEval) &&
                 Objects.equals(defense, that.defense) &&
@@ -161,6 +206,6 @@ public class InternshipEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(internshipId, description, webSurvey, midInternInfo, beginning, ending, studentId, companyId, cdc, companyEval, defense, internSupervisor);
+        return Objects.hash(internshipId, description, webSurvey, midInternInfo, beginning, ending, cdc, companyEval, defense, internSupervisor);
     }
 }

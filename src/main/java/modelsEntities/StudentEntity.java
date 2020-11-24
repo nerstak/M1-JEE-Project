@@ -1,21 +1,51 @@
 package modelsEntities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "student", schema = "public", catalog = "st2eedb")
 public class StudentEntity {
-    private String studentId;
-    private String name;
-    private String firstname;
-    private String email;
-    private String studentGroup;
-    private String linkedinProfile;
-    private String tutorId;
-
     @Id
     @Column(name = "student_id", nullable = false)
+    private String studentId;
+
+    @Basic
+    @Column(name = "name", nullable = true, length = -1)
+    private String name;
+
+    @Basic
+    @Column(name = "firstname", nullable = true, length = -1)
+    private String firstname;
+
+    @Basic
+    @Column(name = "email", nullable = true, length = -1)
+    private String email;
+
+    @Basic
+    @Column(name = "student_group", nullable = true, length = -1)
+    private String studentGroup;
+
+    @Basic
+    @Column(name = "linkedin_profile", nullable = true, length = -1)
+    private String linkedinProfile;
+
+//    @Basic
+//    @Column(name = "tutor_id")
+//    private String tutorId;
+
+    @ManyToOne
+    @JoinColumn( name="tutor_id" )
+    private TutorEntity tutorEntity;
+
+    @ManyToMany
+    @JoinTable( name = "student_to_skills",
+            joinColumns = @JoinColumn( name = "student_id" ),
+            inverseJoinColumns = @JoinColumn( name = "skill_id" ) )
+    private List<SkillsEntity> skills = new ArrayList<>();
+
     public String getStudentId() {
         return studentId;
     }
@@ -24,8 +54,8 @@ public class StudentEntity {
         this.studentId = studentId;
     }
 
-    @Basic
-    @Column(name = "name", nullable = true, length = -1)
+    private TutorEntity getTutorEntity() {return tutorEntity;}
+
     public String getName() {
         return name;
     }
@@ -34,8 +64,6 @@ public class StudentEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "firstname", nullable = true, length = -1)
     public String getFirstname() {
         return firstname;
     }
@@ -44,8 +72,6 @@ public class StudentEntity {
         this.firstname = firstname;
     }
 
-    @Basic
-    @Column(name = "email", nullable = true, length = -1)
     public String getEmail() {
         return email;
     }
@@ -54,8 +80,6 @@ public class StudentEntity {
         this.email = email;
     }
 
-    @Basic
-    @Column(name = "student_group", nullable = true, length = -1)
     public String getStudentGroup() {
         return studentGroup;
     }
@@ -64,8 +88,6 @@ public class StudentEntity {
         this.studentGroup = studentGroup;
     }
 
-    @Basic
-    @Column(name = "linkedin_profile", nullable = true, length = -1)
     public String getLinkedinProfile() {
         return linkedinProfile;
     }
@@ -73,7 +95,7 @@ public class StudentEntity {
     public void setLinkedinProfile(String linkedinProfile) {
         this.linkedinProfile = linkedinProfile;
     }
-
+/*
     @Basic
     @Column(name = "tutor_id", nullable = true)
     public String getTutorId() {
@@ -82,7 +104,7 @@ public class StudentEntity {
 
     public void setTutorId(String tutorId) {
         this.tutorId = tutorId;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
@@ -94,12 +116,12 @@ public class StudentEntity {
                 Objects.equals(firstname, that.firstname) &&
                 Objects.equals(email, that.email) &&
                 Objects.equals(studentGroup, that.studentGroup) &&
-                Objects.equals(linkedinProfile, that.linkedinProfile) &&
-                Objects.equals(tutorId, that.tutorId);
+                Objects.equals(linkedinProfile, that.linkedinProfile);
+//                Objects.equals(tutorId, that.tutorId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(studentId, name, firstname, email, studentGroup, linkedinProfile, tutorId);
+        return Objects.hash(studentId, name, firstname, email, studentGroup, linkedinProfile);
     }
 }

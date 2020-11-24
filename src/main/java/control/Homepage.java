@@ -1,9 +1,12 @@
 package control;
 
+import control.sessionBeans.InternshipSessionBean;
+import control.sessionBeans.TutorSessionBean;
 import modelsEntities.TutorEntity;
 import utils.database.InternshipDataServices;
 import utils.database.KeywordsDataServices;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +25,11 @@ public class Homepage extends ServletModel {
 
     private InternshipDataServices internshipDataServices;
     private KeywordsDataServices keywordsDataServices;
+
+    @EJB
+    private TutorSessionBean tutorSB;
+    @EJB
+    private InternshipSessionBean internshipsSB;
 
     private TutorEntity tutor;
     private int year;
@@ -65,10 +73,10 @@ public class Homepage extends ServletModel {
             }
 
             // TODO: Reactivate this
-            /*request.setAttribute("listOfInternship", internshipDataServices.getListInternships(tutor, year, name, keyword));
+            request.setAttribute("listOfInternship",internshipsSB.getInternshipData(tutor.getTutorId(), year, name, keyword));
             request.setAttribute("searchedYear", year);
             request.setAttribute("searchedKeyword", keyword);
-            request.setAttribute("searchedName", name);*/
+            request.setAttribute("searchedName", name);
 
             request.getRequestDispatcher(HOME_PAGE).forward(request, response);
         } else {
