@@ -5,9 +5,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "final_report", schema = "public", catalog = "st2eedb")
-@NamedQueries(
+@NamedQueries({
         @NamedQuery(name = "FinalReportEntity.updateTitleReport", query = "update FinalReportEntity set title = :title Where finalReportId = :finalReportId"),
         @NamedQuery(name = "FinalReportEntity.updateReportBool", query = "update FinalReportEntity set report = :report Where finalReportId = :finalReportId")
+    }
 )
 public class FinalReportEntity {
     private String finalReportId;
