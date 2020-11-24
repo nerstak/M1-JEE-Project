@@ -1,6 +1,9 @@
 package modelsEntities;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.sql.Date;
 import java.util.Objects;
 
@@ -11,16 +14,17 @@ public class InternshipsDataDetailsEntity {
     private String name;
     private String firstname;
     private String email;
-    private String group;
+    private String studentGroup;
     private String linkedinProfile;
     private String tutorId;
     private String internshipId;
     private String companyId;
     private String description;
-    private Boolean midTermInfo;
+    private Boolean midInternInfo;
     private Boolean webSurvey;
     private Date beginning;
     private Date ending;
+    private Boolean cdc;
     private Boolean companyEval;
     private Boolean defense;
     private String internSupervisor;
@@ -33,6 +37,9 @@ public class InternshipsDataDetailsEntity {
     private Integer communication;
     private Integer tech;
     private String marksId;
+    private String finalReportId;
+    private String title;
+    private Boolean report;
     private String commentsId;
     private String studentComm;
     private String supervisorComm;
@@ -78,13 +85,13 @@ public class InternshipsDataDetailsEntity {
     }
 
     @Basic
-    @Column(name = "group", nullable = true, length = -1)
-    public String getGroup() {
-        return group;
+    @Column(name = "student_group", nullable = true, length = -1)
+    public String getStudentGroup() {
+        return studentGroup;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setStudentGroup(String studentGroup) {
+        this.studentGroup = studentGroup;
     }
 
     @Basic
@@ -107,7 +114,7 @@ public class InternshipsDataDetailsEntity {
         this.tutorId = tutorId;
     }
 
-    @Id
+    @Basic
     @Column(name = "internship_id", nullable = true)
     public String getInternshipId() {
         return internshipId;
@@ -138,13 +145,13 @@ public class InternshipsDataDetailsEntity {
     }
 
     @Basic
-    @Column(name = "mid_term_info", nullable = true)
-    public Boolean getMidTermInfo() {
-        return midTermInfo;
+    @Column(name = "mid_intern_info", nullable = true)
+    public Boolean getMidInternInfo() {
+        return midInternInfo;
     }
 
-    public void setMidTermInfo(Boolean midTermInfo) {
-        this.midTermInfo = midTermInfo;
+    public void setMidInternInfo(Boolean midInternInfo) {
+        this.midInternInfo = midInternInfo;
     }
 
     @Basic
@@ -175,6 +182,16 @@ public class InternshipsDataDetailsEntity {
 
     public void setEnding(Date ending) {
         this.ending = ending;
+    }
+
+    @Basic
+    @Column(name = "cdc", nullable = true)
+    public Boolean getCdc() {
+        return cdc;
+    }
+
+    public void setCdc(Boolean cdc) {
+        this.cdc = cdc;
     }
 
     @Basic
@@ -298,6 +315,36 @@ public class InternshipsDataDetailsEntity {
     }
 
     @Basic
+    @Column(name = "final_report_id", nullable = true)
+    public String getFinalReportId() {
+        return finalReportId;
+    }
+
+    public void setFinalReportId(String finalReportId) {
+        this.finalReportId = finalReportId;
+    }
+
+    @Basic
+    @Column(name = "title", nullable = true, length = -1)
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Basic
+    @Column(name = "report", nullable = true)
+    public Boolean getReport() {
+        return report;
+    }
+
+    public void setReport(Boolean report) {
+        this.report = report;
+    }
+
+    @Basic
     @Column(name = "comments_id", nullable = true)
     public String getCommentsId() {
         return commentsId;
@@ -336,16 +383,17 @@ public class InternshipsDataDetailsEntity {
                 Objects.equals(name, that.name) &&
                 Objects.equals(firstname, that.firstname) &&
                 Objects.equals(email, that.email) &&
-                Objects.equals(group, that.group) &&
+                Objects.equals(studentGroup, that.studentGroup) &&
                 Objects.equals(linkedinProfile, that.linkedinProfile) &&
                 Objects.equals(tutorId, that.tutorId) &&
                 Objects.equals(internshipId, that.internshipId) &&
                 Objects.equals(companyId, that.companyId) &&
                 Objects.equals(description, that.description) &&
-                Objects.equals(midTermInfo, that.midTermInfo) &&
+                Objects.equals(midInternInfo, that.midInternInfo) &&
                 Objects.equals(webSurvey, that.webSurvey) &&
                 Objects.equals(beginning, that.beginning) &&
                 Objects.equals(ending, that.ending) &&
+                Objects.equals(cdc, that.cdc) &&
                 Objects.equals(companyEval, that.companyEval) &&
                 Objects.equals(defense, that.defense) &&
                 Objects.equals(internSupervisor, that.internSupervisor) &&
@@ -358,6 +406,9 @@ public class InternshipsDataDetailsEntity {
                 Objects.equals(communication, that.communication) &&
                 Objects.equals(tech, that.tech) &&
                 Objects.equals(marksId, that.marksId) &&
+                Objects.equals(finalReportId, that.finalReportId) &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(report, that.report) &&
                 Objects.equals(commentsId, that.commentsId) &&
                 Objects.equals(studentComm, that.studentComm) &&
                 Objects.equals(supervisorComm, that.supervisorComm);
@@ -365,6 +416,6 @@ public class InternshipsDataDetailsEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(studentId, name, firstname, email, group, linkedinProfile, tutorId, internshipId, companyId, description, midTermInfo, webSurvey, beginning, ending, companyEval, defense, internSupervisor, companyName, address, done, planned, visitReport, visitId, communication, tech, marksId, commentsId, studentComm, supervisorComm);
+        return Objects.hash(studentId, name, firstname, email, studentGroup, linkedinProfile, tutorId, internshipId, companyId, description, midInternInfo, webSurvey, beginning, ending, cdc, companyEval, defense, internSupervisor, companyName, address, done, planned, visitReport, visitId, communication, tech, marksId, finalReportId, title, report, commentsId, studentComm, supervisorComm);
     }
 }

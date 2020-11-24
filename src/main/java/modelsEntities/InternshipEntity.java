@@ -10,7 +10,7 @@ public class InternshipEntity {
     private String internshipId;
     private String description;
     private Boolean webSurvey;
-    private Boolean midTermInfo;
+    private Boolean midInternInfo;
     private Date beginning;
     private Date ending;
     private String studentId;
@@ -51,13 +51,13 @@ public class InternshipEntity {
     }
 
     @Basic
-    @Column(name = "mid_term_info", nullable = true)
-    public Boolean getMidTermInfo() {
-        return midTermInfo;
+    @Column(name = "mid_intern_info", nullable = true)
+    public Boolean getMidInternInfo() {
+        return midInternInfo;
     }
 
-    public void setMidTermInfo(Boolean midTermInfo) {
-        this.midTermInfo = midTermInfo;
+    public void setMidInternInfo(Boolean midInternInfo) {
+        this.midInternInfo = midInternInfo;
     }
 
     @Basic
@@ -148,7 +148,7 @@ public class InternshipEntity {
         return Objects.equals(internshipId, that.internshipId) &&
                 Objects.equals(description, that.description) &&
                 Objects.equals(webSurvey, that.webSurvey) &&
-                Objects.equals(midTermInfo, that.midTermInfo) &&
+                Objects.equals(midInternInfo, that.midInternInfo) &&
                 Objects.equals(beginning, that.beginning) &&
                 Objects.equals(ending, that.ending) &&
                 Objects.equals(studentId, that.studentId) &&
@@ -161,6 +161,6 @@ public class InternshipEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(internshipId, description, webSurvey, midTermInfo, beginning, ending, studentId, companyId, cdc, companyEval, defense, internSupervisor);
+        return Objects.hash(internshipId, description, webSurvey, midInternInfo, beginning, ending, studentId, companyId, cdc, companyEval, defense, internSupervisor);
     }
 }

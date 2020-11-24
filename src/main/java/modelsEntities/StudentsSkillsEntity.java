@@ -1,6 +1,9 @@
 package modelsEntities;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
@@ -10,7 +13,7 @@ public class StudentsSkillsEntity {
     private String skill;
     private String studentId;
 
-    @Id
+    @Basic
     @Column(name = "skill_id", nullable = true)
     public String getSkillId() {
         return skillId;
@@ -30,7 +33,7 @@ public class StudentsSkillsEntity {
         this.skill = skill;
     }
 
-    @Id
+    @Basic
     @Column(name = "student_id", nullable = true)
     public String getStudentId() {
         return studentId;

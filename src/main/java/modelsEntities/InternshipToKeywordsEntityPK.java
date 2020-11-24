@@ -5,18 +5,18 @@ import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class StudentsToKeywordsEntityPK implements Serializable {
-    private String studentId;
+public class InternshipToKeywordsEntityPK implements Serializable {
+    private String internshipId;
     private String keywordId;
 
-    @Column(name = "student_id", nullable = false)
+    @Column(name = "internship_id", nullable = false)
     @Id
-    public Object getStudentId() {
-        return studentId;
+    public String getInternshipId() {
+        return internshipId;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public void setInternshipId(String internshipId) {
+        this.internshipId = internshipId;
     }
 
     @Column(name = "keyword_id", nullable = false)
@@ -33,13 +33,13 @@ public class StudentsToKeywordsEntityPK implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StudentsToKeywordsEntityPK that = (StudentsToKeywordsEntityPK) o;
-        return Objects.equals(studentId, that.studentId) &&
+        InternshipToKeywordsEntityPK that = (InternshipToKeywordsEntityPK) o;
+        return Objects.equals(internshipId, that.internshipId) &&
                 Objects.equals(keywordId, that.keywordId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(studentId, keywordId);
+        return Objects.hash(internshipId, keywordId);
     }
 }

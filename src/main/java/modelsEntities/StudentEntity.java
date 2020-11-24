@@ -10,7 +10,7 @@ public class StudentEntity {
     private String name;
     private String firstname;
     private String email;
-    private String group;
+    private String studentGroup;
     private String linkedinProfile;
     private String tutorId;
 
@@ -55,13 +55,13 @@ public class StudentEntity {
     }
 
     @Basic
-    @Column(name = "group", nullable = true, length = -1)
-    public String getGroup() {
-        return group;
+    @Column(name = "student_group", nullable = true, length = -1)
+    public String getStudentGroup() {
+        return studentGroup;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setStudentGroup(String studentGroup) {
+        this.studentGroup = studentGroup;
     }
 
     @Basic
@@ -93,13 +93,13 @@ public class StudentEntity {
                 Objects.equals(name, that.name) &&
                 Objects.equals(firstname, that.firstname) &&
                 Objects.equals(email, that.email) &&
-                Objects.equals(group, that.group) &&
+                Objects.equals(studentGroup, that.studentGroup) &&
                 Objects.equals(linkedinProfile, that.linkedinProfile) &&
                 Objects.equals(tutorId, that.tutorId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(studentId, name, firstname, email, group, linkedinProfile, tutorId);
+        return Objects.hash(studentId, name, firstname, email, studentGroup, linkedinProfile, tutorId);
     }
 }
