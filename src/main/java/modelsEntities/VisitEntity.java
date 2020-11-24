@@ -5,6 +5,9 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "visit", schema = "public", catalog = "st2eedb")
+@NamedQueries(
+        @NamedQuery(name = "VisitEntity.UpdateVisit", query = "update VisitEntity set done = :done, planned = :planned Where visitId = :visitId")
+)
 public class VisitEntity {
     private String visitId;
     private Boolean done;
