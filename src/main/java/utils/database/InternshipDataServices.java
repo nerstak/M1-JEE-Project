@@ -99,7 +99,8 @@ public class InternshipDataServices extends DataServices {
             ps.setInt(2, year);
             ps.setString(3, name);
             ps.setString(4, keyword);
-
+            ps.setString(5, keyword);
+            
             return ps.executeQuery();
         } catch (SQLException e) {
             Logger.getLogger(DataServices.class.getName()).log(Level.SEVERE, null, e);

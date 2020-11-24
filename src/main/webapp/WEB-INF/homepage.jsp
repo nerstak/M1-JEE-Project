@@ -43,6 +43,7 @@
             <div class="homepage-selector-select">
                 <label for="year">Year</label>
                 <select name="year" id="year">
+                    <option value="0">All</option>
                     <c:forEach var="year" begin="0" end="7" step="1">
                     <option value="${2022 - year}"
                             <c:choose>
@@ -58,7 +59,7 @@
             <div class="homepage-selector-select">
                 <label for="keywords">Keywords</label>
                 <select name="keywords" id="keywords">
-                    <option value="%">-</option>
+                    <option value="-">-</option>
                     <c:forEach items="${listOfKeywords}" var="keyword">
                         <option value="${keyword.keyword}"
                             <c:choose>
