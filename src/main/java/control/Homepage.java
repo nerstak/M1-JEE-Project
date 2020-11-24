@@ -60,8 +60,8 @@ public class Homepage extends ServletModel {
             }
 
             keyword = request.getParameter("keywords");
-            if (keyword == null) {
-                keyword = "%";
+            if(keyword == null) {
+                keyword = "-";
             }
 
             // TODO: Reactivate this
