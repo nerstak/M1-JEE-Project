@@ -1,23 +1,21 @@
 package model;
 
-import java.util.UUID;
-
 public class Tutor {
-    private UUID tutorId;
+    private String tutorId;
     private String name;
-    private String firstName;
+    private String firstname;
     private String pwd;
-    private String Email;
+    private String email;
 
-    public String getEmail() { return Email; }
+    public String getEmail() { return email; }
 
-    public void setEmail(String email) { Email = email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public UUID getTutorId() {
+    public String getTutorId() {
         return tutorId;
     }
 
-    public void setTutorId(UUID tutorId) {
+    public void setTutorId(String tutorId) {
         this.tutorId = tutorId;
     }
 
@@ -29,12 +27,12 @@ public class Tutor {
         this.name = name;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getPwd() {

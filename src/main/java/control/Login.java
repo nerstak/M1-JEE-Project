@@ -1,14 +1,18 @@
 package control;
 
+import control.sessionBeans.TutorSessionBean;
 import model.Tutor;
+import modelsEntities.TutorEntity;
 import utils.database.TutorDataServices;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static utils.Constants.*;
 
@@ -18,6 +22,11 @@ import static utils.Constants.*;
 @WebServlet(name = "Login")
 public class Login extends ServletModel {
     private HttpSession session;
+
+    @EJB
+    private TutorSessionBean tutorSB;
+
+    ArrayList<TutorEntity> tutors;
 
     private TutorDataServices tutorDataServices;
 
@@ -51,8 +60,11 @@ public class Login extends ServletModel {
             request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); //redirect to welcome if ok
         }
 
-        if (tutorDataServices.selectTutor(tutor)) {
-            session.setAttribute("tutor", tutor);
+        tutors = new ArrayList<>();
+        tutors.addAll(tutorSB.getTutors(tutor.getEmail(), tutor.getPwd()));
+
+        if (!tutors.isEmpty()) {
+            session.setAttribute("tutor", tutors.get(0));
             response.sendRedirect("Homepage");
         } else {
             request.setAttribute("errorMessage", ERR_INV_CRED_MESS);

@@ -32,8 +32,8 @@ public class TutorDataServices extends DataServices{
 
             // Filling missing information
             if(rs.next()) {
-                tutor.setTutorId(UUID.fromString(rs.getString("tutor_id")));
-                tutor.setFirstName(rs.getString("firstname"));
+                tutor.setTutorId(UUID.fromString(rs.getString("tutor_id")).toString());
+                tutor.setFirstname(rs.getString("firstname"));
                 tutor.setName(rs.getString("name"));
                 return true;
             }

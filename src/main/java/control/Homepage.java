@@ -1,8 +1,6 @@
 package control;
 
-import model.Keywords;
-import model.Skills;
-import model.Tutor;
+import modelsEntities.TutorEntity;
 import utils.database.InternshipDataServices;
 import utils.database.KeywordsDataServices;
 
@@ -12,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static utils.Constants.HOME_PAGE;
 
@@ -26,7 +23,7 @@ public class Homepage extends ServletModel {
     private InternshipDataServices internshipDataServices;
     private KeywordsDataServices keywordsDataServices;
 
-    private Tutor tutor;
+    private TutorEntity tutor;
     private int year;
     private String name;
     String keyword;
@@ -48,7 +45,7 @@ public class Homepage extends ServletModel {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         session = request.getSession();
-        tutor = (Tutor) session.getAttribute("tutor");
+        tutor = (TutorEntity) session.getAttribute("tutor");
         if (tutor != null) {
             request.setAttribute("listOfKeywords", keywordsDataServices.getListOfKeywords());
 
@@ -67,10 +64,11 @@ public class Homepage extends ServletModel {
                 keyword = "%";
             }
 
-            request.setAttribute("listOfInternship", internshipDataServices.getListInternships(tutor, year, name, keyword));
+            // TODO: Reactivate this
+            /*request.setAttribute("listOfInternship", internshipDataServices.getListInternships(tutor, year, name, keyword));
             request.setAttribute("searchedYear", year);
             request.setAttribute("searchedKeyword", keyword);
-            request.setAttribute("searchedName", name);
+            request.setAttribute("searchedName", name);*/
 
             request.getRequestDispatcher(HOME_PAGE).forward(request, response);
         } else {

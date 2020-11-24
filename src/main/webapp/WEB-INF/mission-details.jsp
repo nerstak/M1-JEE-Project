@@ -26,7 +26,7 @@
         <div class="navbar-menu">
             <jsp:useBean id="tutor" class="model.Tutor" scope="session"/>
             <p>
-                ${tutor.firstName}${" "}${tutor.name}
+                ${tutor.firstname}${" "}${tutor.name}
             </p>
             <a href="Logout">Logout</a>
         </div>
