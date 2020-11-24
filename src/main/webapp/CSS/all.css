@@ -20,7 +20,7 @@ h1, h2, h3{
     font-family: Roboto,sans-serif;
 }
 
-a,p,li, label, input[type="text"]{
+a,p,li, label, input[type="text"], textarea{
     font-family: "Open Sans", sans-serif;
     color: var(--color-textmain-lighttheme);
 }
@@ -44,10 +44,6 @@ h2{
 
 h3, label{
     font-size: 1.5rem;
-}
-
-.h4{
-    font-size: 1.2;
 }
 
 button{
@@ -122,5 +118,6 @@ form input[type="text"]:disabled {
     --color-textmain-lighttheme : rgba(0,0,0, 0.87);
     --color-textmedium-lighttheme : rgba(0,0,0, 0.6);
     --color-textdisable-lighttheme : rgba(0,0,0, 0.3);
-    --color-red : #e61a23;
+    --color-red : #c4242c;
+    --color-green : #61c33c;
 }

@@ -4,7 +4,7 @@ VALUES ('Jean', 'Pierre', 'jean.pierre@efrei.net', 'password'),
        ('John', 'Lennon', 'john.lennon@efrei.net', 'password'),
        ('Murphy', 'Cooper', 'murphy.cooper@efrei.net', 'password');
 
-INSERT INTO student (firstname, name, email, "group", linkedin_profile, tutor_id)
+INSERT INTO student (firstname, name, email, student_group, linkedin_profile, tutor_id)
 VALUES ('Andy', 'Warhol', 'andy.warhol@efrei.net', 'A', 'https://www.linkedin.com/in/andy-wahrol-15',
         (SELECT tutor_id FROM tutor WHERE email = 'jean.pierre@efrei.net')),
        ('Ada', 'Lovelace', 'ada.lovelace@efrei.net', 'B', 'https://www.linkedin.com/in/ada-lovelace-1564',
@@ -23,11 +23,11 @@ VALUES ('C'),
        ('C#'),
        ('Java'),
        ('C++'),
-       ('J2EE'),
+       ('J2ee'),
        ('Docker'),
        ('Git'),
-       ('CSS'),
-       ('SQL');
+       ('Css'),
+       ('Sql');
 
 INSERT INTO student_to_skills (skill_id, student_id)
 VALUES ((SELECT skill_id FROM skills WHERE skill = 'C'),
@@ -36,15 +36,15 @@ VALUES ((SELECT skill_id FROM skills WHERE skill = 'C'),
         (SELECT student_id FROM student WHERE email = 'dennis.ritchie@efrei.net')),
        ((SELECT skill_id FROM skills WHERE skill = 'Java'),
         (SELECT student_id FROM student WHERE email = 'ada.lovelace@efrei.net')),
-       ((SELECT skill_id FROM skills WHERE skill = 'SQL'),
+       ((SELECT skill_id FROM skills WHERE skill = 'Sql'),
         (SELECT student_id FROM student WHERE email = 'ada.lovelace@efrei.net')),
        ((SELECT skill_id FROM skills WHERE skill = 'Java'),
         (SELECT student_id FROM student WHERE email = 'peggy.johnson@efrei.net')),
-       ((SELECT skill_id FROM skills WHERE skill = 'J2EE'),
+       ((SELECT skill_id FROM skills WHERE skill = 'J2ee'),
         (SELECT student_id FROM student WHERE email = 'peggy.johnson@efrei.net')),
        ((SELECT skill_id FROM skills WHERE skill = 'Docker'),
         (SELECT student_id FROM student WHERE email = 'peggy.johnson@efrei.net')),
-       ((SELECT skill_id FROM skills WHERE skill = 'CSS'),
+       ((SELECT skill_id FROM skills WHERE skill = 'Css'),
         (SELECT student_id FROM student WHERE email = 'andy.warhol@efrei.net')),
        ((SELECT skill_id FROM skills WHERE skill = 'C#'),
         (SELECT student_id FROM student WHERE email = 'alan.turing@efrei.net')),
@@ -122,7 +122,13 @@ VALUES (17, 12, (SELECT internship_id
                  WHERE student_id = (SELECT student_id FROM student WHERE email = 'peggy.johnson@efrei.net'))),
        (9, 19, (SELECT internship_id
                 FROM internship
-                WHERE student_id = (SELECT student_id FROM student WHERE email = 'andy.warhol@efrei.net')));
+                WHERE student_id = (SELECT student_id FROM student WHERE email = 'andy.warhol@efrei.net'))),
+       (null, null, (SELECT internship_id
+                FROM internship
+                WHERE student_id = (SELECT student_id FROM student WHERE email = 'dennis.ritchie@efrei.net'))),
+       (null, null, (SELECT internship_id
+                FROM internship
+                WHERE student_id = (SELECT student_id FROM student WHERE email = 'alan.turing@efrei.net')));
 
 INSERT INTO comments (student_comm, supervisor_comm, internship_id)
 VALUES ('Comments', null, (SELECT internship_id
@@ -135,7 +141,15 @@ VALUES ('Comments', null, (SELECT internship_id
        ('Comments', 'Comments', (SELECT internship_id
                                  FROM internship
                                  WHERE student_id =
-                                       (SELECT student_id FROM student WHERE email = 'peggy.johnson@efrei.net')));
+                                       (SELECT student_id FROM student WHERE email = 'peggy.johnson@efrei.net'))),
+       (null, null, (SELECT internship_id
+                                 FROM internship
+                                 WHERE student_id =
+                                       (SELECT student_id FROM student WHERE email = 'alan.turing@efrei.net'))),
+       (null, null, (SELECT internship_id
+                                 FROM internship
+                                 WHERE student_id =
+                                       (SELECT student_id FROM student WHERE email = 'dennis.ritchie@efrei.net')));
 
 INSERT INTO final_report (title, report, internship_id)
 VALUES ('My cool report.pdf', true, (SELECT internship_id
@@ -152,7 +166,17 @@ VALUES ('My cool report.pdf', true, (SELECT internship_id
                                    FROM internship
                                    WHERE student_id = (SELECT student_id
                                                        FROM student
-                                                       WHERE email = 'peggy.johnson@efrei.net')));
+                                                       WHERE email = 'peggy.johnson@efrei.net'))),
+       (null, false, (SELECT internship_id
+                                   FROM internship
+                                   WHERE student_id = (SELECT student_id
+                                                       FROM student
+                                                       WHERE email = 'alan.turing@efrei.net'))),
+       (null, false, (SELECT internship_id
+                                   FROM internship
+                                   WHERE student_id = (SELECT student_id
+                                                       FROM student
+                                                       WHERE email = 'dennis.ritchie@efrei.net')));
 
 INSERT INTO visit (done, planned, visit_report, internship_id)
 VALUES (true, true, true, (SELECT internship_id
@@ -170,4 +194,12 @@ VALUES (true, true, true, (SELECT internship_id
        (true, true, true, (SELECT internship_id
                            FROM internship
                            WHERE student_id =
-                                 (SELECT student_id FROM student WHERE email = 'peggy.johnson@efrei.net')));
+                                 (SELECT student_id FROM student WHERE email = 'peggy.johnson@efrei.net'))),
+       (false, false, false, (SELECT internship_id
+                           FROM internship
+                           WHERE student_id =
+                                 (SELECT student_id FROM student WHERE email = 'dennis.ritchie@efrei.net'))),
+       (false, false, false, (SELECT internship_id
+                           FROM internship
+                           WHERE student_id =
+                                 (SELECT student_id FROM student WHERE email = 'alan.turing@efrei.net')));

@@ -1,150 +1,227 @@
 package control;
 
 import model.*;
+import utils.database.MarksDataServices;
+import utils.ProcessString;
+import utils.database.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Date;
 
 import static utils.Constants.*;
 
+/**
+ * Details controller, for any additional information on internship
+ */
 @WebServlet(name = "Details")
 public class Details extends ServletModel {
     private InternshipData internshipData;
-    private ResultSet rs;
-    private ArrayList<Skills> listOfSkills;
+
+    private InternshipDataServices internshipDataServices;
+    private SkillsDataServices skillsDataServices;
+    private KeywordsDataServices keywordsDataServices;
+    private StudentDataServices studentDataServices;
+    private FinalReportDataServices finalReportDataServices;
+    private MarksDataServices marksDataServices;
+    private VisitDataServices visitDataServices;
+
+    @Override
+    public void init() {
+        super.init();
+        internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
+        skillsDataServices = new SkillsDataServices(dbUser, dbPwd, dbUrl);
+        keywordsDataServices = new KeywordsDataServices(dbUser, dbPwd, dbUrl);
+        studentDataServices = new StudentDataServices(dbUser, dbPwd, dbUrl);
+        finalReportDataServices = new FinalReportDataServices(dbUser, dbPwd, dbUrl);
+        marksDataServices = new MarksDataServices(dbUser, dbPwd, dbUrl);
+        visitDataServices = new VisitDataServices(dbUser, dbPwd, dbUrl);
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Check from which submit button the request come from
         String internshipSubmit = request.getParameter("internshipSubmit");
-        if (internshipSubmit.equals("details")){
+        if (internshipSubmit.equals("details")) {
             String internshipId = request.getParameter("internshipId");
-            internshipData = getInternshipDataDetails(internshipId);
+            internshipData = internshipDataServices.getInternshipDetailed(internshipId);
 
             //Set request attributes
             request.setAttribute("internshipData", internshipData);
-            request.setAttribute("listOfStudentSkills", getListOfStudentSkills(internshipData.getStudent().getStudentId().toString()));
-            request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
-        }else if (internshipSubmit.equals("modify")){
+            request.setAttribute("listOfSkills", skillsDataServices.getListOfSkills());
+            request.setAttribute("listOfKeywords",keywordsDataServices.getListOfKeywords());
+            request.setAttribute("listOfStudentSkills", skillsDataServices.getStudentSkillsAll(internshipData.getStudent()));
+            request.setAttribute("listOfInternshipKeywords", keywordsDataServices.getInternshipKeywordsAll(internshipData.getInternship().getInternship().toString()));
 
-        }else{
-            //todo je pense qu'il n'y a plus la liste des internship à renvoyer
-            request.getRequestDispatcher(HOME_PAGE).forward(request, response);
+            request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
+        } else if (internshipSubmit.equals("modify")) {
+            updateAllData(request);
+            response.sendRedirect("Homepage");
+        } else {
+            response.sendRedirect("Homepage");
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.sendRedirect("Homepage");
     }
 
     /**
-     * Get all the details about an internship for one student
-     * @param internshipId, the student ID in the database
-     * @return internshipData that contains all the data
+     * Update all data for one internship
+     * @param request, http request object
+     * @return true if the db is updated
      */
-    public InternshipData getInternshipDataDetails(String internshipId){
-        internshipData = new InternshipData();
-        rs = dataServices.selectInternshipDetailed(internshipId);
+    private boolean updateAllData(HttpServletRequest request){
+        //Disable all data services
+        DataServices.disableAutoCommits(studentDataServices, marksDataServices, visitDataServices, internshipDataServices, finalReportDataServices);
 
-        if (rs != null){
-            try {
-                while (rs.next()){
-                    //Instantiate a student bean
-                    Student student = new Student();
-                    student.setStudentId(UUID.fromString(rs.getString("student_id")));
-                    student.setName(rs.getString("name"));
-                    student.setFirstName(rs.getString("firstname"));
-                    student.setEmail(rs.getString("email"));
-                    student.setGroup(rs.getString("group"));
-                    student.setLinkedinProfile(rs.getString("linkedin_profile"));
-
-                    //Instantiate a internship bean
-                    Internship internship = new Internship();
-                    internship.setInternship(UUID.fromString(rs.getString("internship_id")));
-                    internship.setDesciption(rs.getString("description"));
-                    internship.setMidInternInfo(rs.getBoolean("mid_intern_info"));
-                    internship.setWebSurvey(rs.getBoolean("web_survey"));
-                    internship.setBegining(rs.getDate("beginning"));
-                    internship.setEnd(rs.getDate("ending"));
-                    internship.setCdc(rs.getBoolean("cdc"));
-                    internship.setDefense(rs.getBoolean("defense"));
-                    internship.setCompanyEval(rs.getBoolean("company_eval"));
-                    internship.setInternSupervisor(rs.getString("intern_supervisor"));
-
-                    //Instantiate a company bean
-                    Company company = new Company();
-                    company.setCompanyId(UUID.fromString(rs.getString("company_id")));
-                    company.setName(rs.getString("company_name"));
-                    company.setAddress(rs.getString("address"));
-
-                    //Instantiate a visit bean
-                    Visit visit = new Visit();
-                    visit.setVisitID(UUID.fromString(rs.getString("visit_id")));
-                    visit.setDone(rs.getBoolean("done"));
-                    visit.setPlanned(rs.getBoolean("planned"));
-                    visit.setVisitReport(rs.getBoolean("visit_report"));
-
-                    //Instantiate a marks bean
-                    Marks marks = new Marks();
-                    marks.setMarksId(UUID.fromString(rs.getString("marks_id")));
-                    marks.setCommunication(rs.getInt("communication"));
-                    marks.setTech(rs.getInt("tech"));
-
-                    //Instantiate a comments bean
-                    Comments comments = new Comments();
-                    comments.setCommentsId(UUID.fromString(rs.getString("comments_id")));
-                    comments.setStudentComm(rs.getString("student_comm"));
-                    comments.setSupervisorComment(rs.getString("supervisor_comm"));
-
-
-                    //Instantiate a final report bean
-                    FinalReport finalReport = new FinalReport();
-                    finalReport.setFinalReportId(UUID.fromString(rs.getString("final_report_id")));
-                    finalReport.setReport(rs.getBoolean("report"));
-                    finalReport.setTitle(rs.getString("title"));
-
-                    //Set attributes of internshipData
-                    internshipData.setStudent(student);
-                    internshipData.setInternship(internship);
-                    internshipData.setCompany(company);
-                    internshipData.setVisit(visit);
-                    internshipData.setMarks(marks);
-                    internshipData.setComments(comments);
-                    internshipData.setFinalReport(finalReport);
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+        //Check if update is done, if it not return false
+        if (!updateStudent(request)){
+            return false;
         }
 
-        return internshipData;
+        if (!updateMarks(request)){
+            return false;
+        }
+
+        if (!updateVisit(request)){
+            return false;
+        }
+
+        if (!updateInternship(request)){
+            return false;
+        }
+
+        if (!updateFinalReport(request)){
+            return false;
+        }
+
+        //Commit all request in the db
+        DataServices.commitRequest(studentDataServices, marksDataServices, visitDataServices, internshipDataServices, finalReportDataServices);
+        return true;
     }
 
     /**
-     * Get the list of skills of a student
-     * @param studentId, the ID of the student
-     * @return the list of skills for the student
+     * Update the student
+     * @param request, http request object
+     * @return true if the db is updated
      */
-    public ArrayList<Skills> getListOfStudentSkills(String studentId){
-        listOfSkills = new ArrayList<>();
-        rs = dataServices.selectStudentSkillsAll(studentId);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    Skills skills = new Skills(rs.getString("skill"), (UUID) rs.getObject("skill_id"));
-                    listOfSkills.add(skills);
-                }
-            } catch (Exception e) {
-                Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, e);
-            }
+    private boolean updateStudent(HttpServletRequest request){
+        //Student
+        String studentGroup = request.getParameter("studentGroup");
+        String studentFirstname = request.getParameter("studentFirstname");
+        String studentName = request.getParameter("studentName");
+        String studentId = request.getParameter("studentId");
+
+        if(ProcessString.areStringEmpty(studentFirstname, studentGroup, studentName, studentId)){
+            return false;
         }
-        return listOfSkills;
+
+        return (studentDataServices.updateNamesGroup(studentName, studentFirstname, studentGroup, studentId) == 1);
+    }
+
+    /**
+     * Update the marks
+     * @param request, http request object
+     * @return true if the db is updated
+     */
+    private boolean updateMarks(HttpServletRequest request){
+        //Marks
+        String commMark = request.getParameter("commMark");
+        String techMark = request.getParameter("techMark");
+        String marksId = request.getParameter("marksId");
+
+        if(ProcessString.areStringEmpty(commMark, techMark, marksId)){
+            return false;
+        }
+
+        if((Integer.parseInt(commMark) < 0) || (Integer.parseInt(commMark) > 20)){
+            return false;
+        }
+
+        if((Integer.parseInt(techMark) < 0) || (Integer.parseInt(techMark) > 20)){
+            return false;
+        }
+
+        return (marksDataServices.updateMarks(techMark, commMark, marksId) == 1);
+    }
+
+    /**
+     * Update the visit
+     * @param request, http request object
+     * @return true if the db is updated
+     */
+    private boolean updateVisit(HttpServletRequest request){
+        //Visit
+        String visitPlanned = request.getParameter("visitPlanned")== null
+                ? "false"
+                : "true";
+        String visitDone = request.getParameter("visitDone")== null
+                ? "false"
+                : "true";
+        String visitId = request.getParameter("visitId");
+
+        if(ProcessString.areStringEmpty(visitDone, visitPlanned, visitId)){
+            return false;
+        }
+
+        return (visitDataServices.updateVisit(visitDone, visitPlanned, visitId) == 1);
+    }
+
+    /**
+     * Update the internship
+     * @param request, http request object
+     * @return true if the db is updated
+     */
+    private boolean updateInternship(HttpServletRequest request){
+        //Internship
+        String beginningDate = request.getParameter("beginningDate");
+        String endDate = request.getParameter("endDate");
+        String supervisor = request.getParameter("supervisor");
+        String defense = request.getParameter("defense")== null
+                ? "false"
+                : "true";
+        String webSurvey = request.getParameter("webSurvey")== null
+                ? "false"
+                : "true";
+        String companyEval = request.getParameter("companyEval")== null
+                ? "false"
+                : "true";
+        String cdc = request.getParameter("cdc") == null
+                ? "false"
+                : "true";
+        String internshipId = request.getParameter("internshipId");
+
+        //Check if all data are not empty and begin date is before end date
+        if((ProcessString.areStringEmpty(beginningDate, endDate, supervisor, defense, webSurvey, companyEval, cdc, internshipId)) || (ProcessString.isDateBefore(endDate, beginningDate))) {
+            return false;
+        }
+
+        int rowAffected = internshipDataServices.updateInternshipFromHomepage(
+                Date.valueOf(beginningDate), Date.valueOf(endDate),
+                supervisor, defense, webSurvey, companyEval, cdc, internshipId);
+
+        return (rowAffected == 1);
+    }
+
+    /**
+     * Update the report table
+     * @param request, http request
+     * @return true if the database has been updated
+     */
+    private boolean updateFinalReport(HttpServletRequest request){
+        //Report
+        String report = request.getParameter("releasedReport") == null
+                ? "false"
+                : "true";
+        String reportId = request.getParameter("finalReportId");
+
+        if (ProcessString.areStringEmpty(report, reportId)){
+            return false;
+        }
+
+        return (finalReportDataServices.updateReportBool(report, reportId) == 1);
     }
 }
