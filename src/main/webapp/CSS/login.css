@@ -14,8 +14,11 @@
 /*Login left*/
 .login-left{
     flex: 60%;
+    /*Do not shorthand the background property => break the display*/
+    background: url("../Image/bg_login.jpg");
+    background-repeat: no-repeat;
     background-size: cover;
-    background: url("../Image/bg_login.jpg") no-repeat 60%;
+    background-position: 60%;
 }
 
 /*Login right*/
