@@ -1,9 +1,11 @@
 package control.sessionBeans;
 
 import modelsEntities.KeywordsEntity;
+import modelsEntities.SkillsEntity;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +19,26 @@ public class KeywordsSessionBean extends ModelBean<KeywordsEntity>{
     @Override
     public KeywordsEntity find(UUID id) {
         em.find(KeywordsEntity.class,id);
+        return null;
+    }
+
+    @Override
+    public void save(KeywordsEntity e) {
+        em.persist(e);
+    }
+
+    public List getKeywordsByName(String s) {
+        Query q = em.createNamedQuery("Keywords.SelectByName");
+        q.setParameter("keyword",s);
+        return q.getResultList();
+    }
+
+    public KeywordsEntity getKeywordByName(String s) {
+        ArrayList<KeywordsEntity> list = new ArrayList<>();
+        list.addAll(getKeywordsByName(s));
+        if(!list.isEmpty()) {
+            return list.get(0);
+        }
         return null;
     }
 }

@@ -5,10 +5,7 @@ import control.sessionBeans.InternshipSessionBean;
 import control.sessionBeans.KeywordsSessionBean;
 import control.sessionBeans.SkillsSessionBean;
 import control.sessionBeans.StudentSessionBean;
-import modelsEntities.InternshipEntity;
-import modelsEntities.SkillsEntity;
-import modelsEntities.StudentEntity;
-import modelsEntities.TutorEntity;
+import modelsEntities.*;
 import utils.ProcessString;
 import utils.database.*;
 
@@ -261,38 +258,24 @@ public class UpdateDetails extends ServletModel{
         keyword = ProcessString.capitalizeAndLowerCase(keyword);
         String internshipId = request.getParameter("internshipId");
 
-        ResultSet resultSet = keywordsDataServices.selectAKeyword(keyword);
-        DataServices.disableAutoCommits(keywordsDataServices);
-        if (resultSet != null){
-            try {
-                if(resultSet.next()){ //if the keyword is already in the DB
-                    String keywordId = resultSet.getString("keyword_id");
-                    //Check if the skill is already linked to the student
-                    resultSet = keywordsDataServices.selectAInternshipToKeywordsCouple(internshipId, keywordId);
-                    if(resultSet != null){
-                        if(!resultSet.next()){
-                            //Insert the Skill_id + student_id inside the Student_to_skill table
-                            if (keywordsDataServices.insertIntoInternshipToKeywords(internshipId, keywordId) == 1){//If row is added to the db => commit the request
-                                DataServices.commitRequest(keywordsDataServices);
-                                return true;
-                            }
-                        }
-                    }
-                }else{
-                    //Add the skill inside Skills + add couple Id inside Student_to_skill
-                    UUID keywordId = UUID.randomUUID();
-                    if  ((keywordsDataServices.insertIntoKeyword(keywordId, keyword) == 1) && (keywordsDataServices.insertIntoInternshipToKeywords(internshipId, keywordId.toString())) == 1){
-                        DataServices.commitRequest(keywordsDataServices);
-                        return true;
-                    }
-                }
+        KeywordsEntity keywordsEntity = keywordsSB.getKeywordByName(keyword);
+        try {
+            if (keywordsEntity == null) {
+                // Creating skill if not existing
+                keywordsEntity = new KeywordsEntity();
+                keywordsEntity.setKeywordId(UUID.randomUUID());
+                keywordsEntity.setKeyword(keyword);
+                keywordsSB.save(keywordsEntity);
             }
-            catch (SQLException e){
-                e.printStackTrace();
-                return false;
-            }
+
+            // Adding skill to student
+            internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
+            internshipEntity.getListKeywords().add(keywordsEntity);
+            internshipsSB.save(internshipEntity);
+            return true;
+        } catch (EntityExistsException e) {
+            return false;
         }
-        return false;
     }
 
     /**

@@ -8,9 +8,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "keywords", schema = "public", catalog = "st2eedb")
-@NamedQueries(
-        @NamedQuery(name = "Keywords.SelectAll", query = "SELECT k FROM KeywordsEntity k")
-)
+@NamedQueries({
+        @NamedQuery(name = "Keywords.SelectAll", query = "SELECT k FROM KeywordsEntity k"),
+        @NamedQuery(name = "Keywords.SelectByName", query = "SELECT k FROM KeywordsEntity k WHERE k.keyword = :keyword")
+})
 public class KeywordsEntity implements InterfaceEntity {
     @Id
     @Column(name = "keyword_id", nullable = false, columnDefinition="uuid")
