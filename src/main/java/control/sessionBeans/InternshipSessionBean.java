@@ -24,9 +24,14 @@ public class InternshipSessionBean {
         return q.getResultList();
     }
 
+    // TODO: Delete this if never used
     public List getInternship(UUID internshipId) {
         Query q = em.createNamedQuery("Internship.SelectSingle");
         q.setParameter("internshipId", internshipId);
         return q.getResultList();
+    }
+
+    public InternshipEntity find(UUID internshipId) {
+        return em.find(InternshipEntity.class, internshipId);
     }
 }

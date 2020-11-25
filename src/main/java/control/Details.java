@@ -57,7 +57,8 @@ public class Details extends ServletModel {
         String internshipSubmit = request.getParameter("internshipSubmit");
         if (internshipSubmit.equals("details")) {
             String internshipId = request.getParameter("internshipId");
-            internshipEntity = (InternshipEntity) internshipsSB.getInternship(UUID.fromString(internshipId)).get(0);
+            //internshipEntity = (InternshipEntity) internshipsSB.getInternship(UUID.fromString(internshipId)).get(0);
+            internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
 
             //Set request attributes
             request.setAttribute("internshipData", internshipEntity);

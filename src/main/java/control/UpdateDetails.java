@@ -313,7 +313,7 @@ public class UpdateDetails extends ServletModel{
             }
         }
 
-        internshipEntity = (InternshipEntity) internshipsSB.getInternship(UUID.fromString(internshipId)).get(0);
+        internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
 
         //Set request attributes
         request.setAttribute("internshipData", internshipEntity);
