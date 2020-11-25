@@ -1,11 +1,8 @@
 package control;
 
 import control.sessionBeans.InternshipSessionBean;
-import control.sessionBeans.TutorSessionBean;
-import modelsEntities.InternshipEntity;
+import control.sessionBeans.KeywordsSessionBean;
 import modelsEntities.TutorEntity;
-import utils.database.InternshipDataServices;
-import utils.database.KeywordsDataServices;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -14,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static utils.Constants.HOME_PAGE;
 
@@ -25,25 +21,16 @@ import static utils.Constants.HOME_PAGE;
 public class Homepage extends ServletModel {
     private HttpSession session;
 
-    private InternshipDataServices internshipDataServices;
-    private KeywordsDataServices keywordsDataServices;
-
     @EJB
-    private TutorSessionBean tutorSB;
+    private KeywordsSessionBean keywordsSB;
     @EJB
     private InternshipSessionBean internshipsSB;
+
 
     private TutorEntity tutor;
     private int year;
     private String name;
     String keyword;
-
-    @Override
-    public void init() {
-        super.init();
-        internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
-        keywordsDataServices = new KeywordsDataServices(dbUser, dbPwd, dbUrl);
-    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
@@ -57,7 +44,7 @@ public class Homepage extends ServletModel {
         session = request.getSession();
         tutor = (TutorEntity) session.getAttribute("tutor");
         if (tutor != null) {
-            request.setAttribute("listOfKeywords", keywordsDataServices.getListOfKeywords());
+            request.setAttribute("listOfKeywords", keywordsSB.getKeywords());
 
             try {
                 year = Integer.parseInt(request.getParameter("year"));

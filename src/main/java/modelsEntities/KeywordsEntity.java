@@ -8,6 +8,9 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "keywords", schema = "public", catalog = "st2eedb")
+@NamedQueries(
+        @NamedQuery(name = "Keywords.SelectAll", query = "SELECT k FROM KeywordsEntity k")
+)
 public class KeywordsEntity {
     @Id
     @Column(name = "keyword_id", nullable = false, columnDefinition="uuid")
