@@ -51,8 +51,8 @@ public class StudentDataServices extends DataServices {
     public int updateNamesGroup(String lastName, String firstName, String group, String id){
         try {
             ps = con.prepareStatement(DB_UPDATE_STUDENT_NAME_GROUP);
-            ps.setString(1, firstName);
-            ps.setString(2, lastName);
+            ps.setString(1, lastName);
+            ps.setString(2, firstName);
             ps.setString(3, group);
             ps.setObject(4, id, Types.OTHER);
 

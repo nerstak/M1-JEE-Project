@@ -9,6 +9,7 @@ import model.InternshipData;
 import model.Student;
 import modelsEntities.InternshipEntity;
 import modelsEntities.StudentEntity;
+import modelsEntities.TutorEntity;
 import utils.ProcessString;
 import utils.database.*;
 
@@ -16,6 +17,7 @@ import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -35,6 +37,9 @@ public class UpdateDetails extends ServletModel{
     private StudentSessionBean studentSB;
 
     private InternshipEntity internshipEntity;
+    private TutorEntity tutorEntity;
+
+    private HttpSession session;
 
     private InternshipDataServices internshipDataServices;
     private CompanyDataServices companyDataServices;
@@ -58,6 +63,9 @@ public class UpdateDetails extends ServletModel{
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Get the name of the button that call the servlet
+        session = request.getSession();
+        tutorEntity = (TutorEntity) session.getAttribute("tutor");
+
         String detailsSubmitButton = request.getParameter("updateDetails");
         String internshipId = request.getParameter("internshipId");
         switch (detailsSubmitButton){
@@ -147,6 +155,7 @@ public class UpdateDetails extends ServletModel{
         student.setFirstname(firstName);
         student.setName(lastName);
         student.setEmail(email);
+        student.setTutorEntity(tutorEntity);
 
         //Check if data are empty (expect linkedin url)
         if(ProcessString.areStringEmpty(studentId.toString(), firstName, lastName, email, group)){
