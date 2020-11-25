@@ -39,22 +39,6 @@ public class Details extends ServletModel {
 
     private InternshipEntity internshipEntity;
 
-    private InternshipDataServices internshipDataServices;
-    private StudentDataServices studentDataServices;
-    private FinalReportDataServices finalReportDataServices;
-    private MarksDataServices marksDataServices;
-    private VisitDataServices visitDataServices;
-
-    @Override
-    public void init() {
-        super.init();
-        internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
-        studentDataServices = new StudentDataServices(dbUser, dbPwd, dbUrl);
-        finalReportDataServices = new FinalReportDataServices(dbUser, dbPwd, dbUrl);
-        marksDataServices = new MarksDataServices(dbUser, dbPwd, dbUrl);
-        visitDataServices = new VisitDataServices(dbUser, dbPwd, dbUrl);
-    }
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Check from which submit button the request come from
         String internshipSubmit = request.getParameter("internshipSubmit");
@@ -88,9 +72,6 @@ public class Details extends ServletModel {
      * @return true if the db is updated
      */
     private boolean updateAllData(HttpServletRequest request){
-        //Disable all data services
-        DataServices.disableAutoCommits(studentDataServices, marksDataServices, visitDataServices, internshipDataServices, finalReportDataServices);
-
         //Check if update is done, if it not return false
         if (!updateInternship(request)){
             return false;
@@ -112,8 +93,6 @@ public class Details extends ServletModel {
             return false;
         }
 
-        //Commit all request in the db
-        DataServices.commitRequest(studentDataServices, marksDataServices, visitDataServices, internshipDataServices, finalReportDataServices);
         return true;
     }
 

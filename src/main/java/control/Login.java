@@ -28,7 +28,6 @@ public class Login extends ServletModel {
 
     ArrayList<TutorEntity> tutors;
 
-    private TutorDataServices tutorDataServices;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -70,11 +69,5 @@ public class Login extends ServletModel {
             request.setAttribute("errorMessage", ERR_INV_CRED_MESS);
             request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
         }
-    }
-
-    @Override
-    public void init() {
-        super.init();
-        tutorDataServices = new TutorDataServices(dbUser, dbPwd, dbUrl);
     }
 }
