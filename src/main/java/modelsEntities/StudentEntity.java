@@ -47,6 +47,20 @@ public class StudentEntity {
             inverseJoinColumns = @JoinColumn( name = "skill_id" ) )
     private List<SkillsEntity> skills = new ArrayList<>();
 
+    public void setTutorEntity(TutorEntity tutorEntity) {
+        this.tutorEntity = tutorEntity;
+    }
+
+    public List<SkillsEntity> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<SkillsEntity> skills) {
+        this.skills = skills;
+    }
+
+
+
     public UUID getStudentId() {
         return studentId;
     }

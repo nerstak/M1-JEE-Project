@@ -8,6 +8,9 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "skills", schema = "public", catalog = "st2eedb")
+@NamedQueries(
+        @NamedQuery(name = "Skills.SelectAll", query = "SELECT s FROM SkillsEntity s")
+)
 public class SkillsEntity {
     @Id
     @Column(name = "skill_id", nullable = false, columnDefinition="uuid")
@@ -38,9 +41,15 @@ public class SkillsEntity {
     @JoinTable( name = "student_to_skills",
             joinColumns = @JoinColumn( name = "skill_id" ),
             inverseJoinColumns = @JoinColumn( name = "student_id" ) )
-    private List<StudentEntity> students = new ArrayList<>();
+    private List<StudentEntity> listStudents = new ArrayList<>();
 
-    public List getListStudents() {return students;}
+    public List<StudentEntity> getListStudents() {
+        return listStudents;
+    }
+
+    public void setListStudents(List<StudentEntity> listStudents) {
+        this.listStudents = listStudents;
+    }
 
     @Override
     public boolean equals(Object o) {

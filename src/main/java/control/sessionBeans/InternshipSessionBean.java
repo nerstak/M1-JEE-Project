@@ -1,5 +1,6 @@
 package control.sessionBeans;
 
+import modelsEntities.InternshipEntity;
 import modelsEntities.TutorEntity;
 
 import javax.ejb.Stateless;
@@ -20,6 +21,12 @@ public class InternshipSessionBean {
         //q.setParameter("year",year);
         //q.setParameter("name",name);
         //q.setParameter("keyword",keyword);
+        return q.getResultList();
+    }
+
+    public List getInternship(UUID internshipId) {
+        Query q = em.createNamedQuery("Internship.SelectSingle");
+        q.setParameter("internshipId", internshipId);
         return q.getResultList();
     }
 }

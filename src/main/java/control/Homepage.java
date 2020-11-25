@@ -26,7 +26,6 @@ public class Homepage extends ServletModel {
     @EJB
     private InternshipSessionBean internshipsSB;
 
-
     private TutorEntity tutor;
     private int year;
     private String name;

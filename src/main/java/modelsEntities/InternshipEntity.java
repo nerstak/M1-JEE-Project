@@ -9,9 +9,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "internship", schema = "public", catalog = "st2eedb")
-@NamedQueries(
-        @NamedQuery(name="Internship.SelectList", query = "SELECT i FROM InternshipEntity i JOIN FETCH i.student s WHERE s.tutorEntity.tutorId = :tutor")
-)
+@NamedQueries({
+        @NamedQuery(name = "Internship.SelectList", query = "SELECT i FROM InternshipEntity i JOIN FETCH i.student s WHERE s.tutorEntity.tutorId = :tutor"),
+        @NamedQuery(name = "Internship.SelectSingle", query = "SELECT i FROM InternshipEntity i WHERE i.internshipId = :internshipId")
+})
 public class InternshipEntity {
     @Id    @Column(name = "internship_id", nullable = false, columnDefinition="uuid") @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID internshipId;
