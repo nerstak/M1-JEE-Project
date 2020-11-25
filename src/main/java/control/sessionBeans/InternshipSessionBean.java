@@ -34,4 +34,11 @@ public class InternshipSessionBean {
     public InternshipEntity find(UUID internshipId) {
         return em.find(InternshipEntity.class, internshipId);
     }
+
+    /*
+    public InternshipEntity find(UUID internshipId) {
+        InternshipEntity i = em.find(InternshipEntity.class, internshipId);
+        i.setDescription("lol");
+        return i;
+    }*/
 }

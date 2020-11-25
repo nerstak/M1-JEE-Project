@@ -4,9 +4,11 @@ package control;
 import control.sessionBeans.InternshipSessionBean;
 import control.sessionBeans.KeywordsSessionBean;
 import control.sessionBeans.SkillsSessionBean;
+import control.sessionBeans.StudentSessionBean;
 import model.InternshipData;
 import model.Student;
 import modelsEntities.InternshipEntity;
+import modelsEntities.StudentEntity;
 import utils.ProcessString;
 import utils.database.*;
 
@@ -29,11 +31,12 @@ public class UpdateDetails extends ServletModel{
     private KeywordsSessionBean keywordsSB;
     @EJB
     private SkillsSessionBean skillsSB;
+    @EJB
+    private StudentSessionBean studentSB;
 
     private InternshipEntity internshipEntity;
 
     private InternshipDataServices internshipDataServices;
-    private StudentDataServices studentDataServices;
     private CompanyDataServices companyDataServices;
     private FinalReportDataServices finalReportDataServices;
     private CommentsDataServices commentsDataServices;
@@ -45,7 +48,6 @@ public class UpdateDetails extends ServletModel{
     public void init() {
         super.init();
         internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
-        studentDataServices = new StudentDataServices(dbUser, dbPwd, dbUrl);
         finalReportDataServices = new FinalReportDataServices(dbUser, dbPwd, dbUrl);
         companyDataServices = new CompanyDataServices(dbUser, dbPwd, dbUrl);
         commentsDataServices = new CommentsDataServices(dbUser, dbPwd, dbUrl);
@@ -137,11 +139,12 @@ public class UpdateDetails extends ServletModel{
         String lastName = request.getParameter("lastName");
         String linkedin = request.getParameter("linkedin");
         String email = request.getParameter("email");
-        Student student = new Student();
+
+        StudentEntity student = new StudentEntity();
         student.setStudentId(studentId);
-        student.setGroup(group);
+        student.setStudentGroup(group);
         student.setLinkedinProfile(linkedin);
-        student.setFirstName(firstName);
+        student.setFirstname(firstName);
         student.setName(lastName);
         student.setEmail(email);
 
@@ -151,7 +154,7 @@ public class UpdateDetails extends ServletModel{
             return false;
         }
 
-        return (studentDataServices.updateStudent(student) == 1);
+        return studentSB.saveStudent(student);
     }
 
     /**
