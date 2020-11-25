@@ -10,9 +10,8 @@ public abstract class ModelBean<T extends InterfaceEntity> {
     @PersistenceContext
     protected EntityManager em;
 
-    public boolean save(T e) {
+    public void save(T e) {
         em.merge(e);
-        return true;
     }
 
     public abstract T find(UUID id);

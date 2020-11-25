@@ -8,9 +8,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "skills", schema = "public", catalog = "st2eedb")
-@NamedQueries(
-        @NamedQuery(name = "Skills.SelectAll", query = "SELECT s FROM SkillsEntity s")
-)
+@NamedQueries({
+        @NamedQuery(name = "Skills.SelectAll", query = "SELECT s FROM SkillsEntity s"),
+        @NamedQuery(name = "Skills.SelectByName", query = "SELECT s FROM SkillsEntity s WHERE s.skill = :skill")
+})
 public class SkillsEntity implements InterfaceEntity {
     @Id
     @Column(name = "skill_id", nullable = false, columnDefinition="uuid")
