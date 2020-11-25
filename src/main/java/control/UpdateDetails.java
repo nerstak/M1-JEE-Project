@@ -1,10 +1,7 @@
 package control;
 
 
-import control.sessionBeans.InternshipSessionBean;
-import control.sessionBeans.KeywordsSessionBean;
-import control.sessionBeans.SkillsSessionBean;
-import control.sessionBeans.StudentSessionBean;
+import control.sessionBeans.*;
 import modelsEntities.*;
 import utils.ProcessString;
 import utils.database.*;
@@ -17,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.UUID;
 
 import static utils.Constants.*;
@@ -32,6 +27,8 @@ public class UpdateDetails extends ServletModel{
     private SkillsSessionBean skillsSB;
     @EJB
     private StudentSessionBean studentSB;
+    @EJB
+    private CommentsSessionBean commentsSB;
 
     private InternshipEntity internshipEntity;
     private TutorEntity tutorEntity;
@@ -185,19 +182,16 @@ public class UpdateDetails extends ServletModel{
             return false;
         }
 
+        internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
+        internshipEntity.setDescription(description);
+        internshipEntity.getFinalReport().setTitle(title);
+        CommentsEntity comments = internshipEntity.getComments();
+        comments.setStudentComm(studentComments);
+        comments.setSupervisorComm(tutorComments);
+        commentsSB.save(comments);
+        internshipsSB.save(internshipEntity);
 
-        DataServices.disableAutoCommits(internshipDataServices, finalReportDataServices, commentsDataServices);
-
-        int rowAffectedInternship = internshipDataServices.updateInternshipDescription(internshipId, description);
-        int rowAffectedFinalReport = finalReportDataServices.updateTitleReport(titleId, title);
-        int rowAffectedComments = commentsDataServices.updateComments(commentsId, studentComments, tutorComments);
-
-        if (((rowAffectedFinalReport == 1) && (rowAffectedInternship == 1)) && (rowAffectedComments == 1)){
-            DataServices.commitRequest(internshipDataServices, finalReportDataServices, commentsDataServices);
-            return true;
-        }else{
-            return false;
-        }
+        return true;
     }
 
     /**
