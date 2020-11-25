@@ -22,7 +22,7 @@ public class FinalReportEntity {
 
     @OneToOne
     @JoinColumn( name="internship_id", nullable=true )
-    InternshipEntity internshipEntity;
+    InternshipEntity internship;
 
 
     public UUID getFinalReportId() {
@@ -48,7 +48,16 @@ public class FinalReportEntity {
     public void setReport(Boolean report) {
         this.report = report;
     }
-/*
+
+    public InternshipEntity getInternship() {
+        return internship;
+    }
+
+    public void setInternship(InternshipEntity internship) {
+        this.internship = internship;
+    }
+
+    /*
     @Basic
     @Column(name = "internship_id", nullable = true)
     public String getInternshipId() {

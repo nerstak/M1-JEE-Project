@@ -21,7 +21,7 @@ public class CommentsEntity {
 
     @OneToOne
     @JoinColumn( name="internship_id", nullable=true )
-    InternshipEntity internshipEntity;
+    private InternshipEntity internship;
 
     public UUID getCommentsId() {
         return commentsId;
@@ -57,6 +57,15 @@ public class CommentsEntity {
         this.internshipId = internshipId;
     }
 */
+
+    public InternshipEntity getInternship() {
+        return internship;
+    }
+
+    public void setInternship(InternshipEntity internship) {
+        this.internship = internship;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -49,16 +49,16 @@ public class InternshipEntity {
     @Basic    @Column(name = "intern_supervisor", nullable = true, length = -1)
     private String internSupervisor;
 
-    @OneToOne( mappedBy = "InternshipEntity" )
+    @OneToOne( mappedBy = "internship" )
     private MarksEntity marks;
 
-    @OneToOne( mappedBy = "InternshipEntity" )
+    @OneToOne( mappedBy = "internship" )
     private CommentsEntity comments;
 
-    @OneToOne( mappedBy = "InternshipEntity" )
+    @OneToOne( mappedBy = "internship" )
     private FinalReportEntity finalReport;
 
-    @OneToOne( mappedBy = "InternshipEntity" )
+    @OneToOne( mappedBy = "internship" )
     private VisitEntity visit;
 
     @ManyToOne  @JoinColumn( name="company_id" )

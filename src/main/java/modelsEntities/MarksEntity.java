@@ -23,7 +23,7 @@ public class MarksEntity {
 
     @OneToOne
     @JoinColumn( name="internship_id", nullable=true )
-    private InternshipEntity internshipEntity;
+    private InternshipEntity internship;
 
     public UUID getMarksId() {
         return marksId;
@@ -49,8 +49,15 @@ public class MarksEntity {
         this.communication = communication;
     }
 
+    public InternshipEntity getInternship() {
+        return internship;
+    }
 
-/*
+    public void setInternship(InternshipEntity internship) {
+        this.internship = internship;
+    }
+
+    /*
     @Basic
     @Column(name = "internship_id", nullable = true)
     public String getInternshipId() {

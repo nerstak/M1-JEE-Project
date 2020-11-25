@@ -26,7 +26,7 @@ public class VisitEntity {
 
     @OneToOne
     @JoinColumn( name="internship_id", nullable=true )
-    private InternshipEntity internshipEntity;
+    private InternshipEntity internship;
 
 
     public UUID getVisitId() {
@@ -61,20 +61,25 @@ public class VisitEntity {
         this.visitReport = visitReport;
     }
 
+    public InternshipEntity getInternship() {
+        return internship;
+    }
 
-
+    public void setInternship(InternshipEntity internship) {
+        this.internship = internship;
+    }
 
     /*
-    @Basic
-    @Column(name = "internship_id", nullable = true)
-    public String getInternshipId() {
-        return internshipId;
-    }
+        @Basic
+        @Column(name = "internship_id", nullable = true)
+        public String getInternshipId() {
+            return internshipId;
+        }
 
-    public void setInternshipId(String internshipId) {
-        this.internshipId = internshipId;
-    }
-*/
+        public void setInternshipId(String internshipId) {
+            this.internshipId = internshipId;
+        }
+    */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

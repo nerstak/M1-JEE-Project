@@ -17,7 +17,7 @@
         <class>modelsEntities.VisitEntity</class>
 
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/st2eedb"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.user" value="adm" />
             <property name="javax.persistence.jdbc.password" value="adm" />
