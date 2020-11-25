@@ -123,37 +123,37 @@
                                     </span>
                                 <input type="hidden" value="${Internship.marks.marksId}" name="marksId">
                                 <input type="hidden" value="${Internship.student.studentId}" name="studentId">
-                                <input type="hidden" value="${Internship.visit.visitID}" name="visitId">
+                                <input type="hidden" value="${Internship.visit.visitId}" name="visitId">
                                 <input type="hidden" value="${Internship.finalReport.finalReportId}" name="finalReportId">
                                 <span class="homepage-cell"><input name="internshipId" type="text"
-                                                                   value="${Internship.internship.internship}"
+                                                                   value="${Internship.internshipId}"
                                                                    readonly/></span>
                                 <span class="homepage-cell"><input name="studentGroup" type="text"
-                                                                   value="${Internship.student.group}"/></span>
+                                                                   value="${Internship.student.studentGroup}"/></span>
                                 <span class="homepage-cell"><input name="studentFirstname" type="text"
-                                                                   value="${Internship.student.firstName}"/></span>
+                                                                   value="${Internship.student.firstname}"/></span>
                                 <span class="homepage-cell"><input name="studentName" type="text"
                                                                    value="${Internship.student.name}"/></span>
                                 <span class="homepage-cell"><input name="cdc"
-                                                                   type="checkbox" ${Internship.internship.cdc == true ? 'checked' : ''} /></span>
+                                                                   type="checkbox" ${Internship.cdc == true ? 'checked' : ''} /></span>
                                 <span class="homepage-cell"><input name="companyEval"
-                                                                   type="checkbox" ${Internship.internship.companyEval == true ? 'checked' : ''}/></span>
+                                                                   type="checkbox" ${Internship.companyEval == true ? 'checked' : ''}/></span>
                                 <span class="homepage-cell"><input name="webSurvey"
-                                                                   type="checkbox" ${Internship.internship.webSurvey == true ? 'checked' : ''}/></span>
+                                                                   type="checkbox" ${Internship.webSurvey == true ? 'checked' : ''}/></span>
                                 <span class="homepage-cell"><input name="releasedReport"
                                                                    type="checkbox" ${Internship.finalReport.report == true ? 'checked' : ''}/></span>
                                 <span class="homepage-cell"><input name="defense"
-                                                                   type="checkbox" ${Internship.internship.defense == true ? 'checked' : ''} /></span>
+                                                                   type="checkbox" ${Internship.defense == true ? 'checked' : ''} /></span>
                                 <span class="homepage-cell"><input name="visitPlanned"
                                                                    type="checkbox" ${Internship.visit.planned == true ? 'checked' : ''}/></span>
                                 <span class="homepage-cell"><input name="visitDone"
                                                                    type="checkbox" ${Internship.visit.done == true ? 'checked' : ''}/></span>
                                 <span class="homepage-cell"><input name="beginningDate" type="date"
-                                                                   value="${Internship.internship.beginning}"/></span>
+                                                                   value="${Internship.beginning}"/></span>
                                 <span class="homepage-cell"><input name="endDate" type="date"
-                                                                   value="${Internship.internship.end}"/></span>
+                                                                   value="${Internship.ending}"/></span>
                                 <span class="homepage-cell"><input name="supervisor" type="text"
-                                                                   value="${Internship.internship.internSupervisor}"/></span>
+                                                                   value="${Internship.internSupervisor}"/></span>
                                 <span class="homepage-cell"><input name="techMark" type="text"
                                                                    value="${Internship.marks.tech}"/></span>
                                 <span class="homepage-cell"><input name="commMark" type="text"

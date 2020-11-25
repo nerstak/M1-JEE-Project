@@ -10,7 +10,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "internship", schema = "public", catalog = "st2eedb")
 @NamedQueries(
-        @NamedQuery(name="Internship.SelectList", query = "SELECT i FROM InternshipEntity i JOIN FETCH i.studentEntity s WHERE s.tutorEntity.tutorId = :tutor")
+        @NamedQuery(name="Internship.SelectList", query = "SELECT i FROM InternshipEntity i JOIN FETCH i.student s WHERE s.tutorEntity.tutorId = :tutor")
 )
 public class InternshipEntity {
     @Id    @Column(name = "internship_id", nullable = false, columnDefinition="uuid") @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,22 +50,22 @@ public class InternshipEntity {
     private String internSupervisor;
 
     @OneToOne( mappedBy = "InternshipEntity" )
-    private MarksEntity marksEntity;
+    private MarksEntity marks;
 
     @OneToOne( mappedBy = "InternshipEntity" )
-    private CommentsEntity commentsEntity;
+    private CommentsEntity comments;
 
     @OneToOne( mappedBy = "InternshipEntity" )
-    private FinalReportEntity finalReportEntity;
+    private FinalReportEntity finalReport;
 
     @OneToOne( mappedBy = "InternshipEntity" )
-    private VisitEntity visitEntity;
+    private VisitEntity visit;
 
     @ManyToOne  @JoinColumn( name="company_id" )
-    private CompanyEntity companyEntity;
+    private CompanyEntity company;
 
     @ManyToOne  @JoinColumn( name="student_id" )
-    private StudentEntity studentEntity;
+    private StudentEntity student;
 
     @ManyToMany
     @JoinTable( name = "internship_to_keywords",
@@ -74,18 +74,18 @@ public class InternshipEntity {
     private List<KeywordsEntity> keywords = new ArrayList<>();
 
 
-    public FinalReportEntity getFinalReport() {return finalReportEntity;}
+    public FinalReportEntity getFinalReport() {return finalReport;}
 
-    public CommentsEntity getComments() {return commentsEntity;}
+    public CommentsEntity getComments() {return comments;}
 
-    public MarksEntity getMarks() {return marksEntity;}
+    public MarksEntity getMarks() {return marks;}
 
-    public VisitEntity getVisit() {return visitEntity;}
+    public VisitEntity getVisit() {return visit;}
 
-    public StudentEntity getStudent() {return studentEntity;}
+    public StudentEntity getStudent() {return student;}
 
 
-    public CompanyEntity getCompany() {return companyEntity;}
+    public CompanyEntity getCompany() {return company;}
 
     public List getListKeywords() {return keywords;}
 
