@@ -1,11 +1,8 @@
 package control.sessionBeans;
 
 import modelsEntities.FinalReportEntity;
-import modelsEntities.VisitEntity;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.UUID;
 
 @Stateless(name = "FinalReportSessionEJB")

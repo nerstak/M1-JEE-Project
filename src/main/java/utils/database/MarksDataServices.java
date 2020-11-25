@@ -1,7 +1,5 @@
 package utils.database;
 
-import utils.database.DataServices;
-
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.logging.Level;

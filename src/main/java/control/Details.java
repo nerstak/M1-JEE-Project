@@ -2,9 +2,7 @@ package control;
 
 import control.sessionBeans.*;
 import modelsEntities.*;
-import utils.database.MarksDataServices;
 import utils.ProcessString;
-import utils.database.*;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -15,7 +13,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.UUID;
 
-import static utils.Constants.*;
+import static utils.Constants.MISSION_PAGE;
 
 /**
  * Details controller, for any additional information on internship

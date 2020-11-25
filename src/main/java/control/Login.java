@@ -3,7 +3,6 @@ package control;
 import control.sessionBeans.TutorSessionBean;
 import model.Tutor;
 import modelsEntities.TutorEntity;
-import utils.database.TutorDataServices;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
