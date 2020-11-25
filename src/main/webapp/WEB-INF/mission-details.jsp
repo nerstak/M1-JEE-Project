@@ -24,7 +24,7 @@
     <header class="navbar">
         <a href="Homepage"><img class="logo-efrei" src="${pageContext.request.contextPath}/Image/Logo-Efrei-2017-Fr-Web.png" alt="efrei"></a>
         <div class="navbar-menu">
-            <jsp:useBean id="tutor" class="model.Tutor" scope="session"/>
+            <jsp:useBean id="tutor" class="modelsEntities.TutorEntity" scope="session"/>
             <p>
                 ${tutor.firstname}${" "}${tutor.name}
             </p>
@@ -52,7 +52,7 @@
 
     <main class="main-info">
 
-        <jsp:useBean id="internshipData" class="model.InternshipData" scope="request"/>
+        <jsp:useBean id="internshipData" class="modelsEntities.InternshipEntity" scope="request"/>
         <div class="wrapper-flex">
             <div class="info-company">
                 <h2>Company</h2>
@@ -64,24 +64,24 @@
                         </div>
                         <div class="input-right">
                             <label for="mds">M.d.S</label>
-                            <input type="text" name="mds" id="mds" value="${internshipData.internship.internSupervisor}">
+                            <input type="text" name="mds" id="mds" value="${internshipData.internSupervisor}">
                         </div>
                     </div>
                     <div class="div-input-half">
                         <div class="input-left">
                             <label for="begin">Begin</label>
-                            <input type="date" id="begin" name="begin" value="${internshipData.internship.beginning}">
+                            <input type="date" id="begin" name="begin" value="${internshipData.beginning}">
                         </div>
                         <div class="input-right">
                             <label for="end">End</label>
-                            <input type="date" id="end" name="end" value="${internshipData.internship.end}">
+                            <input type="date" id="end" name="end" value="${internshipData.ending}">
                         </div>
                     </div>
                     <div class="div-input-full">
                         <label for="companyAddress">Address</label>
                         <input type="text" id="companyAddress" name="companyAddress" value="${internshipData.company.address}" >
                     </div>
-                    <input type="hidden" name="internshipId" value="${internshipData.internship.internship}">
+                    <input type="hidden" name="internshipId" value="${internshipData.internshipId}">
                     <input type="hidden" name="companyId" value="${internshipData.company.companyId}">
                     <button type="submit" value="company" name="updateDetails">Modify</button>
                 </form>
@@ -97,13 +97,13 @@
                         </div>
                         <div class="input-right">
                             <label for="group">Group</label>
-                            <input type="text" name="group" id="group" value="${internshipData.student.group}">
+                            <input type="text" name="group" id="group" value="${internshipData.student.studentGroup}">
                         </div>
                     </div>
                     <div class="div-input-half">
                         <div class="input-left">
                             <label for="firstName">First Name</label>
-                            <input type="text" id="firstName" name="firstName" value="${internshipData.student.firstName}">
+                            <input type="text" id="firstName" name="firstName" value="${internshipData.student.firstname}">
                         </div>
                         <div class="input-right">
                             <label for="lastName">Last Name</label>
@@ -118,7 +118,7 @@
                         <label for="linkedin">Linkedin Profile</label>
                         <input type="text" id="linkedin" name="linkedin" value="${internshipData.student.linkedinProfile}">
                     </div>
-                    <input type="hidden" name="internshipId" value="${internshipData.internship.internship}">
+                    <input type="hidden" name="internshipId" value="${internshipData.internshipId}">
                     <button type="submit" value="student" name="updateDetails">Modify</button>
                 </form>
             </div>
@@ -137,18 +137,18 @@
                     <div class="div-input-third">
                         <div class="input-left">
                             <label for="description">Description</label>
-                            <textarea name="description" id="description" form="info-company-form">${internshipData.internship.description}</textarea>
+                            <textarea name="description" id="description" form="info-company-form">${internshipData.description}</textarea>
                         </div>
                         <div class="input-right">
                             <label for="tutorComments">Tutor's comment</label>
-                            <textarea name="tutorComments" id="tutorComments" form="info-company-form">${internshipData.comments.supervisorComment}</textarea>
+                            <textarea name="tutorComments" id="tutorComments" form="info-company-form">${internshipData.comments.supervisorComm}</textarea>
                         </div>
                         <div class="input-right">
                             <label for="studentComments">Student's comments</label>
                             <textarea name="studentComments" id="studentComments" form="info-company-form">${internshipData.comments.studentComm}</textarea>
                         </div>
                     </div>
-                    <input type="hidden" name="internshipId" value="${internshipData.internship.internship}">
+                    <input type="hidden" name="internshipId" value="${internshipData.internshipId}">
                     <input type="hidden" name="titleId" value="${internshipData.finalReport.finalReportId}">
                     <input type="hidden" name="commentsId" value="${internshipData.comments.commentsId}">
 
@@ -167,18 +167,18 @@
                                 <input type="text" id="skillInput" name="skill">
                             </div>
                             <input type="hidden" name="studentId" value="${internshipData.student.studentId}">
-                            <input type="hidden" name="internshipId" value="${internshipData.internship.internship}">
+                            <input type="hidden" name="internshipId" value="${internshipData.internshipId}">
                             <button type="submit" value="skills" name="updateDetails">Add</button>
                         </div>
                     </div>
                 </form>
                 <div class="list-data">
                     <c:choose>
-                        <c:when test="${empty listOfStudentSkills}">
+                        <c:when test="${empty internshipData.student.skills}">
                             <h2>No skills registered</h2>
                         </c:when>
                         <c:otherwise>
-                            <c:forEach items="${listOfStudentSkills}" var="skill">
+                            <c:forEach items="${internshipData.student.skills}" var="skill">
                                 <p>${skill.skill}</p>
                             </c:forEach>
                         </c:otherwise>
@@ -195,18 +195,18 @@
                                 <label for="keywordInput">Keywords</label>
                                 <input type="text" id="keywordInput" name="keyword">
                             </div>
-                            <input type="hidden" name="internshipId" value="${internshipData.internship.internship}">
+                            <input type="hidden" name="internshipId" value="${internshipData.internshipId}">
                             <button type="submit" value="keywords" name="updateDetails">Add</button>
                         </div>
                     </div>
                 </form>
                 <div class="list-data">
                     <c:choose>
-                        <c:when test="${empty listOfInternshipKeywords}">
+                        <c:when test="${empty internshipData.listKeywords}">
                             <h2>No skills registered</h2>
                         </c:when>
                         <c:otherwise>
-                            <c:forEach items="${listOfInternshipKeywords}" var="keywords">
+                            <c:forEach items="${internshipData.listKeywords}" var="keywords">
                                 <p>${keywords.keyword}</p>
                             </c:forEach>
                         </c:otherwise>

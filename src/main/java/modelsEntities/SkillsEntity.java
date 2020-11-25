@@ -1,32 +1,54 @@
 package modelsEntities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "skills", schema = "public", catalog = "st2eedb")
+@NamedQueries(
+        @NamedQuery(name = "Skills.SelectAll", query = "SELECT s FROM SkillsEntity s")
+)
 public class SkillsEntity {
-    private String skillId;
-    private String skill;
-
     @Id
-    @Column(name = "skill_id", nullable = false)
-    public String getSkillId() {
-        return skillId;
-    }
-
-    public void setSkillId(String skillId) {
-        this.skillId = skillId;
-    }
+    @Column(name = "skill_id", nullable = false, columnDefinition="uuid")
+    private UUID skillId;
 
     @Basic
     @Column(name = "skill", nullable = true, length = -1)
+    private String skill;
+
+
+    public UUID getSkillId() {
+        return skillId;
+    }
+
+    public void setSkillId(UUID skillId) {
+        this.skillId = skillId;
+    }
+
     public String getSkill() {
         return skill;
     }
 
     public void setSkill(String skill) {
         this.skill = skill;
+    }
+
+    @ManyToMany
+    @JoinTable( name = "student_to_skills",
+            joinColumns = @JoinColumn( name = "skill_id" ),
+            inverseJoinColumns = @JoinColumn( name = "student_id" ) )
+    private List<StudentEntity> listStudents = new ArrayList<>();
+
+    public List<StudentEntity> getListStudents() {
+        return listStudents;
+    }
+
+    public void setListStudents(List<StudentEntity> listStudents) {
+        this.listStudents = listStudents;
     }
 
     @Override

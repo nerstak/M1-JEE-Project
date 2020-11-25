@@ -1,26 +1,40 @@
 package modelsEntities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "keywords", schema = "public", catalog = "st2eedb")
+@NamedQueries(
+        @NamedQuery(name = "Keywords.SelectAll", query = "SELECT k FROM KeywordsEntity k")
+)
 public class KeywordsEntity {
-    private String keywordId;
-    private String keyword;
-
     @Id
-    @Column(name = "keyword_id", nullable = false)
-    public String getKeywordId() {
-        return keywordId;
-    }
-
-    public void setKeywordId(String keywordId) {
-        this.keywordId = keywordId;
-    }
+    @Column(name = "keyword_id", nullable = false, columnDefinition="uuid")
+    private UUID keywordId;
 
     @Basic
     @Column(name = "keyword", nullable = true, length = -1)
+    private String keyword;
+
+    @ManyToMany
+    @JoinTable( name = "internship_to_keywords",
+            joinColumns = @JoinColumn( name = "keyword_id" ),
+            inverseJoinColumns = @JoinColumn( name = "internship_id" ) )
+    private List<InternshipEntity> internships = new ArrayList<>();
+
+
+    public UUID getKeywordId() {
+        return keywordId;
+    }
+
+    public void setKeywordId(UUID keywordId) {
+        this.keywordId = keywordId;
+    }
+
     public String getKeyword() {
         return keyword;
     }
@@ -28,6 +42,8 @@ public class KeywordsEntity {
     public void setKeyword(String keyword) {
         this.keyword = keyword;
     }
+
+    public List getListInternships() { return internships; }
 
     @Override
     public boolean equals(Object o) {

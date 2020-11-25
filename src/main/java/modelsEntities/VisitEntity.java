@@ -2,6 +2,7 @@ package modelsEntities;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "visit", schema = "public", catalog = "st2eedb")
@@ -9,24 +10,36 @@ import java.util.Objects;
         @NamedQuery(name = "VisitEntity.UpdateVisit", query = "update VisitEntity set done = :done, planned = :planned Where visitId = :visitId")
 )
 public class VisitEntity {
-    private String visitId;
-    private Boolean done;
-    private Boolean planned;
-    private Boolean visitReport;
-    private String internshipId;
-
     @Id
-    @Column(name = "visit_id", nullable = false)
-    public String getVisitId() {
-        return visitId;
-    }
-
-    public void setVisitId(String visitId) {
-        this.visitId = visitId;
-    }
+    @Column(name = "visit_id", nullable = false, columnDefinition="uuid")
+    private UUID visitId;
 
     @Basic
     @Column(name = "done", nullable = true)
+    private Boolean done;
+
+    @Basic
+    @Column(name = "planned", nullable = true)
+    private Boolean planned;
+
+    @Basic
+    @Column(name = "visit_report", nullable = true)
+    private Boolean visitReport;
+//    private String internshipId;
+
+    @OneToOne
+    @JoinColumn( name="internship_id", nullable=true )
+    private InternshipEntity internship;
+
+
+    public UUID getVisitId() {
+        return visitId;
+    }
+
+    public void setVisitId(UUID visitId) {
+        this.visitId = visitId;
+    }
+
     public Boolean getDone() {
         return done;
     }
@@ -35,8 +48,6 @@ public class VisitEntity {
         this.done = done;
     }
 
-    @Basic
-    @Column(name = "planned", nullable = true)
     public Boolean getPlanned() {
         return planned;
     }
@@ -45,8 +56,6 @@ public class VisitEntity {
         this.planned = planned;
     }
 
-    @Basic
-    @Column(name = "visit_report", nullable = true)
     public Boolean getVisitReport() {
         return visitReport;
     }
@@ -55,16 +64,25 @@ public class VisitEntity {
         this.visitReport = visitReport;
     }
 
-    @Basic
-    @Column(name = "internship_id", nullable = true)
-    public String getInternshipId() {
-        return internshipId;
+    public InternshipEntity getInternship() {
+        return internship;
     }
 
-    public void setInternshipId(String internshipId) {
-        this.internshipId = internshipId;
+    public void setInternship(InternshipEntity internship) {
+        this.internship = internship;
     }
 
+    /*
+        @Basic
+        @Column(name = "internship_id", nullable = true)
+        public String getInternshipId() {
+            return internshipId;
+        }
+
+        public void setInternshipId(String internshipId) {
+            this.internshipId = internshipId;
+        }
+    */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,12 +91,12 @@ public class VisitEntity {
         return Objects.equals(visitId, that.visitId) &&
                 Objects.equals(done, that.done) &&
                 Objects.equals(planned, that.planned) &&
-                Objects.equals(visitReport, that.visitReport) &&
-                Objects.equals(internshipId, that.internshipId);
+                Objects.equals(visitReport, that.visitReport);// &&
+//                Objects.equals(internshipId, that.internshipId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(visitId, done, planned, visitReport, internshipId);
+        return Objects.hash(visitId, done, planned, visitReport);
     }
 }

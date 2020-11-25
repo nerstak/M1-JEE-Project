@@ -1,16 +1,24 @@
 package control;
 
+import control.sessionBeans.InternshipSessionBean;
+import control.sessionBeans.KeywordsSessionBean;
+import control.sessionBeans.SkillsSessionBean;
 import model.*;
+import modelsEntities.InternshipEntity;
+import modelsEntities.TutorEntity;
 import utils.database.MarksDataServices;
 import utils.ProcessString;
 import utils.database.*;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.UUID;
 
 import static utils.Constants.*;
 
@@ -19,11 +27,16 @@ import static utils.Constants.*;
  */
 @WebServlet(name = "Details")
 public class Details extends ServletModel {
-    private InternshipData internshipData;
+    @EJB
+    private InternshipSessionBean internshipsSB;
+    @EJB
+    private KeywordsSessionBean keywordsSB;
+    @EJB
+    private SkillsSessionBean skillsSB;
+
+    private InternshipEntity internshipEntity;
 
     private InternshipDataServices internshipDataServices;
-    private SkillsDataServices skillsDataServices;
-    private KeywordsDataServices keywordsDataServices;
     private StudentDataServices studentDataServices;
     private FinalReportDataServices finalReportDataServices;
     private MarksDataServices marksDataServices;
@@ -33,8 +46,6 @@ public class Details extends ServletModel {
     public void init() {
         super.init();
         internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
-        skillsDataServices = new SkillsDataServices(dbUser, dbPwd, dbUrl);
-        keywordsDataServices = new KeywordsDataServices(dbUser, dbPwd, dbUrl);
         studentDataServices = new StudentDataServices(dbUser, dbPwd, dbUrl);
         finalReportDataServices = new FinalReportDataServices(dbUser, dbPwd, dbUrl);
         marksDataServices = new MarksDataServices(dbUser, dbPwd, dbUrl);
@@ -46,14 +57,12 @@ public class Details extends ServletModel {
         String internshipSubmit = request.getParameter("internshipSubmit");
         if (internshipSubmit.equals("details")) {
             String internshipId = request.getParameter("internshipId");
-            internshipData = internshipDataServices.getInternshipDetailed(internshipId);
+            internshipEntity = (InternshipEntity) internshipsSB.getInternship(UUID.fromString(internshipId)).get(0);
 
             //Set request attributes
-            request.setAttribute("internshipData", internshipData);
-            request.setAttribute("listOfSkills", skillsDataServices.getListOfSkills());
-            request.setAttribute("listOfKeywords",keywordsDataServices.getListOfKeywords());
-            request.setAttribute("listOfStudentSkills", skillsDataServices.getStudentSkillsAll(internshipData.getStudent()));
-            request.setAttribute("listOfInternshipKeywords", keywordsDataServices.getInternshipKeywordsAll(internshipData.getInternship().getInternship().toString()));
+            request.setAttribute("internshipData", internshipEntity);
+            request.setAttribute("listOfSkills", skillsSB.getSkills());
+            request.setAttribute("listOfKeywords",keywordsSB.getKeywords());
 
             request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
         } else if (internshipSubmit.equals("modify")) {

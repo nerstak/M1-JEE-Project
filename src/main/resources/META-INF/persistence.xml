@@ -10,30 +10,27 @@
         <class>modelsEntities.CompanyEntity</class>
         <class>modelsEntities.FinalReportEntity</class>
         <class>modelsEntities.InternshipEntity</class>
-        <class>modelsEntities.InternshipToKeywordsEntity</class>
         <class>modelsEntities.KeywordsEntity</class>
         <class>modelsEntities.MarksEntity</class>
         <class>modelsEntities.SkillsEntity</class>
         <class>modelsEntities.StudentEntity</class>
-        <class>modelsEntities.StudentToSkillsEntity</class>
         <class>modelsEntities.VisitEntity</class>
-        <class>modelsEntities.InternshipKeywordsEntity</class>
-        <class>modelsEntities.InternshipsDataEntity</class>
-        <class>modelsEntities.InternshipsDataDetailsEntity</class>
-        <class>modelsEntities.StudentsSkillsEntity</class>
+
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/st2eedb"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.user" value="adm" />
             <property name="javax.persistence.jdbc.password" value="adm" />
-            <property name="toplink.jdbc.url" value="jdbc:postgresql://localhost:5432"/>
-            <property name="toplink.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432"/>
-            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-            <property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:5432"/>
-            <property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver"/>
-            <property name="eclipselink.jdbc.url" value="jdbc:postgresql://localhost:5432"/>
-            <property name="eclipselink.jdbc.driver" value="org.postgresql.Driver"/>
+<!--            <property name="toplink.jdbc.url" value="jdbc:postgresql://localhost:5432"/>-->
+<!--            <property name="toplink.jdbc.driver" value="org.postgresql.Driver"/>-->
+<!--            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432"/>-->
+<!--            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>-->
+<!--            <property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:5432"/>-->
+<!--            <property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver"/>-->
+<!--            <property name="eclipselink.jdbc.url" value="jdbc:postgresql://localhost:5432"/>-->
+<!--            <property name="eclipselink.jdbc.driver" value="org.postgresql.Driver"/>-->
+<!--            <property name="eclipselink.persistence.jdbc.user" value="adm" />-->
+<!--            <property name="eclipselink.persistence.jdbc.password" value="adm" />-->
         </properties>
     </persistence-unit>
 </persistence>

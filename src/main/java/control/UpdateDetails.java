@@ -1,11 +1,16 @@
 package control;
 
 
+import control.sessionBeans.InternshipSessionBean;
+import control.sessionBeans.KeywordsSessionBean;
+import control.sessionBeans.SkillsSessionBean;
 import model.InternshipData;
 import model.Student;
+import modelsEntities.InternshipEntity;
 import utils.ProcessString;
 import utils.database.*;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +23,15 @@ import java.util.UUID;
 import static utils.Constants.*;
 
 public class UpdateDetails extends ServletModel{
+    @EJB
+    private InternshipSessionBean internshipsSB;
+    @EJB
+    private KeywordsSessionBean keywordsSB;
+    @EJB
+    private SkillsSessionBean skillsSB;
+
+    private InternshipEntity internshipEntity;
+
     private InternshipDataServices internshipDataServices;
     private StudentDataServices studentDataServices;
     private CompanyDataServices companyDataServices;
@@ -26,7 +40,6 @@ public class UpdateDetails extends ServletModel{
     private SkillsDataServices skillsDataServices;
     private KeywordsDataServices keywordsDataServices;
     private boolean successRequest;
-    private InternshipData internshipData;
 
     @Override
     public void init() {
@@ -299,12 +312,13 @@ public class UpdateDetails extends ServletModel{
                 request.setAttribute("message", ERR_FAILED_UPDATE_DB);
             }
         }
-        internshipData = internshipDataServices.getInternshipDetailed(internshipId);
-        request.setAttribute("internshipData", internshipData);
-        request.setAttribute("listOfSkills", skillsDataServices.getListOfSkills());
-        request.setAttribute("listOfKeywords",keywordsDataServices.getListOfKeywords());
-        request.setAttribute("listOfStudentSkills", skillsDataServices.getStudentSkillsAll(internshipData.getStudent()));
-        request.setAttribute("listOfInternshipKeywords", keywordsDataServices.getInternshipKeywordsAll(internshipData.getInternship().getInternship().toString()));
+
+        internshipEntity = (InternshipEntity) internshipsSB.getInternship(UUID.fromString(internshipId)).get(0);
+
+        //Set request attributes
+        request.setAttribute("internshipData", internshipEntity);
+        request.setAttribute("listOfSkills", skillsSB.getSkills());
+        request.setAttribute("listOfKeywords",keywordsSB.getKeywords());
 
         request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
     }

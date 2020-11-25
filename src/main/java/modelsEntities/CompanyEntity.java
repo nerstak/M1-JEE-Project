@@ -2,6 +2,7 @@ package modelsEntities;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "company", schema = "public", catalog = "st2eedb")
@@ -9,17 +10,18 @@ import java.util.Objects;
         @NamedQuery(name = "CompanyEntity.updateCompany", query = "update CompanyEntity set name = :name, address = :address Where companyId = :companyId")
 )
 public class CompanyEntity {
-    private String companyId;
+    @Id
+    @Column(name = "company_id", nullable = false, columnDefinition="uuid")
+    private UUID companyId;
     private String name;
     private String address;
 
-    @Id
-    @Column(name = "company_id", nullable = false)
-    public String getCompanyId() {
+
+    public UUID getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(String companyId) {
+    public void setCompanyId(UUID companyId) {
         this.companyId = companyId;
     }
 

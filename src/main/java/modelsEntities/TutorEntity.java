@@ -1,7 +1,10 @@
 package modelsEntities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tutor", schema = "public", catalog = "st2eedb")
@@ -9,21 +12,27 @@ import java.util.Objects;
         @NamedQuery(name = "Tutor.SelectSingleTutor", query = "SELECT t FROM TutorEntity t WHERE t.email  = :email AND t.pwd = :pwd")
 )
 public class TutorEntity {
-    private String tutorId;
+    @Id
+    @Column(name = "tutor_id", nullable = false, columnDefinition="uuid") @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private UUID tutorId;
     private String name;
     private String firstname;
     private String pwd;
     private String email;
 
-    @Id
-    @Column(name = "tutor_id", nullable = false)
-    public String getTutorId() {
+
+    public UUID getTutorId() {
         return tutorId;
     }
 
-    public void setTutorId(String tutorId) {
+    public void setTutorId(UUID tutorId) {
         this.tutorId = tutorId;
     }
+
+    @OneToMany(mappedBy="tutorEntity")
+    private List<StudentEntity> students = new ArrayList<>();
+
+    public List getListStudents() { return students; }
 
     @Basic
     @Column(name = "name", nullable = true, length = -1)
