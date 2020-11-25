@@ -9,7 +9,7 @@ import java.util.UUID;
 @NamedQueries(
         @NamedQuery(name = "VisitEntity.UpdateVisit", query = "update VisitEntity set done = :done, planned = :planned Where visitId = :visitId")
 )
-public class VisitEntity {
+public class VisitEntity implements InterfaceEntity {
     @Id
     @Column(name = "visit_id", nullable = false, columnDefinition="uuid")
     private UUID visitId;

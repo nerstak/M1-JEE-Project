@@ -13,7 +13,7 @@ import java.util.UUID;
         @NamedQuery(name = "Internship.SelectList", query = "SELECT i FROM InternshipEntity i JOIN FETCH i.student s WHERE s.tutorEntity.tutorId = :tutor"),
         @NamedQuery(name = "Internship.SelectSingle", query = "SELECT i FROM InternshipEntity i WHERE i.internshipId = :internshipId")
 })
-public class InternshipEntity {
+public class InternshipEntity implements InterfaceEntity {
     @Id    @Column(name = "internship_id", nullable = false, columnDefinition="uuid") @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID internshipId;
 

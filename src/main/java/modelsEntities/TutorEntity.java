@@ -11,7 +11,7 @@ import java.util.UUID;
 @NamedQueries(
         @NamedQuery(name = "Tutor.SelectSingleTutor", query = "SELECT t FROM TutorEntity t WHERE t.email  = :email AND t.pwd = :pwd")
 )
-public class TutorEntity {
+public class TutorEntity implements InterfaceEntity {
     @Id
     @Column(name = "tutor_id", nullable = false, columnDefinition="uuid") @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID tutorId;

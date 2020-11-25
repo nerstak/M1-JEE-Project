@@ -9,15 +9,7 @@ import javax.persistence.PersistenceContext;
 import java.util.UUID;
 
 @Stateless(name = "MarksSessionEJB")
-public class MarksSessionBean {
-    @PersistenceContext
-    EntityManager em;
-
-    public boolean save(MarksEntity e) {
-        em.merge(e);
-        return true;
-    }
-
+public class MarksSessionBean extends ModelBean<MarksEntity>{
     public MarksEntity find(UUID id) {
         return em.find(MarksEntity.class, id);
     }

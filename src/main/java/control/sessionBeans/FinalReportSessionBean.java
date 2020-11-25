@@ -9,16 +9,9 @@ import javax.persistence.PersistenceContext;
 import java.util.UUID;
 
 @Stateless(name = "FinalReportSessionEJB")
-public class FinalReportSessionBean {
-    @PersistenceContext
-    EntityManager em;
-
+public class FinalReportSessionBean extends ModelBean<FinalReportEntity> {
+    @Override
     public FinalReportEntity find(UUID id) {
         return em.find(FinalReportEntity.class, id);
-    }
-
-    public boolean save(FinalReportEntity e) {
-        em.merge(e);
-        return true;
     }
 }

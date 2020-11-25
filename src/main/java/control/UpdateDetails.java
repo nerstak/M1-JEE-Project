@@ -160,8 +160,9 @@ public class UpdateDetails extends ServletModel{
             request.setAttribute("message", ERR_EMPTY_FIELDS);
             return false;
         }
+        studentSB.save(student);
 
-        return studentSB.save(student);
+        return true;
     }
 
     /**

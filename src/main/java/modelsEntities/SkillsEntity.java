@@ -11,7 +11,7 @@ import java.util.UUID;
 @NamedQueries(
         @NamedQuery(name = "Skills.SelectAll", query = "SELECT s FROM SkillsEntity s")
 )
-public class SkillsEntity {
+public class SkillsEntity implements InterfaceEntity {
     @Id
     @Column(name = "skill_id", nullable = false, columnDefinition="uuid")
     private UUID skillId;

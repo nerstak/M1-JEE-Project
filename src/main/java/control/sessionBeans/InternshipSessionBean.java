@@ -11,10 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Stateless(name = "InternshipSessionEJB")
-public class InternshipSessionBean {
-    @PersistenceContext
-    EntityManager em;
-
+public class InternshipSessionBean extends ModelBean<InternshipEntity> {
     public List getInternshipData(UUID tutorId, int year, String name, String keyword) {
         Query q = em.createNamedQuery("Internship.SelectList");
         q.setParameter("tutor",tutorId);
@@ -31,12 +28,8 @@ public class InternshipSessionBean {
         return q.getResultList();
     }
 
+    @Override
     public InternshipEntity find(UUID id) {
         return em.find(InternshipEntity.class, id);
-    }
-
-    public boolean save(InternshipEntity e) {
-        em.merge(e);
-        return true;
     }
 }

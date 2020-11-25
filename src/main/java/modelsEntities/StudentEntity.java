@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "student", schema = "public", catalog = "st2eedb")
-public class StudentEntity {
+public class StudentEntity implements InterfaceEntity {
     @Id
     @Column(name = "student_id", nullable = false, columnDefinition="uuid")
     private UUID studentId;

@@ -8,15 +8,7 @@ import javax.persistence.PersistenceContext;
 import java.util.UUID;
 
 @Stateless(name = "StudentSessionEJB")
-public class StudentSessionBean {
-    @PersistenceContext
-    EntityManager em;
-
-    public boolean save(StudentEntity e) {
-        em.merge(e);
-        return true;
-    }
-
+public class StudentSessionBean extends ModelBean<StudentEntity>{
     public StudentEntity find(UUID id) {
         return em.find(StudentEntity.class, id);
     }

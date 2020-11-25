@@ -11,7 +11,7 @@ import java.util.UUID;
 @NamedQueries(
         @NamedQuery(name = "Keywords.SelectAll", query = "SELECT k FROM KeywordsEntity k")
 )
-public class KeywordsEntity {
+public class KeywordsEntity implements InterfaceEntity {
     @Id
     @Column(name = "keyword_id", nullable = false, columnDefinition="uuid")
     private UUID keywordId;

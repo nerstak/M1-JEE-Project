@@ -9,7 +9,7 @@ import java.util.UUID;
 @NamedQueries(
         @NamedQuery(name = "CommentsEntity.updateComments", query = "update CommentsEntity set studentComm = :studentComm, supervisorComm = :supervisorComm Where commentsId = :commentsId")
 )
-public class CommentsEntity {
+public class CommentsEntity implements InterfaceEntity {
     @Id
     @Column(name = "comments_id", nullable = false, columnDefinition="uuid")
     private UUID commentsId;

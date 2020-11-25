@@ -11,7 +11,7 @@ import java.util.UUID;
         @NamedQuery(name = "FinalReportEntity.updateReportBool", query = "update FinalReportEntity set report = :report Where finalReportId = :finalReportId")
     }
 )
-public class FinalReportEntity {
+public class FinalReportEntity implements InterfaceEntity {
     @Id
     @Column(name = "final_report_id", nullable = false, columnDefinition="uuid")
     private UUID finalReportId;
