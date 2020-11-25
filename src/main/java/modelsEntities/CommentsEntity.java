@@ -5,6 +5,9 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "comments", schema = "public", catalog = "st2eedb")
+@NamedQueries(
+        @NamedQuery(name = "CommentsEntity.updateComments", query = "update CommentsEntity set studentComm = :studentComm, supervisorComm = :supervisorComm Where commentsId = :commentsId")
+)
 public class CommentsEntity {
     private String commentsId;
     private String studentComm;
