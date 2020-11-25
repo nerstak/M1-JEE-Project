@@ -5,8 +5,6 @@ import control.sessionBeans.InternshipSessionBean;
 import control.sessionBeans.KeywordsSessionBean;
 import control.sessionBeans.SkillsSessionBean;
 import control.sessionBeans.StudentSessionBean;
-import model.InternshipData;
-import model.Student;
 import modelsEntities.InternshipEntity;
 import modelsEntities.StudentEntity;
 import modelsEntities.TutorEntity;
@@ -163,7 +161,7 @@ public class UpdateDetails extends ServletModel{
             return false;
         }
 
-        return studentSB.saveStudent(student);
+        return studentSB.save(student);
     }
 
     /**

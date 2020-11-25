@@ -1,22 +1,23 @@
 package control.sessionBeans;
 
 import modelsEntities.CommentsEntity;
+import modelsEntities.VisitEntity;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.UUID;
 
-@Stateless(name = "CommentsSessionEJB")
-public class CommentsSessionBean {
+@Stateless(name = "VisitSessionEJB")
+public class VisitSessionBean {
     @PersistenceContext
     EntityManager em;
 
-    public CommentsEntity find(UUID id) {
-        return em.find(CommentsEntity.class, id);
+    public VisitEntity find(UUID id) {
+        return em.find(VisitEntity.class, id);
     }
 
-    public boolean save(CommentsEntity e) {
+    public boolean save(VisitEntity e) {
         em.merge(e);
         return true;
     }

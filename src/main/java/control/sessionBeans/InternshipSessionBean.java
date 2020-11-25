@@ -31,14 +31,12 @@ public class InternshipSessionBean {
         return q.getResultList();
     }
 
-    public InternshipEntity find(UUID internshipId) {
-        return em.find(InternshipEntity.class, internshipId);
+    public InternshipEntity find(UUID id) {
+        return em.find(InternshipEntity.class, id);
     }
 
-    /*
-    public InternshipEntity find(UUID internshipId) {
-        InternshipEntity i = em.find(InternshipEntity.class, internshipId);
-        i.setDescription("lol");
-        return i;
-    }*/
+    public boolean save(InternshipEntity e) {
+        em.merge(e);
+        return true;
+    }
 }
