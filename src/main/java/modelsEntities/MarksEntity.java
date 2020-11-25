@@ -2,32 +2,37 @@ package modelsEntities;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "marks", schema = "public", catalog = "st2eedb")
 public class MarksEntity {
     @Id
-    @Column(name = "marks_id", nullable = false)
-    private String marksId;
+    @Column(name = "marks_id", nullable = false, columnDefinition="uuid")
+    private UUID marksId;
+
+    @Basic
+    @Column(name = "tech", nullable = true)
     private Integer tech;
+
+    @Basic
+    @Column(name = "communication", nullable = true)
     private Integer communication;
-    private String internshipId;
+//    private String internshipId;
 
 
     @OneToOne
     @JoinColumn( name="internship_id", nullable=true )
     private InternshipEntity internshipEntity;
 
-    public String getMarksId() {
+    public UUID getMarksId() {
         return marksId;
     }
 
-    public void setMarksId(String marksId) {
+    public void setMarksId(UUID marksId) {
         this.marksId = marksId;
     }
 
-    @Basic
-    @Column(name = "tech", nullable = true)
     public Integer getTech() {
         return tech;
     }
@@ -36,8 +41,6 @@ public class MarksEntity {
         this.tech = tech;
     }
 
-    @Basic
-    @Column(name = "communication", nullable = true)
     public Integer getCommunication() {
         return communication;
     }
@@ -47,7 +50,7 @@ public class MarksEntity {
     }
 
 
-
+/*
     @Basic
     @Column(name = "internship_id", nullable = true)
     public String getInternshipId() {
@@ -56,7 +59,7 @@ public class MarksEntity {
 
     public void setInternshipId(String internshipId) {
         this.internshipId = internshipId;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
@@ -65,12 +68,12 @@ public class MarksEntity {
         MarksEntity that = (MarksEntity) o;
         return Objects.equals(marksId, that.marksId) &&
                 Objects.equals(tech, that.tech) &&
-                Objects.equals(communication, that.communication) &&
-                Objects.equals(internshipId, that.internshipId);
+                Objects.equals(communication, that.communication);// &&
+//                Objects.equals(internshipId, that.internshipId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(marksId, tech, communication, internshipId);
+        return Objects.hash(marksId, tech, communication);
     }
 }

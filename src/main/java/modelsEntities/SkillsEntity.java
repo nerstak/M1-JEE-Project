@@ -4,26 +4,28 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "skills", schema = "public", catalog = "st2eedb")
 public class SkillsEntity {
     @Id
-    @Column(name = "skill_id", nullable = false)
-    private String skillId;
-    private String skill;
-
-
-    public String getSkillId() {
-        return skillId;
-    }
-
-    public void setSkillId(String skillId) {
-        this.skillId = skillId;
-    }
+    @Column(name = "skill_id", nullable = false, columnDefinition="uuid")
+    private UUID skillId;
 
     @Basic
     @Column(name = "skill", nullable = true, length = -1)
+    private String skill;
+
+
+    public UUID getSkillId() {
+        return skillId;
+    }
+
+    public void setSkillId(UUID skillId) {
+        this.skillId = skillId;
+    }
+
     public String getSkill() {
         return skill;
     }

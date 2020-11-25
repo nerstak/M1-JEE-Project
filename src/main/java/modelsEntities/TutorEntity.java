@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tutor", schema = "public", catalog = "st2eedb")
@@ -12,19 +13,19 @@ import java.util.Objects;
 )
 public class TutorEntity {
     @Id
-    @Column(name = "tutor_id", nullable = false)
-    private String tutorId;
+    @Column(name = "tutor_id", nullable = false, columnDefinition="uuid") @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private UUID tutorId;
     private String name;
     private String firstname;
     private String pwd;
     private String email;
 
 
-    public String getTutorId() {
+    public UUID getTutorId() {
         return tutorId;
     }
 
-    public void setTutorId(String tutorId) {
+    public void setTutorId(UUID tutorId) {
         this.tutorId = tutorId;
     }
 

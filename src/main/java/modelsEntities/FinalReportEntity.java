@@ -2,32 +2,37 @@ package modelsEntities;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "final_report", schema = "public", catalog = "st2eedb")
 public class FinalReportEntity {
     @Id
-    @Column(name = "final_report_id", nullable = false)
-    private String finalReportId;
+    @Column(name = "final_report_id", nullable = false, columnDefinition="uuid")
+    private UUID finalReportId;
+
+    @Basic
+    @Column(name = "title", nullable = true, length = -1)
     private String title;
+
+    @Basic
+    @Column(name = "report", nullable = true)
     private Boolean report;
-    private String internshipId;
+    //private String internshipId;
 
     @OneToOne
     @JoinColumn( name="internship_id", nullable=true )
     InternshipEntity internshipEntity;
 
 
-    public String getFinalReportId() {
+    public UUID getFinalReportId() {
         return finalReportId;
     }
 
-    public void setFinalReportId(String finalReportId) {
+    public void setFinalReportId(UUID finalReportId) {
         this.finalReportId = finalReportId;
     }
 
-    @Basic
-    @Column(name = "title", nullable = true, length = -1)
     public String getTitle() {
         return title;
     }
@@ -36,8 +41,6 @@ public class FinalReportEntity {
         this.title = title;
     }
 
-    @Basic
-    @Column(name = "report", nullable = true)
     public Boolean getReport() {
         return report;
     }
@@ -63,12 +66,12 @@ public class FinalReportEntity {
         FinalReportEntity that = (FinalReportEntity) o;
         return Objects.equals(finalReportId, that.finalReportId) &&
                 Objects.equals(title, that.title) &&
-                Objects.equals(report, that.report) &&
-                Objects.equals(internshipId, that.internshipId);
+                Objects.equals(report, that.report);// &&
+//                Objects.equals(internshipId, that.internshipId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(finalReportId, title, report, internshipId);
+        return Objects.hash(finalReportId, title, report);
     }
 }

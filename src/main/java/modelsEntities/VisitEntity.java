@@ -2,29 +2,41 @@ package modelsEntities;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "visit", schema = "public", catalog = "st2eedb")
 public class VisitEntity {
     @Id
-    @Column(name = "visit_id", nullable = false)
-    private String visitId;
-    private Boolean done;
-    private Boolean planned;
-    private Boolean visitReport;
-    private String internshipId;
-
-
-    public String getVisitId() {
-        return visitId;
-    }
-
-    public void setVisitId(String visitId) {
-        this.visitId = visitId;
-    }
+    @Column(name = "visit_id", nullable = false, columnDefinition="uuid")
+    private UUID visitId;
 
     @Basic
     @Column(name = "done", nullable = true)
+    private Boolean done;
+
+    @Basic
+    @Column(name = "planned", nullable = true)
+    private Boolean planned;
+
+    @Basic
+    @Column(name = "visit_report", nullable = true)
+    private Boolean visitReport;
+//    private String internshipId;
+
+    @OneToOne
+    @JoinColumn( name="internship_id", nullable=true )
+    private InternshipEntity internshipEntity;
+
+
+    public UUID getVisitId() {
+        return visitId;
+    }
+
+    public void setVisitId(UUID visitId) {
+        this.visitId = visitId;
+    }
+
     public Boolean getDone() {
         return done;
     }
@@ -33,8 +45,6 @@ public class VisitEntity {
         this.done = done;
     }
 
-    @Basic
-    @Column(name = "planned", nullable = true)
     public Boolean getPlanned() {
         return planned;
     }
@@ -43,8 +53,6 @@ public class VisitEntity {
         this.planned = planned;
     }
 
-    @Basic
-    @Column(name = "visit_report", nullable = true)
     public Boolean getVisitReport() {
         return visitReport;
     }
@@ -54,9 +62,7 @@ public class VisitEntity {
     }
 
 
-    @OneToOne
-    @JoinColumn( name="internship_id", nullable=true )
-    private InternshipEntity internshipEntity;
+
 
     /*
     @Basic
@@ -77,12 +83,12 @@ public class VisitEntity {
         return Objects.equals(visitId, that.visitId) &&
                 Objects.equals(done, that.done) &&
                 Objects.equals(planned, that.planned) &&
-                Objects.equals(visitReport, that.visitReport) &&
-                Objects.equals(internshipId, that.internshipId);
+                Objects.equals(visitReport, that.visitReport);// &&
+//                Objects.equals(internshipId, that.internshipId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(visitId, done, planned, visitReport, internshipId);
+        return Objects.hash(visitId, done, planned, visitReport);
     }
 }

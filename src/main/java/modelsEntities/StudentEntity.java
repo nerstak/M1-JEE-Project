@@ -4,13 +4,14 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "student", schema = "public", catalog = "st2eedb")
 public class StudentEntity {
     @Id
-    @Column(name = "student_id", nullable = false)
-    private String studentId;
+    @Column(name = "student_id", nullable = false, columnDefinition="uuid")
+    private UUID studentId;
 
     @Basic
     @Column(name = "name", nullable = true, length = -1)
@@ -46,11 +47,11 @@ public class StudentEntity {
             inverseJoinColumns = @JoinColumn( name = "skill_id" ) )
     private List<SkillsEntity> skills = new ArrayList<>();
 
-    public String getStudentId() {
+    public UUID getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(String studentId) {
+    public void setStudentId(UUID studentId) {
         this.studentId = studentId;
     }
 

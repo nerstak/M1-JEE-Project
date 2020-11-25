@@ -2,6 +2,7 @@ package control;
 
 import control.sessionBeans.InternshipSessionBean;
 import control.sessionBeans.TutorSessionBean;
+import modelsEntities.InternshipEntity;
 import modelsEntities.TutorEntity;
 import utils.database.InternshipDataServices;
 import utils.database.KeywordsDataServices;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static utils.Constants.HOME_PAGE;
 
@@ -72,7 +74,6 @@ public class Homepage extends ServletModel {
                 keyword = "-";
             }
 
-            // TODO: Reactivate this
             request.setAttribute("listOfInternship",internshipsSB.getInternshipData(tutor.getTutorId(), year, name, keyword));
             request.setAttribute("searchedYear", year);
             request.setAttribute("searchedKeyword", keyword);

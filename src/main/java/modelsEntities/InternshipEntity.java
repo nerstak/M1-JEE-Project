@@ -5,15 +5,16 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "internship", schema = "public", catalog = "st2eedb")
 @NamedQueries(
-        @NamedQuery(name="Internship.SelectList", query = "SELECT i FROM InternshipEntity i JOIN FETCH i.studentEntity s WHERE s.tutorEntity.tutorId LIKE :tutor")
+        @NamedQuery(name="Internship.SelectList", query = "SELECT i FROM InternshipEntity i JOIN FETCH i.studentEntity s WHERE s.tutorEntity.tutorId = :tutor")
 )
 public class InternshipEntity {
-    @Id    @Column(name = "internship_id", nullable = false)
-    private String internshipId;
+    @Id    @Column(name = "internship_id", nullable = false, columnDefinition="uuid") @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private UUID internshipId;
 
     @Basic    @Column(name = "description", nullable = true, length = -1)
     private String description;
@@ -88,11 +89,11 @@ public class InternshipEntity {
 
     public List getListKeywords() {return keywords;}
 
-    public String getInternshipId() {
+    public UUID getInternshipId() {
         return internshipId;
     }
 
-    public void setInternshipId(String internshipId) {
+    public void setInternshipId(UUID internshipId) {
         this.internshipId = internshipId;
     }
 
