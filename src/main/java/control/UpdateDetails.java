@@ -208,8 +208,10 @@ public class UpdateDetails extends ServletModel{
 
             // Adding skill to student
             StudentEntity student = studentSB.find(UUID.fromString(studentId));
-            student.getSkills().add(skillsEntity);
-            studentSB.save(student);
+            if(!student.getSkills().contains(skillsEntity)) {
+                student.getSkills().add(skillsEntity);
+                studentSB.save(student);
+            }
             return true;
         } catch (EntityExistsException e) {
             return false;
@@ -246,8 +248,10 @@ public class UpdateDetails extends ServletModel{
             }
 
             // Adding keyword to internship
-            internshipEntity.getListKeywords().add(keywordsEntity);
-            internshipsSB.save(internshipEntity);
+            if(!internshipEntity.getListKeywords().contains(keywordsEntity)) {
+                internshipEntity.getListKeywords().add(keywordsEntity);
+                internshipsSB.save(internshipEntity);
+            }
             return true;
         } catch (EntityExistsException e) {
             return false;
