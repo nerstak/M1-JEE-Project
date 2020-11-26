@@ -1,14 +1,16 @@
 package control;
 
-import model.Tutor;
-import utils.database.TutorDataServices;
+import control.sessionBeans.TutorSessionBean;
+import models.TutorEntity;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static utils.Constants.*;
 
@@ -19,7 +21,11 @@ import static utils.Constants.*;
 public class Login extends ServletModel {
     private HttpSession session;
 
-    private TutorDataServices tutorDataServices;
+    @EJB
+    private TutorSessionBean tutorSB;
+
+    ArrayList<TutorEntity> tutors;
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,29 +46,25 @@ public class Login extends ServletModel {
             response.sendRedirect("Homepage");
         }
 
-        Tutor tutor = new Tutor();
-        tutor.setEmail(request.getParameter("login"));
-        tutor.setPwd(request.getParameter("pwd"));
+        String email = request.getParameter("login");
+        String pwd = request.getParameter("pwd");
 
 
 
-        if (tutor.getEmail().isEmpty() || tutor.getPwd().isEmpty()) {
+        if (email.isEmpty() || pwd.isEmpty()) {
             request.setAttribute("errorMessage", ERR_MISSING_FIELD);
             request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); //redirect to welcome if ok
         }
 
-        if (tutorDataServices.selectTutor(tutor)) {
-            session.setAttribute("tutor", tutor);
+        tutors = new ArrayList<>();
+        tutors.addAll(tutorSB.getTutors(email, pwd));
+
+        if (!tutors.isEmpty()) {
+            session.setAttribute("tutor", tutors.get(0));
             response.sendRedirect("Homepage");
         } else {
             request.setAttribute("errorMessage", ERR_INV_CRED_MESS);
             request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
         }
-    }
-
-    @Override
-    public void init() {
-        super.init();
-        tutorDataServices = new TutorDataServices(dbUser, dbPwd, dbUrl);
     }
 }

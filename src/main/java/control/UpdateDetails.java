@@ -1,50 +1,52 @@
 package control;
 
 
-import model.InternshipData;
-import model.Student;
+import control.sessionBeans.*;
+import models.*;
 import utils.ProcessString;
-import utils.database.*;
 
+import javax.ejb.EJB;
+import javax.persistence.EntityExistsException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.UUID;
 
 import static utils.Constants.*;
 
 public class UpdateDetails extends ServletModel{
-    private InternshipDataServices internshipDataServices;
-    private StudentDataServices studentDataServices;
-    private CompanyDataServices companyDataServices;
-    private FinalReportDataServices finalReportDataServices;
-    private CommentsDataServices commentsDataServices;
-    private SkillsDataServices skillsDataServices;
-    private KeywordsDataServices keywordsDataServices;
-    private boolean successRequest;
-    private InternshipData internshipData;
+    @EJB
+    private InternshipSessionBean internshipsSB;
+    @EJB
+    private KeywordsSessionBean keywordsSB;
+    @EJB
+    private SkillsSessionBean skillsSB;
+    @EJB
+    private StudentSessionBean studentSB;
+    @EJB
+    private CommentsSessionBean commentsSB;
+    @EJB
+    private CompanySessionBean companySB;
 
-    @Override
-    public void init() {
-        super.init();
-        internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
-        studentDataServices = new StudentDataServices(dbUser, dbPwd, dbUrl);
-        finalReportDataServices = new FinalReportDataServices(dbUser, dbPwd, dbUrl);
-        companyDataServices = new CompanyDataServices(dbUser, dbPwd, dbUrl);
-        commentsDataServices = new CommentsDataServices(dbUser, dbPwd, dbUrl);
-        skillsDataServices = new SkillsDataServices(dbUser, dbPwd, dbUrl);
-        keywordsDataServices = new KeywordsDataServices(dbUser, dbPwd, dbUrl);
-    }
+    private InternshipEntity internshipEntity;
+    private TutorEntity tutorEntity;
+
+    private HttpSession session;
+
+    private boolean successRequest;
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Get the name of the button that call the servlet
+        session = request.getSession();
+        tutorEntity = (TutorEntity) session.getAttribute("tutor");
+
         String detailsSubmitButton = request.getParameter("updateDetails");
         String internshipId = request.getParameter("internshipId");
+        internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
         switch (detailsSubmitButton){
             case "company":
                 successRequest = updateCompany(request);
@@ -99,17 +101,16 @@ public class UpdateDetails extends ServletModel{
             return false;
         }
 
-        //Disable the autocommit of the dataservices in case of error
-        DataServices.disableAutoCommits(internshipDataServices, companyDataServices);
-        int rowAffectedInternship = internshipDataServices.updateInternshipFromCompanyDetailsPage(internshipId, Date.valueOf(begin), Date.valueOf(end), mds);
-        int rowAffectedCompany = companyDataServices.updateCompany(companyId, companyName, companyAddress);
+        internshipEntity.setEnding(Date.valueOf(end));
+        internshipEntity.setBeginning(Date.valueOf(begin));
+        internshipEntity.setInternSupervisor(mds);
+        CompanyEntity companyEntity = internshipEntity.getCompany();
+        companyEntity.setAddress(companyAddress);
+        companyEntity.setName(companyName);
+        companySB.save(companyEntity);
+        internshipsSB.save(internshipEntity);
 
-        if ((rowAffectedCompany == 1) && (rowAffectedInternship == 1)){ //if all the data has been updates => commit the request
-            DataServices.commitRequest(internshipDataServices, companyDataServices);
-            return true;
-        }else{ //rollback
-            return false;
-        }
+        return true;
     }
 
     /**
@@ -124,11 +125,11 @@ public class UpdateDetails extends ServletModel{
         String lastName = request.getParameter("lastName");
         String linkedin = request.getParameter("linkedin");
         String email = request.getParameter("email");
-        Student student = new Student();
-        student.setStudentId(studentId);
-        student.setGroup(group);
+
+        StudentEntity student = internshipEntity.getStudent();
+        student.setStudentGroup(group);
         student.setLinkedinProfile(linkedin);
-        student.setFirstName(firstName);
+        student.setFirstname(firstName);
         student.setName(lastName);
         student.setEmail(email);
 
@@ -137,8 +138,9 @@ public class UpdateDetails extends ServletModel{
             request.setAttribute("message", ERR_EMPTY_FIELDS);
             return false;
         }
+        studentSB.save(student);
 
-        return (studentDataServices.updateStudent(student) == 1);
+        return true;
     }
 
     /**
@@ -162,19 +164,15 @@ public class UpdateDetails extends ServletModel{
             return false;
         }
 
+        internshipEntity.setDescription(description);
+        internshipEntity.getFinalReport().setTitle(title);
+        CommentsEntity comments = internshipEntity.getComments();
+        comments.setStudentComm(studentComments);
+        comments.setSupervisorComm(tutorComments);
+        commentsSB.save(comments);
+        internshipsSB.save(internshipEntity);
 
-        DataServices.disableAutoCommits(internshipDataServices, finalReportDataServices, commentsDataServices);
-
-        int rowAffectedInternship = internshipDataServices.updateInternshipDescription(internshipId, description);
-        int rowAffectedFinalReport = finalReportDataServices.updateTitleReport(titleId, title);
-        int rowAffectedComments = commentsDataServices.updateComments(commentsId, studentComments, tutorComments);
-
-        if (((rowAffectedFinalReport == 1) && (rowAffectedInternship == 1)) && (rowAffectedComments == 1)){
-            DataServices.commitRequest(internshipDataServices, finalReportDataServices, commentsDataServices);
-            return true;
-        }else{
-            return false;
-        }
+        return true;
     }
 
     /**
@@ -194,40 +192,28 @@ public class UpdateDetails extends ServletModel{
 
         //Capitalize the first letter
         skill = ProcessString.capitalizeAndLowerCase(skill);
-        String studentId = request.getParameter("studentId");
 
-        ResultSet resultSet = skillsDataServices.selectASkill(skill);
-        DataServices.disableAutoCommits(skillsDataServices);
-        if (resultSet != null){
-            try {
-                if(resultSet.next()){ //if the skill is already in the DB
-                    String skillIdDb = resultSet.getString("skill_id");
-                    //Check if the skill is already linked to the student
-                    resultSet = skillsDataServices.selectAStudentToSkillCouple(studentId, skillIdDb);
-                    if(resultSet != null){
-                        if(!resultSet.next()){
-                            //Insert the Skill_id + student_id inside the Student_to_skill table
-                            if (skillsDataServices.insertIntoStudentToSkill(studentId, skillIdDb) == 1){//If row is added to the db => commit the request
-                                DataServices.commitRequest(skillsDataServices);
-                                return true;
-                            }
-                        }
-                    }
-                }else{
-                    //Add the skill inside Skills + add couple Id inside Student_to_skill
-                    UUID skillId = UUID.randomUUID();
-                    if  ((skillsDataServices.insertIntoSkill(skillId, skill) == 1) && (skillsDataServices.insertIntoStudentToSkill(studentId, skillId.toString())) == 1){
-                        DataServices.commitRequest(skillsDataServices);
-                        return true;
-                    }
-                }
+        SkillsEntity skillsEntity = skillsSB.getSkillByName(skill);
+        try {
+            if (skillsEntity == null) {
+                // Creating skill if not existing
+                skillsEntity = new SkillsEntity();
+                skillsEntity.setSkillId(UUID.randomUUID());
+                skillsEntity.setSkill(skill);
+                skillsSB.save(skillsEntity);
             }
-            catch (SQLException e){
-                e.printStackTrace();
-                return false;
+
+            // Adding skill to student
+            StudentEntity student = internshipEntity.getStudent();
+            if(!student.getSkills().contains(skillsEntity)) {
+                student.getSkills().add(skillsEntity);
+                studentSB.save(student);
+                return true;
             }
+            return false;
+        } catch (EntityExistsException e) {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -247,40 +233,27 @@ public class UpdateDetails extends ServletModel{
 
         //Capitalize the first letter
         keyword = ProcessString.capitalizeAndLowerCase(keyword);
-        String internshipId = request.getParameter("internshipId");
 
-        ResultSet resultSet = keywordsDataServices.selectAKeyword(keyword);
-        DataServices.disableAutoCommits(keywordsDataServices);
-        if (resultSet != null){
-            try {
-                if(resultSet.next()){ //if the keyword is already in the DB
-                    String keywordId = resultSet.getString("keyword_id");
-                    //Check if the skill is already linked to the student
-                    resultSet = keywordsDataServices.selectAInternshipToKeywordsCouple(internshipId, keywordId);
-                    if(resultSet != null){
-                        if(!resultSet.next()){
-                            //Insert the Skill_id + student_id inside the Student_to_skill table
-                            if (keywordsDataServices.insertIntoInternshipToKeywords(internshipId, keywordId) == 1){//If row is added to the db => commit the request
-                                DataServices.commitRequest(keywordsDataServices);
-                                return true;
-                            }
-                        }
-                    }
-                }else{
-                    //Add the skill inside Skills + add couple Id inside Student_to_skill
-                    UUID keywordId = UUID.randomUUID();
-                    if  ((keywordsDataServices.insertIntoKeyword(keywordId, keyword) == 1) && (keywordsDataServices.insertIntoInternshipToKeywords(internshipId, keywordId.toString())) == 1){
-                        DataServices.commitRequest(keywordsDataServices);
-                        return true;
-                    }
-                }
+        KeywordsEntity keywordsEntity = keywordsSB.getKeywordByName(keyword);
+        try {
+            if (keywordsEntity == null) {
+                // Creating skill if not existing
+                keywordsEntity = new KeywordsEntity();
+                keywordsEntity.setKeywordId(UUID.randomUUID());
+                keywordsEntity.setKeyword(keyword);
+                keywordsSB.save(keywordsEntity);
             }
-            catch (SQLException e){
-                e.printStackTrace();
-                return false;
+
+            // Adding keyword to internship
+            if(!internshipEntity.getListKeywords().contains(keywordsEntity)) {
+                internshipEntity.getListKeywords().add(keywordsEntity);
+                internshipsSB.save(internshipEntity);
+                return true;
             }
+            return false;
+        } catch (EntityExistsException e) {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -299,12 +272,14 @@ public class UpdateDetails extends ServletModel{
                 request.setAttribute("message", ERR_FAILED_UPDATE_DB);
             }
         }
-        internshipData = internshipDataServices.getInternshipDetailed(internshipId);
-        request.setAttribute("internshipData", internshipData);
-        request.setAttribute("listOfSkills", skillsDataServices.getListOfSkills());
-        request.setAttribute("listOfKeywords",keywordsDataServices.getListOfKeywords());
-        request.setAttribute("listOfStudentSkills", skillsDataServices.getStudentSkillsAll(internshipData.getStudent()));
-        request.setAttribute("listOfInternshipKeywords", keywordsDataServices.getInternshipKeywordsAll(internshipData.getInternship().getInternship().toString()));
+
+        // We force the update of values
+        internshipEntity = internshipsSB.find(internshipEntity.getInternshipId());
+
+        //Set request attributes
+        request.setAttribute("internshipData", internshipEntity);
+        request.setAttribute("listOfSkills", skillsSB.getSkills());
+        request.setAttribute("listOfKeywords",keywordsSB.getKeywords());
 
         request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
     }

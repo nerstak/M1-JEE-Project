@@ -1,62 +1,58 @@
 package control;
 
-import model.*;
-import utils.database.MarksDataServices;
+import control.sessionBeans.*;
+import models.*;
 import utils.ProcessString;
-import utils.database.*;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.UUID;
 
-import static utils.Constants.*;
+import static utils.Constants.MISSION_PAGE;
 
 /**
  * Details controller, for any additional information on internship
  */
 @WebServlet(name = "Details")
 public class Details extends ServletModel {
-    private InternshipData internshipData;
+    @EJB
+    private InternshipSessionBean internshipsSB;
+    @EJB
+    private KeywordsSessionBean keywordsSB;
+    @EJB
+    private SkillsSessionBean skillsSB;
+    @EJB
+    private StudentSessionBean studentSB;
+    @EJB
+    private MarksSessionBean marksSB;
+    @EJB
+    private VisitSessionBean visitSB;
+    @EJB
+    private FinalReportSessionBean finalReportSB;
 
-    private InternshipDataServices internshipDataServices;
-    private SkillsDataServices skillsDataServices;
-    private KeywordsDataServices keywordsDataServices;
-    private StudentDataServices studentDataServices;
-    private FinalReportDataServices finalReportDataServices;
-    private MarksDataServices marksDataServices;
-    private VisitDataServices visitDataServices;
-
-    @Override
-    public void init() {
-        super.init();
-        internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
-        skillsDataServices = new SkillsDataServices(dbUser, dbPwd, dbUrl);
-        keywordsDataServices = new KeywordsDataServices(dbUser, dbPwd, dbUrl);
-        studentDataServices = new StudentDataServices(dbUser, dbPwd, dbUrl);
-        finalReportDataServices = new FinalReportDataServices(dbUser, dbPwd, dbUrl);
-        marksDataServices = new MarksDataServices(dbUser, dbPwd, dbUrl);
-        visitDataServices = new VisitDataServices(dbUser, dbPwd, dbUrl);
-    }
+    private InternshipEntity internshipEntity;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Check from which submit button the request come from
         String internshipSubmit = request.getParameter("internshipSubmit");
+        String internshipId = request.getParameter("internshipId");
         if (internshipSubmit.equals("details")) {
-            String internshipId = request.getParameter("internshipId");
-            internshipData = internshipDataServices.getInternshipDetailed(internshipId);
+            internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
 
             //Set request attributes
-            request.setAttribute("internshipData", internshipData);
-            request.setAttribute("listOfSkills", skillsDataServices.getListOfSkills());
-            request.setAttribute("listOfKeywords",keywordsDataServices.getListOfKeywords());
-            request.setAttribute("listOfStudentSkills", skillsDataServices.getStudentSkillsAll(internshipData.getStudent()));
-            request.setAttribute("listOfInternshipKeywords", keywordsDataServices.getInternshipKeywordsAll(internshipData.getInternship().getInternship().toString()));
+            request.setAttribute("internshipData", internshipEntity);
+            request.setAttribute("listOfSkills", skillsSB.getSkills());
+            request.setAttribute("listOfKeywords",keywordsSB.getKeywords());
 
             request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
         } else if (internshipSubmit.equals("modify")) {
+            internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
+
             updateAllData(request);
             response.sendRedirect("Homepage");
         } else {
@@ -74,10 +70,11 @@ public class Details extends ServletModel {
      * @return true if the db is updated
      */
     private boolean updateAllData(HttpServletRequest request){
-        //Disable all data services
-        DataServices.disableAutoCommits(studentDataServices, marksDataServices, visitDataServices, internshipDataServices, finalReportDataServices);
-
         //Check if update is done, if it not return false
+        if (!updateInternship(request)){
+            return false;
+        }
+
         if (!updateStudent(request)){
             return false;
         }
@@ -90,16 +87,10 @@ public class Details extends ServletModel {
             return false;
         }
 
-        if (!updateInternship(request)){
-            return false;
-        }
-
         if (!updateFinalReport(request)){
             return false;
         }
 
-        //Commit all request in the db
-        DataServices.commitRequest(studentDataServices, marksDataServices, visitDataServices, internshipDataServices, finalReportDataServices);
         return true;
     }
 
@@ -113,13 +104,19 @@ public class Details extends ServletModel {
         String studentGroup = request.getParameter("studentGroup");
         String studentFirstname = request.getParameter("studentFirstname");
         String studentName = request.getParameter("studentName");
-        String studentId = request.getParameter("studentId");
 
-        if(ProcessString.areStringEmpty(studentFirstname, studentGroup, studentName, studentId)){
+        StudentEntity student = internshipEntity.getStudent();
+
+        if(ProcessString.areStringEmpty(studentFirstname, studentGroup, studentName) || student == null){
             return false;
         }
 
-        return (studentDataServices.updateNamesGroup(studentName, studentFirstname, studentGroup, studentId) == 1);
+        student.setStudentGroup(studentGroup);
+        student.setFirstname(studentFirstname);
+        student.setName(studentName);
+        studentSB.save(student);
+
+        return true;
     }
 
     /**
@@ -131,9 +128,8 @@ public class Details extends ServletModel {
         //Marks
         String commMark = request.getParameter("commMark");
         String techMark = request.getParameter("techMark");
-        String marksId = request.getParameter("marksId");
 
-        if(ProcessString.areStringEmpty(commMark, techMark, marksId)){
+        if(ProcessString.areStringEmpty(commMark, techMark)){
             return false;
         }
 
@@ -145,7 +141,12 @@ public class Details extends ServletModel {
             return false;
         }
 
-        return (marksDataServices.updateMarks(techMark, commMark, marksId) == 1);
+        MarksEntity marks = internshipEntity.getMarks();
+        marks.setCommunication(Integer.valueOf(commMark));
+        marks.setTech(Integer.valueOf(techMark));
+        marksSB.save(marks);
+
+        return true;
     }
 
     /**
@@ -161,13 +162,16 @@ public class Details extends ServletModel {
         String visitDone = request.getParameter("visitDone")== null
                 ? "false"
                 : "true";
-        String visitId = request.getParameter("visitId");
+        VisitEntity visit = internshipEntity.getVisit();
 
-        if(ProcessString.areStringEmpty(visitDone, visitPlanned, visitId)){
+        if(ProcessString.areStringEmpty(visitDone, visitPlanned)){
             return false;
         }
+        visit.setDone(Boolean.valueOf(visitDone));
+        visit.setPlanned(Boolean.valueOf(visitPlanned));
+        visitSB.save(visit);
 
-        return (visitDataServices.updateVisit(visitDone, visitPlanned, visitId) == 1);
+        return true;
     }
 
     /**
@@ -199,11 +203,16 @@ public class Details extends ServletModel {
             return false;
         }
 
-        int rowAffected = internshipDataServices.updateInternshipFromHomepage(
-                Date.valueOf(beginningDate), Date.valueOf(endDate),
-                supervisor, defense, webSurvey, companyEval, cdc, internshipId);
+        internshipEntity.setDefense(Boolean.valueOf(defense));
+        internshipEntity.setCompanyEval(Boolean.valueOf(companyEval));
+        internshipEntity.setWebSurvey(Boolean.valueOf(webSurvey));
+        internshipEntity.setCdc(Boolean.valueOf(cdc));
+        internshipEntity.setInternSupervisor(supervisor);
+        internshipEntity.setBeginning(Date.valueOf(beginningDate));
+        internshipEntity.setEnding(Date.valueOf(endDate));
+        internshipsSB.save(internshipEntity);
 
-        return (rowAffected == 1);
+        return true;
     }
 
     /**
@@ -216,12 +225,14 @@ public class Details extends ServletModel {
         String report = request.getParameter("releasedReport") == null
                 ? "false"
                 : "true";
-        String reportId = request.getParameter("finalReportId");
 
-        if (ProcessString.areStringEmpty(report, reportId)){
+        if (ProcessString.areStringEmpty(report)){
             return false;
         }
+        FinalReportEntity finalReport = internshipEntity.getFinalReport();
+        finalReport.setReport(Boolean.valueOf(report));
+        finalReportSB.save(finalReport);
 
-        return (finalReportDataServices.updateReportBool(report, reportId) == 1);
+        return true;
     }
 }
