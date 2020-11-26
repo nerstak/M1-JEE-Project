@@ -27,7 +27,7 @@ public class Homepage extends ServletModel {
     private InternshipSessionBean internshipsSB;
 
     private TutorEntity tutor;
-    private int year;
+    private String year;
     private String name;
     String keyword;
 
@@ -45,11 +45,12 @@ public class Homepage extends ServletModel {
         if (tutor != null) {
             request.setAttribute("listOfKeywords", keywordsSB.getKeywords());
 
-            try {
-                year = Integer.parseInt(request.getParameter("year"));
-            } catch (NumberFormatException e) {
-                year = 2020;
+
+            year = request.getParameter("year");
+            if (year == null) {
+                year = "%";
             }
+
             name = request.getParameter("search-name");
             if (name == null) {
                 name = "";
