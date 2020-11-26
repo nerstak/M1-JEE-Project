@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Entity for Skills table of Database
+ */
 @Entity
 @Table(name = "skills", schema = "public", catalog = "st2eedb")
 @NamedQueries({
@@ -13,6 +16,7 @@ import java.util.UUID;
         @NamedQuery(name = "Skills.SelectByName", query = "SELECT s FROM SkillsEntity s WHERE s.skill = :skill")
 })
 public class SkillsEntity implements InterfaceEntity {
+    // Attributes
     @Id
     @Column(name = "skill_id", nullable = false, columnDefinition="uuid")
     private UUID skillId;
@@ -21,7 +25,14 @@ public class SkillsEntity implements InterfaceEntity {
     @Column(name = "skill", nullable = true, length = -1)
     private String skill;
 
+    // Relations
+    @ManyToMany
+    @JoinTable( name = "student_to_skills",
+            joinColumns = @JoinColumn( name = "skill_id" ),
+            inverseJoinColumns = @JoinColumn( name = "student_id" ) )
+    private List<StudentEntity> listStudents = new ArrayList<>();
 
+    // Getters and Setters
     public UUID getSkillId() {
         return skillId;
     }
@@ -37,12 +48,6 @@ public class SkillsEntity implements InterfaceEntity {
     public void setSkill(String skill) {
         this.skill = skill;
     }
-
-    @ManyToMany
-    @JoinTable( name = "student_to_skills",
-            joinColumns = @JoinColumn( name = "skill_id" ),
-            inverseJoinColumns = @JoinColumn( name = "student_id" ) )
-    private List<StudentEntity> listStudents = new ArrayList<>();
 
     public List<StudentEntity> getListStudents() {
         return listStudents;

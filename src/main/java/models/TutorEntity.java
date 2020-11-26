@@ -6,21 +6,41 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Entity for Tutor table of Database
+ */
 @Entity
 @Table(name = "tutor", schema = "public", catalog = "st2eedb")
 @NamedQueries(
         @NamedQuery(name = "Tutor.SelectSingleTutor", query = "SELECT t FROM TutorEntity t WHERE t.email  = :email AND t.pwd = :pwd")
 )
 public class TutorEntity implements InterfaceEntity {
+    // Attributes
     @Id
     @Column(name = "tutor_id", nullable = false, columnDefinition="uuid") @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID tutorId;
+
+    @Basic
+    @Column(name = "name", nullable = true, length = -1)
     private String name;
+
+    @Basic
+    @Column(name = "firstname", nullable = true, length = -1)
     private String firstname;
+
+    @Basic
+    @Column(name = "pwd", nullable = true, length = -1)
     private String pwd;
+
+    @Basic
+    @Column(name = "email", nullable = true, length = -1)
     private String email;
 
+    // Relations
+    @OneToMany(mappedBy="tutorEntity")
+    private List<StudentEntity> students = new ArrayList<>();
 
+    // Getters and Setters
     public UUID getTutorId() {
         return tutorId;
     }
@@ -29,13 +49,12 @@ public class TutorEntity implements InterfaceEntity {
         this.tutorId = tutorId;
     }
 
-    @OneToMany(mappedBy="tutorEntity")
-    private List<StudentEntity> students = new ArrayList<>();
-
     public List getListStudents() { return students; }
 
-    @Basic
-    @Column(name = "name", nullable = true, length = -1)
+    public void setStudents(List<StudentEntity> students) {
+        this.students = students;
+    }
+
     public String getName() {
         return name;
     }
@@ -44,8 +63,6 @@ public class TutorEntity implements InterfaceEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "firstname", nullable = true, length = -1)
     public String getFirstname() {
         return firstname;
     }
@@ -54,8 +71,6 @@ public class TutorEntity implements InterfaceEntity {
         this.firstname = firstname;
     }
 
-    @Basic
-    @Column(name = "pwd", nullable = true, length = -1)
     public String getPwd() {
         return pwd;
     }
@@ -64,8 +79,6 @@ public class TutorEntity implements InterfaceEntity {
         this.pwd = pwd;
     }
 
-    @Basic
-    @Column(name = "email", nullable = true, length = -1)
     public String getEmail() {
         return email;
     }

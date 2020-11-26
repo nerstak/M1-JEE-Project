@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Entity for Internship table of Database
+ */
 @Entity
 @Table(name = "internship", schema = "public", catalog = "st2eedb")
 @NamedQueries({
@@ -14,6 +17,7 @@ import java.util.UUID;
         @NamedQuery(name = "Internship.SelectSingle", query = "SELECT i FROM InternshipEntity i WHERE i.internshipId = :internshipId")
 })
 public class InternshipEntity implements InterfaceEntity {
+    // Attributes
     @Id    @Column(name = "internship_id", nullable = false, columnDefinition="uuid") @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID internshipId;
 
@@ -32,12 +36,6 @@ public class InternshipEntity implements InterfaceEntity {
     @Basic    @Column(name = "ending", nullable = true)
     private Date ending;
 
-//    @Basic    @Column(name = "student_id", nullable = true)
-//    private String studentId;
-//
-//    @Basic    @Column(name = "company_id", nullable = true)
-//    private String companyId;
-
     @Basic    @Column(name = "cdc", nullable = true)
     private Boolean cdc;
 
@@ -50,6 +48,7 @@ public class InternshipEntity implements InterfaceEntity {
     @Basic    @Column(name = "intern_supervisor", nullable = true, length = -1)
     private String internSupervisor;
 
+    // Relations
     @OneToOne( mappedBy = "internship" )
     private MarksEntity marks;
 
@@ -74,21 +73,48 @@ public class InternshipEntity implements InterfaceEntity {
             inverseJoinColumns = @JoinColumn( name = "keyword_id" ) )
     private List<KeywordsEntity> keywords = new ArrayList<>();
 
-
+    // Getters and setters
     public FinalReportEntity getFinalReport() {return finalReport;}
+
+    public void setFinalReport(FinalReportEntity finalReport) {
+        this.finalReport = finalReport;
+    }
 
     public CommentsEntity getComments() {return comments;}
 
+    public void setComments(CommentsEntity comments) {
+        this.comments = comments;
+    }
+
     public MarksEntity getMarks() {return marks;}
+
+    public void setMarks(MarksEntity marks) {
+        this.marks = marks;
+    }
 
     public VisitEntity getVisit() {return visit;}
 
+    public void setVisit(VisitEntity visit) {
+        this.visit = visit;
+    }
+
     public StudentEntity getStudent() {return student;}
 
+    public void setStudent(StudentEntity student) {
+        this.student = student;
+    }
 
     public CompanyEntity getCompany() {return company;}
 
+    public void setCompany(CompanyEntity company) {
+        this.company = company;
+    }
+
     public List getListKeywords() {return keywords;}
+
+    public void setKeywords(List<KeywordsEntity> keywords) {
+        this.keywords = keywords;
+    }
 
     public UUID getInternshipId() {
         return internshipId;
@@ -114,7 +140,6 @@ public class InternshipEntity implements InterfaceEntity {
         this.webSurvey = webSurvey;
     }
 
-
     public Boolean getMidInternInfo() {
         return midInternInfo;
     }
@@ -138,22 +163,6 @@ public class InternshipEntity implements InterfaceEntity {
     public void setEnding(Date ending) {
         this.ending = ending;
     }
-
-//    public String getStudentId() {
-//        return studentId;
-//    }
-//
-//    public void setStudentId(String studentId) {
-//        this.studentId = studentId;
-//    }
-//
-//    public String getCompanyId() {
-//        return companyId;
-//    }
-//
-//    public void setCompanyId(String companyId) {
-//        this.companyId = companyId;
-//    }
 
     public Boolean getCdc() {
         return cdc;
@@ -198,8 +207,6 @@ public class InternshipEntity implements InterfaceEntity {
                 Objects.equals(midInternInfo, that.midInternInfo) &&
                 Objects.equals(beginning, that.beginning) &&
                 Objects.equals(ending, that.ending) &&
-//                Objects.equals(studentId, that.studentId) &&
-//                Objects.equals(companyId, that.companyId) &&
                 Objects.equals(cdc, that.cdc) &&
                 Objects.equals(companyEval, that.companyEval) &&
                 Objects.equals(defense, that.defense) &&

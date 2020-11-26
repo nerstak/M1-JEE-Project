@@ -4,12 +4,16 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Entity for Comments table of Database
+ */
 @Entity
 @Table(name = "comments", schema = "public", catalog = "st2eedb")
 @NamedQueries(
         @NamedQuery(name = "CommentsEntity.updateComments", query = "update CommentsEntity set studentComm = :studentComm, supervisorComm = :supervisorComm Where commentsId = :commentsId")
 )
 public class CommentsEntity implements InterfaceEntity {
+    // Attributes
     @Id
     @Column(name = "comments_id", nullable = false, columnDefinition="uuid")
     private UUID commentsId;
@@ -20,12 +24,13 @@ public class CommentsEntity implements InterfaceEntity {
     @Basic
     @Column(name = "supervisor_comm", nullable = true, length = -1)
     private String supervisorComm;
-    //private String internshipId;
 
+    // Relations
     @OneToOne
     @JoinColumn( name="internship_id", nullable=true )
     private InternshipEntity internship;
 
+    // Getters and Setters
     public UUID getCommentsId() {
         return commentsId;
     }
@@ -49,17 +54,6 @@ public class CommentsEntity implements InterfaceEntity {
     public void setSupervisorComm(String supervisorComm) {
         this.supervisorComm = supervisorComm;
     }
-/*
-    @Basic
-    @Column(name = "internship_id", nullable = true)
-    public String getInternshipId() {
-        return internshipId;
-    }
-
-    public void setInternshipId(String internshipId) {
-        this.internshipId = internshipId;
-    }
-*/
 
     public InternshipEntity getInternship() {
         return internship;
@@ -76,8 +70,7 @@ public class CommentsEntity implements InterfaceEntity {
         CommentsEntity that = (CommentsEntity) o;
         return Objects.equals(commentsId, that.commentsId) &&
                 Objects.equals(studentComm, that.studentComm) &&
-                Objects.equals(supervisorComm, that.supervisorComm);// &&
-//                Objects.equals(internshipId, that.internshipId);
+                Objects.equals(supervisorComm, that.supervisorComm);
     }
 
     @Override

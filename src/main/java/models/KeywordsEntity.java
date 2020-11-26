@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Entity for Keywords table of Database
+ */
 @Entity
 @Table(name = "keywords", schema = "public", catalog = "st2eedb")
 @NamedQueries({
@@ -13,6 +16,7 @@ import java.util.UUID;
         @NamedQuery(name = "Keywords.SelectByName", query = "SELECT k FROM KeywordsEntity k WHERE k.keyword = :keyword")
 })
 public class KeywordsEntity implements InterfaceEntity {
+    // Attributes
     @Id
     @Column(name = "keyword_id", nullable = false, columnDefinition="uuid")
     private UUID keywordId;
@@ -21,13 +25,14 @@ public class KeywordsEntity implements InterfaceEntity {
     @Column(name = "keyword", nullable = true, length = -1)
     private String keyword;
 
+    // Relations
     @ManyToMany
     @JoinTable( name = "internship_to_keywords",
             joinColumns = @JoinColumn( name = "keyword_id" ),
             inverseJoinColumns = @JoinColumn( name = "internship_id" ) )
     private List<InternshipEntity> internships = new ArrayList<>();
 
-
+    // Getters and setters
     public UUID getKeywordId() {
         return keywordId;
     }
@@ -45,6 +50,10 @@ public class KeywordsEntity implements InterfaceEntity {
     }
 
     public List getListInternships() { return internships; }
+
+    public void setInternships(List<InternshipEntity> internships) {
+        this.internships = internships;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -4,19 +4,29 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Entity for Company table of Database
+ */
 @Entity
 @Table(name = "company", schema = "public", catalog = "st2eedb")
 @NamedQueries(
         @NamedQuery(name = "CompanyEntity.updateCompany", query = "update CompanyEntity set name = :name, address = :address Where companyId = :companyId")
 )
 public class CompanyEntity implements InterfaceEntity {
+    // Attributes
     @Id
     @Column(name = "company_id", nullable = false, columnDefinition="uuid")
     private UUID companyId;
+
+    @Basic
+    @Column(name = "name", nullable = true, length = -1)
     private String name;
+
+    @Basic
+    @Column(name = "address", nullable = true, length = -1)
     private String address;
 
-
+    // Getters and Setters
     public UUID getCompanyId() {
         return companyId;
     }
@@ -25,8 +35,6 @@ public class CompanyEntity implements InterfaceEntity {
         this.companyId = companyId;
     }
 
-    @Basic
-    @Column(name = "name", nullable = true, length = -1)
     public String getName() {
         return name;
     }
@@ -35,8 +43,6 @@ public class CompanyEntity implements InterfaceEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "address", nullable = true, length = -1)
     public String getAddress() {
         return address;
     }

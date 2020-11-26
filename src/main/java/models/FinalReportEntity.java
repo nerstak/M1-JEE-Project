@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Entity for FinalReport table of Database
+ */
 @Entity
 @Table(name = "final_report", schema = "public", catalog = "st2eedb")
 @NamedQueries({
@@ -12,6 +15,7 @@ import java.util.UUID;
     }
 )
 public class FinalReportEntity implements InterfaceEntity {
+    // Attributes
     @Id
     @Column(name = "final_report_id", nullable = false, columnDefinition="uuid")
     private UUID finalReportId;
@@ -23,13 +27,13 @@ public class FinalReportEntity implements InterfaceEntity {
     @Basic
     @Column(name = "report", nullable = true)
     private Boolean report;
-    //private String internshipId;
 
+    // Relations
     @OneToOne
     @JoinColumn( name="internship_id", nullable=true )
     InternshipEntity internship;
 
-
+    // Getters and Setters
     public UUID getFinalReportId() {
         return finalReportId;
     }
@@ -62,17 +66,6 @@ public class FinalReportEntity implements InterfaceEntity {
         this.internship = internship;
     }
 
-    /*
-    @Basic
-    @Column(name = "internship_id", nullable = true)
-    public String getInternshipId() {
-        return internshipId;
-    }
-
-    public void setInternshipId(String internshipId) {
-        this.internshipId = internshipId;
-    }*/
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,8 +73,7 @@ public class FinalReportEntity implements InterfaceEntity {
         FinalReportEntity that = (FinalReportEntity) o;
         return Objects.equals(finalReportId, that.finalReportId) &&
                 Objects.equals(title, that.title) &&
-                Objects.equals(report, that.report);// &&
-//                Objects.equals(internshipId, that.internshipId);
+                Objects.equals(report, that.report);
     }
 
     @Override

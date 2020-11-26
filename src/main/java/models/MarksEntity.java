@@ -4,12 +4,16 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Entity for Marks table of Database
+ */
 @Entity
 @Table(name = "marks", schema = "public", catalog = "st2eedb")
 @NamedQueries(
         @NamedQuery(name = "MarksEntity.updateMarks", query = "update MarksEntity set tech = :tech, communication = :communication Where marksId = :marksId")
 )
 public class MarksEntity implements InterfaceEntity {
+    // Attributes
     @Id
     @Column(name = "marks_id", nullable = false, columnDefinition="uuid")
     private UUID marksId;
@@ -21,13 +25,13 @@ public class MarksEntity implements InterfaceEntity {
     @Basic
     @Column(name = "communication", nullable = true)
     private Integer communication;
-//    private String internshipId;
 
-
+    // Relations
     @OneToOne
     @JoinColumn( name="internship_id", nullable=true )
     private InternshipEntity internship;
 
+    // Getters and Setters
     public UUID getMarksId() {
         return marksId;
     }
@@ -60,17 +64,6 @@ public class MarksEntity implements InterfaceEntity {
         this.internship = internship;
     }
 
-    /*
-    @Basic
-    @Column(name = "internship_id", nullable = true)
-    public String getInternshipId() {
-        return internshipId;
-    }
-
-    public void setInternshipId(String internshipId) {
-        this.internshipId = internshipId;
-    }*/
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,8 +71,7 @@ public class MarksEntity implements InterfaceEntity {
         MarksEntity that = (MarksEntity) o;
         return Objects.equals(marksId, that.marksId) &&
                 Objects.equals(tech, that.tech) &&
-                Objects.equals(communication, that.communication);// &&
-//                Objects.equals(internshipId, that.internshipId);
+                Objects.equals(communication, that.communication);
     }
 
     @Override

@@ -6,9 +6,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Entity for Student table of Database
+ */
 @Entity
 @Table(name = "student", schema = "public", catalog = "st2eedb")
 public class StudentEntity implements InterfaceEntity {
+    // Attributes
     @Id
     @Column(name = "student_id", nullable = false, columnDefinition="uuid")
     private UUID studentId;
@@ -33,10 +37,7 @@ public class StudentEntity implements InterfaceEntity {
     @Column(name = "linkedin_profile", nullable = true, length = -1)
     private String linkedinProfile;
 
-//    @Basic
-//    @Column(name = "tutor_id")
-//    private String tutorId;
-
+    // Relations
     @ManyToOne
     @JoinColumn( name="tutor_id" )
     private TutorEntity tutorEntity;
@@ -46,6 +47,9 @@ public class StudentEntity implements InterfaceEntity {
             joinColumns = @JoinColumn( name = "student_id" ),
             inverseJoinColumns = @JoinColumn( name = "skill_id" ) )
     private List<SkillsEntity> skills = new ArrayList<>();
+
+    // Getters and Setters
+    private TutorEntity getTutorEntity() {return tutorEntity;}
 
     public void setTutorEntity(TutorEntity tutorEntity) {
         this.tutorEntity = tutorEntity;
@@ -59,8 +63,6 @@ public class StudentEntity implements InterfaceEntity {
         this.skills = skills;
     }
 
-
-
     public UUID getStudentId() {
         return studentId;
     }
@@ -68,8 +70,6 @@ public class StudentEntity implements InterfaceEntity {
     public void setStudentId(UUID studentId) {
         this.studentId = studentId;
     }
-
-    private TutorEntity getTutorEntity() {return tutorEntity;}
 
     public String getName() {
         return name;
@@ -110,16 +110,6 @@ public class StudentEntity implements InterfaceEntity {
     public void setLinkedinProfile(String linkedinProfile) {
         this.linkedinProfile = linkedinProfile;
     }
-/*
-    @Basic
-    @Column(name = "tutor_id", nullable = true)
-    public String getTutorId() {
-        return tutorId;
-    }
-
-    public void setTutorId(String tutorId) {
-        this.tutorId = tutorId;
-    }*/
 
     @Override
     public boolean equals(Object o) {
@@ -132,7 +122,6 @@ public class StudentEntity implements InterfaceEntity {
                 Objects.equals(email, that.email) &&
                 Objects.equals(studentGroup, that.studentGroup) &&
                 Objects.equals(linkedinProfile, that.linkedinProfile);
-//                Objects.equals(tutorId, that.tutorId);
     }
 
     @Override

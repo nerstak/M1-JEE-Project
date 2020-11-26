@@ -4,12 +4,16 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Entity for Visit table of Database
+ */
 @Entity
 @Table(name = "visit", schema = "public", catalog = "st2eedb")
 @NamedQueries(
         @NamedQuery(name = "VisitEntity.UpdateVisit", query = "update VisitEntity set done = :done, planned = :planned Where visitId = :visitId")
 )
 public class VisitEntity implements InterfaceEntity {
+    // Attributes
     @Id
     @Column(name = "visit_id", nullable = false, columnDefinition="uuid")
     private UUID visitId;
@@ -25,13 +29,13 @@ public class VisitEntity implements InterfaceEntity {
     @Basic
     @Column(name = "visit_report", nullable = true)
     private Boolean visitReport;
-//    private String internshipId;
 
+    // Relations
     @OneToOne
     @JoinColumn( name="internship_id", nullable=true )
     private InternshipEntity internship;
 
-
+    // Getters and Setters
     public UUID getVisitId() {
         return visitId;
     }
@@ -72,17 +76,6 @@ public class VisitEntity implements InterfaceEntity {
         this.internship = internship;
     }
 
-    /*
-        @Basic
-        @Column(name = "internship_id", nullable = true)
-        public String getInternshipId() {
-            return internshipId;
-        }
-
-        public void setInternshipId(String internshipId) {
-            this.internshipId = internshipId;
-        }
-    */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -91,8 +84,7 @@ public class VisitEntity implements InterfaceEntity {
         return Objects.equals(visitId, that.visitId) &&
                 Objects.equals(done, that.done) &&
                 Objects.equals(planned, that.planned) &&
-                Objects.equals(visitReport, that.visitReport);// &&
-//                Objects.equals(internshipId, that.internshipId);
+                Objects.equals(visitReport, that.visitReport);
     }
 
     @Override
