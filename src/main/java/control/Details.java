@@ -104,11 +104,10 @@ public class Details extends ServletModel {
         String studentGroup = request.getParameter("studentGroup");
         String studentFirstname = request.getParameter("studentFirstname");
         String studentName = request.getParameter("studentName");
-        String studentId = request.getParameter("studentId");
 
-        StudentEntity student = studentSB.find(UUID.fromString(studentId));
+        StudentEntity student = internshipEntity.getStudent();
 
-        if(ProcessString.areStringEmpty(studentFirstname, studentGroup, studentName, studentId) || student == null){
+        if(ProcessString.areStringEmpty(studentFirstname, studentGroup, studentName) || student == null){
             return false;
         }
 
@@ -129,9 +128,8 @@ public class Details extends ServletModel {
         //Marks
         String commMark = request.getParameter("commMark");
         String techMark = request.getParameter("techMark");
-        String marksId = request.getParameter("marksId");
 
-        if(ProcessString.areStringEmpty(commMark, techMark, marksId)){
+        if(ProcessString.areStringEmpty(commMark, techMark)){
             return false;
         }
 
@@ -143,10 +141,9 @@ public class Details extends ServletModel {
             return false;
         }
 
-        MarksEntity marks = marksSB.find(UUID.fromString(marksId));
+        MarksEntity marks = internshipEntity.getMarks();
         marks.setCommunication(Integer.valueOf(commMark));
         marks.setTech(Integer.valueOf(techMark));
-        marks.setInternship(internshipEntity);
         marksSB.save(marks);
 
         return true;
@@ -165,15 +162,13 @@ public class Details extends ServletModel {
         String visitDone = request.getParameter("visitDone")== null
                 ? "false"
                 : "true";
-        String visitId = request.getParameter("visitId");
-        VisitEntity visit = visitSB.find(UUID.fromString(visitId));
+        VisitEntity visit = internshipEntity.getVisit();
 
-        if(ProcessString.areStringEmpty(visitDone, visitPlanned, visitId)){
+        if(ProcessString.areStringEmpty(visitDone, visitPlanned)){
             return false;
         }
         visit.setDone(Boolean.valueOf(visitDone));
         visit.setPlanned(Boolean.valueOf(visitPlanned));
-        visit.setInternship(internshipEntity);
         visitSB.save(visit);
 
         return true;
@@ -207,7 +202,7 @@ public class Details extends ServletModel {
         if((ProcessString.areStringEmpty(beginningDate, endDate, supervisor, defense, webSurvey, companyEval, cdc, internshipId)) || (ProcessString.isDateBefore(endDate, beginningDate))) {
             return false;
         }
-        internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
+
         internshipEntity.setDefense(Boolean.valueOf(defense));
         internshipEntity.setCompanyEval(Boolean.valueOf(companyEval));
         internshipEntity.setWebSurvey(Boolean.valueOf(webSurvey));
@@ -230,14 +225,12 @@ public class Details extends ServletModel {
         String report = request.getParameter("releasedReport") == null
                 ? "false"
                 : "true";
-        String reportId = request.getParameter("finalReportId");
 
-        if (ProcessString.areStringEmpty(report, reportId)){
+        if (ProcessString.areStringEmpty(report)){
             return false;
         }
-        FinalReportEntity finalReport = finalReportSB.find(UUID.fromString(reportId));
+        FinalReportEntity finalReport = internshipEntity.getFinalReport();
         finalReport.setReport(Boolean.valueOf(report));
-        finalReport.setInternship(internshipEntity);
         finalReportSB.save(finalReport);
 
         return true;

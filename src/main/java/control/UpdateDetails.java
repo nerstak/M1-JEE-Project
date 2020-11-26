@@ -126,14 +126,12 @@ public class UpdateDetails extends ServletModel{
         String linkedin = request.getParameter("linkedin");
         String email = request.getParameter("email");
 
-        StudentEntity student = new StudentEntity();
-        student.setStudentId(studentId);
+        StudentEntity student = internshipEntity.getStudent();
         student.setStudentGroup(group);
         student.setLinkedinProfile(linkedin);
         student.setFirstname(firstName);
         student.setName(lastName);
         student.setEmail(email);
-        student.setTutorEntity(tutorEntity);
 
         //Check if data are empty (expect linkedin url)
         if(ProcessString.areStringEmpty(studentId.toString(), firstName, lastName, email, group)){
@@ -194,7 +192,6 @@ public class UpdateDetails extends ServletModel{
 
         //Capitalize the first letter
         skill = ProcessString.capitalizeAndLowerCase(skill);
-        String studentId = request.getParameter("studentId");
 
         SkillsEntity skillsEntity = skillsSB.getSkillByName(skill);
         try {
@@ -207,12 +204,13 @@ public class UpdateDetails extends ServletModel{
             }
 
             // Adding skill to student
-            StudentEntity student = studentSB.find(UUID.fromString(studentId));
+            StudentEntity student = internshipEntity.getStudent();
             if(!student.getSkills().contains(skillsEntity)) {
                 student.getSkills().add(skillsEntity);
                 studentSB.save(student);
+                return true;
             }
-            return true;
+            return false;
         } catch (EntityExistsException e) {
             return false;
         }
@@ -235,7 +233,6 @@ public class UpdateDetails extends ServletModel{
 
         //Capitalize the first letter
         keyword = ProcessString.capitalizeAndLowerCase(keyword);
-        String internshipId = request.getParameter("internshipId");
 
         KeywordsEntity keywordsEntity = keywordsSB.getKeywordByName(keyword);
         try {
@@ -251,8 +248,9 @@ public class UpdateDetails extends ServletModel{
             if(!internshipEntity.getListKeywords().contains(keywordsEntity)) {
                 internshipEntity.getListKeywords().add(keywordsEntity);
                 internshipsSB.save(internshipEntity);
+                return true;
             }
-            return true;
+            return false;
         } catch (EntityExistsException e) {
             return false;
         }
@@ -274,6 +272,9 @@ public class UpdateDetails extends ServletModel{
                 request.setAttribute("message", ERR_FAILED_UPDATE_DB);
             }
         }
+
+        // We force the update of values
+        internshipEntity = internshipsSB.find(internshipEntity.getInternshipId());
 
         //Set request attributes
         request.setAttribute("internshipData", internshipEntity);
