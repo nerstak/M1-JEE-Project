@@ -1,4 +1,4 @@
-package modelsEntities;
+package models;
 
 public interface InterfaceEntity {
 }

@@ -1,6 +1,6 @@
 package control.sessionBeans;
 
-import modelsEntities.MarksEntity;
+import models.MarksEntity;
 
 import javax.ejb.Stateless;
 import java.util.UUID;

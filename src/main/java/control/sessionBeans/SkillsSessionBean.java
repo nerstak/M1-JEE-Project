@@ -1,6 +1,6 @@
 package control.sessionBeans;
 
-import modelsEntities.SkillsEntity;
+import models.SkillsEntity;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;

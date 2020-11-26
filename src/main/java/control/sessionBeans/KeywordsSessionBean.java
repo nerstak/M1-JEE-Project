@@ -1,6 +1,6 @@
 package control.sessionBeans;
 
-import modelsEntities.KeywordsEntity;
+import models.KeywordsEntity;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;

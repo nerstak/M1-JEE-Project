@@ -18,7 +18,7 @@
     <a href="Homepage"><img class="logo-efrei" src="${pageContext.request.contextPath}/Image/Logo-Efrei-2017-Fr-Web.png"
                             alt="efrei"></a>
     <div class="navbar-menu">
-        <jsp:useBean id="tutor" class="modelsEntities.TutorEntity" scope="session"/>
+        <jsp:useBean id="tutor" class="models.TutorEntity" scope="session"/>
         <p>
             ${tutor.firstname}${" "}${tutor.name}
         </p>

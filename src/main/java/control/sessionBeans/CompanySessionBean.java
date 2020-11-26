@@ -1,6 +1,6 @@
 package control.sessionBeans;
 
-import modelsEntities.CompanyEntity;
+import models.CompanyEntity;
 
 import javax.ejb.Stateless;
 import java.util.UUID;

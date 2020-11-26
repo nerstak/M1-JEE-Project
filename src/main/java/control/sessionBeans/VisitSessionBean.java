@@ -1,6 +1,6 @@
 package control.sessionBeans;
 
-import modelsEntities.VisitEntity;
+import models.VisitEntity;
 
 import javax.ejb.Stateless;
 import java.util.UUID;

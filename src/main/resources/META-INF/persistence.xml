@@ -5,16 +5,16 @@
              version="2.2">
     <persistence-unit name="default">
 
-        <class>modelsEntities.TutorEntity</class>
-        <class>modelsEntities.CommentsEntity</class>
-        <class>modelsEntities.CompanyEntity</class>
-        <class>modelsEntities.FinalReportEntity</class>
-        <class>modelsEntities.InternshipEntity</class>
-        <class>modelsEntities.KeywordsEntity</class>
-        <class>modelsEntities.MarksEntity</class>
-        <class>modelsEntities.SkillsEntity</class>
-        <class>modelsEntities.StudentEntity</class>
-        <class>modelsEntities.VisitEntity</class>
+        <class>models.TutorEntity</class>
+        <class>models.CommentsEntity</class>
+        <class>models.CompanyEntity</class>
+        <class>models.FinalReportEntity</class>
+        <class>models.InternshipEntity</class>
+        <class>models.KeywordsEntity</class>
+        <class>models.MarksEntity</class>
+        <class>models.SkillsEntity</class>
+        <class>models.StudentEntity</class>
+        <class>models.VisitEntity</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/st2eedb"/>

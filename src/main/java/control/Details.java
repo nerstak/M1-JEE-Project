@@ -1,7 +1,7 @@
 package control;
 
 import control.sessionBeans.*;
-import modelsEntities.*;
+import models.*;
 import utils.ProcessString;
 
 import javax.ejb.EJB;

@@ -24,7 +24,7 @@
     <header class="navbar">
         <a href="Homepage"><img class="logo-efrei" src="${pageContext.request.contextPath}/Image/Logo-Efrei-2017-Fr-Web.png" alt="efrei"></a>
         <div class="navbar-menu">
-            <jsp:useBean id="tutor" class="modelsEntities.TutorEntity" scope="session"/>
+            <jsp:useBean id="tutor" class="models.TutorEntity" scope="session"/>
             <p>
                 ${tutor.firstname}${" "}${tutor.name}
             </p>
@@ -52,7 +52,7 @@
 
     <main class="main-info">
 
-        <jsp:useBean id="internshipData" class="modelsEntities.InternshipEntity" scope="request"/>
+        <jsp:useBean id="internshipData" class="models.InternshipEntity" scope="request"/>
         <div class="wrapper-flex">
             <div class="info-company">
                 <h2>Company</h2>

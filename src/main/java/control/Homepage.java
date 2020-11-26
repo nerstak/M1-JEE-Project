@@ -2,7 +2,7 @@ package control;
 
 import control.sessionBeans.InternshipSessionBean;
 import control.sessionBeans.KeywordsSessionBean;
-import modelsEntities.TutorEntity;
+import models.TutorEntity;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;

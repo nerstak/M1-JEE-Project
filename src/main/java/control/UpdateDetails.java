@@ -2,9 +2,8 @@ package control;
 
 
 import control.sessionBeans.*;
-import modelsEntities.*;
+import models.*;
 import utils.ProcessString;
-import utils.database.*;
 
 import javax.ejb.EJB;
 import javax.persistence.EntityExistsException;

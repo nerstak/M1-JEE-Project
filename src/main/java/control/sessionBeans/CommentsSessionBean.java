@@ -1,6 +1,6 @@
 package control.sessionBeans;
 
-import modelsEntities.CommentsEntity;
+import models.CommentsEntity;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

@@ -1,6 +1,6 @@
 package control.sessionBeans;
 
-import modelsEntities.InterfaceEntity;
+import models.InterfaceEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

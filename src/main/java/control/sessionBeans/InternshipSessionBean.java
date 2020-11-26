@@ -1,6 +1,6 @@
 package control.sessionBeans;
 
-import modelsEntities.InternshipEntity;
+import models.InternshipEntity;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;

@@ -1,8 +1,7 @@
 package control;
 
 import control.sessionBeans.TutorSessionBean;
-import model.Tutor;
-import modelsEntities.TutorEntity;
+import models.TutorEntity;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -47,19 +46,18 @@ public class Login extends ServletModel {
             response.sendRedirect("Homepage");
         }
 
-        Tutor tutor = new Tutor();
-        tutor.setEmail(request.getParameter("login"));
-        tutor.setPwd(request.getParameter("pwd"));
+        String email = request.getParameter("login");
+        String pwd = request.getParameter("pwd");
 
 
 
-        if (tutor.getEmail().isEmpty() || tutor.getPwd().isEmpty()) {
+        if (email.isEmpty() || pwd.isEmpty()) {
             request.setAttribute("errorMessage", ERR_MISSING_FIELD);
             request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); //redirect to welcome if ok
         }
 
         tutors = new ArrayList<>();
-        tutors.addAll(tutorSB.getTutors(tutor.getEmail(), tutor.getPwd()));
+        tutors.addAll(tutorSB.getTutors(email, pwd));
 
         if (!tutors.isEmpty()) {
             session.setAttribute("tutor", tutors.get(0));
