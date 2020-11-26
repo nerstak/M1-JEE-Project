@@ -16,7 +16,8 @@ import java.util.UUID;
         @NamedQuery(name = "Internship.SelectList", query = "SELECT DISTINCT i FROM InternshipEntity i LEFT JOIN i.keywords ik WHERE i.student.tutorEntity.tutorId = :tutor AND" +
                                                                 " FUNCTION('to_char', i.beginning, 'YYYY') LIKE :year AND" +
                                                                 " CONCAT(i.student.firstname, ' ', i.student.name) LIKE CONCAT('%',:name,'%') AND" +
-                                                                " :keyword = ik.keyword OR :keyword = '-'"),
+                                                                " :keyword IN (ik.keyword, '-')"+
+                                                                " ORDER BY i.beginning DESC"),
         @NamedQuery(name = "Internship.SelectSingle", query = "SELECT i FROM InternshipEntity i WHERE i.internshipId = :internshipId")
 })
 public class InternshipEntity implements InterfaceEntity {
