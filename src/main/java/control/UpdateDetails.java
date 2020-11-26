@@ -29,30 +29,15 @@ public class UpdateDetails extends ServletModel{
     private StudentSessionBean studentSB;
     @EJB
     private CommentsSessionBean commentsSB;
+    @EJB
+    private CompanySessionBean companySB;
 
     private InternshipEntity internshipEntity;
     private TutorEntity tutorEntity;
 
     private HttpSession session;
 
-    private InternshipDataServices internshipDataServices;
-    private CompanyDataServices companyDataServices;
-    private FinalReportDataServices finalReportDataServices;
-    private CommentsDataServices commentsDataServices;
-    private SkillsDataServices skillsDataServices;
-    private KeywordsDataServices keywordsDataServices;
     private boolean successRequest;
-
-    @Override
-    public void init() {
-        super.init();
-        internshipDataServices = new InternshipDataServices(dbUser, dbPwd, dbUrl);
-        finalReportDataServices = new FinalReportDataServices(dbUser, dbPwd, dbUrl);
-        companyDataServices = new CompanyDataServices(dbUser, dbPwd, dbUrl);
-        commentsDataServices = new CommentsDataServices(dbUser, dbPwd, dbUrl);
-        skillsDataServices = new SkillsDataServices(dbUser, dbPwd, dbUrl);
-        keywordsDataServices = new KeywordsDataServices(dbUser, dbPwd, dbUrl);
-    }
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,6 +47,7 @@ public class UpdateDetails extends ServletModel{
 
         String detailsSubmitButton = request.getParameter("updateDetails");
         String internshipId = request.getParameter("internshipId");
+        internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
         switch (detailsSubmitButton){
             case "company":
                 successRequest = updateCompany(request);
@@ -116,17 +102,16 @@ public class UpdateDetails extends ServletModel{
             return false;
         }
 
-        //Disable the autocommit of the dataservices in case of error
-        DataServices.disableAutoCommits(internshipDataServices, companyDataServices);
-        int rowAffectedInternship = internshipDataServices.updateInternshipFromCompanyDetailsPage(internshipId, Date.valueOf(begin), Date.valueOf(end), mds);
-        int rowAffectedCompany = companyDataServices.updateCompany(companyId, companyName, companyAddress);
+        internshipEntity.setEnding(Date.valueOf(end));
+        internshipEntity.setBeginning(Date.valueOf(begin));
+        internshipEntity.setInternSupervisor(mds);
+        CompanyEntity companyEntity = internshipEntity.getCompany();
+        companyEntity.setAddress(companyAddress);
+        companyEntity.setName(companyName);
+        companySB.save(companyEntity);
+        internshipsSB.save(internshipEntity);
 
-        if ((rowAffectedCompany == 1) && (rowAffectedInternship == 1)){ //if all the data has been updates => commit the request
-            DataServices.commitRequest(internshipDataServices, companyDataServices);
-            return true;
-        }else{ //rollback
-            return false;
-        }
+        return true;
     }
 
     /**
@@ -182,7 +167,6 @@ public class UpdateDetails extends ServletModel{
             return false;
         }
 
-        internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
         internshipEntity.setDescription(description);
         internshipEntity.getFinalReport().setTitle(title);
         CommentsEntity comments = internshipEntity.getComments();
@@ -262,8 +246,7 @@ public class UpdateDetails extends ServletModel{
                 keywordsSB.save(keywordsEntity);
             }
 
-            // Adding skill to student
-            internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
+            // Adding keyword to internship
             internshipEntity.getListKeywords().add(keywordsEntity);
             internshipsSB.save(internshipEntity);
             return true;
@@ -288,8 +271,6 @@ public class UpdateDetails extends ServletModel{
                 request.setAttribute("message", ERR_FAILED_UPDATE_DB);
             }
         }
-
-        internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
 
         //Set request attributes
         request.setAttribute("internshipData", internshipEntity);

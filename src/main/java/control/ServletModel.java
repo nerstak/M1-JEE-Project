@@ -24,51 +24,7 @@ import static utils.Constants.DB_PROPERTIES;
  */
 @WebServlet(name = "ServletModel")
 public abstract class ServletModel extends HttpServlet {
-    protected Properties properties;
-    protected DataServices dataServices;
-    protected InputStream input;
-
-    protected String dbUrl;
-    protected String dbUser;
-    protected String dbPwd;
-
-    private Connection conn;
-    private Statement stmt;
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
-
-    @Override
-    public void init() {
-        getPropertiesFile();
-
-        dbUrl = properties.getProperty("DB.URL");
-        dbUser = properties.getProperty("DB.USER");
-        dbPwd = properties.getProperty("DB.PWD");
-
-        try {
-            // Setting up database connection
-            Class.forName(properties.getProperty("DB.JDBC"));
-            conn = DriverManager.getConnection(dbUrl, dbUser, dbPwd);
-            stmt = conn.createStatement();
-            // May have to be removed later
-            // dataServices = new DataServices(dbUser, dbPwd, dbUrl);
-        } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(ServletModel.class.getName()).log(Level.SEVERE, null, e);
-        }
-    }
-
-    /**
-     * Load the db.properties file
-     */
-    private void getPropertiesFile() {
-        properties = new Properties();
-        try {
-            input = getServletContext().getResourceAsStream(DB_PROPERTIES);
-            properties.load(input);
-        } catch (IOException e) {
-            Logger.getLogger(ServletModel.class.getName()).log(Level.SEVERE, null, e);
-        }
-    }
 }

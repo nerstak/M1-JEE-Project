@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 import java.util.UUID;
 
 @Stateless(name = "CommentsSessionEJB")
-public class CommentsSessionBean {
+public class CommentsSessionBean extends ModelBean<CommentsEntity> {
     @PersistenceContext
     EntityManager em;
 
@@ -16,8 +16,7 @@ public class CommentsSessionBean {
         return em.find(CommentsEntity.class, id);
     }
 
-    public boolean save(CommentsEntity e) {
+    public void save(CommentsEntity e) {
         em.merge(e);
-        return true;
     }
 }
