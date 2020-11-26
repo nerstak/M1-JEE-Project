@@ -13,7 +13,7 @@ public class InternshipSessionBean extends ModelBean<InternshipEntity> {
         Query q = em.createNamedQuery("Internship.SelectList");
         q.setParameter("tutor",tutorId);
         q.setParameter("year",year);
-        //q.setParameter("name",name);
+        q.setParameter("name",name);
         //q.setParameter("keyword",keyword);
         return q.getResultList();
     }

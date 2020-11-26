@@ -13,7 +13,9 @@ import java.util.UUID;
 @Entity
 @Table(name = "internship", schema = "public", catalog = "st2eedb")
 @NamedQueries({
-        @NamedQuery(name = "Internship.SelectList", query = "SELECT i FROM InternshipEntity i WHERE i.student.tutorEntity.tutorId = :tutor AND  function('to_char', i.beginning, 'YYYY') LIKE :year"),
+        @NamedQuery(name = "Internship.SelectList", query = "SELECT i FROM InternshipEntity i WHERE i.student.tutorEntity.tutorId = :tutor AND" +
+                                                                " FUNCTION('to_char', i.beginning, 'YYYY') LIKE :year AND" +
+                                                                " CONCAT(i.student.firstname, ' ', i.student.name) LIKE CONCAT('%',:name,'%') "),
         @NamedQuery(name = "Internship.SelectSingle", query = "SELECT i FROM InternshipEntity i WHERE i.internshipId = :internshipId")
 })
 public class InternshipEntity implements InterfaceEntity {
