@@ -19,17 +19,12 @@ import static utils.Constants.*;
  */
 @WebServlet(name = "Login")
 public class Login extends ServletModel {
-    private HttpSession session;
-
     @EJB
     private TutorSessionBean tutorSB;
 
-    ArrayList<TutorEntity> tutors;
-
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        session = request.getSession();
+        HttpSession session = request.getSession();
 
         if(session.getAttribute("tutor") != null) {
             response.sendRedirect("Homepage");
@@ -40,7 +35,7 @@ public class Login extends ServletModel {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Only for post request
-        session = request.getSession();
+        HttpSession session = request.getSession();
 
         if(session.getAttribute("tutor") != null) {
             response.sendRedirect("Homepage");
@@ -58,7 +53,7 @@ public class Login extends ServletModel {
             return;
         }
 
-        tutors = new ArrayList<>();
+        ArrayList<TutorEntity> tutors = new ArrayList<>();
         tutors.addAll(tutorSB.getTutors(email, pwd));
 
         if (!tutors.isEmpty()) {

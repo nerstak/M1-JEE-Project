@@ -19,17 +19,11 @@ import static utils.Constants.HOME_PAGE;
  */
 @WebServlet(name = "Homepage")
 public class Homepage extends ServletModel {
-    private HttpSession session;
-
     @EJB
     private KeywordsSessionBean keywordsSB;
     @EJB
     private InternshipSessionBean internshipsSB;
 
-    private TutorEntity tutor;
-    private int year;
-    private String name;
-    String keyword;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
@@ -40,8 +34,13 @@ public class Homepage extends ServletModel {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        session = request.getSession();
-        tutor = (TutorEntity) session.getAttribute("tutor");
+        HttpSession session = request.getSession();
+        TutorEntity tutor = (TutorEntity) session.getAttribute("tutor");
+
+        int year;
+        String name;
+        String keyword;
+
         if (tutor != null) {
             request.setAttribute("listOfKeywords", keywordsSB.getKeywords());
 

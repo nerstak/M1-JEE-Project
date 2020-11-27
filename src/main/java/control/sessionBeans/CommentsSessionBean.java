@@ -9,9 +9,6 @@ import java.util.UUID;
 
 @Stateless(name = "CommentsSessionEJB")
 public class CommentsSessionBean extends ModelBean<CommentsEntity> {
-    @PersistenceContext
-    EntityManager em;
-
     public CommentsEntity find(UUID id) {
         return em.find(CommentsEntity.class, id);
     }

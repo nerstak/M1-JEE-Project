@@ -31,53 +31,46 @@ public class UpdateDetails extends ServletModel{
     @EJB
     private CompanySessionBean companySB;
 
-    private InternshipEntity internshipEntity;
-    private TutorEntity tutorEntity;
-
-    private HttpSession session;
-
-    private boolean successRequest;
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Get the name of the button that call the servlet
-        session = request.getSession();
-        tutorEntity = (TutorEntity) session.getAttribute("tutor");
-
         String detailsSubmitButton = request.getParameter("updateDetails");
         String internshipId = request.getParameter("internshipId");
-        internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
+        InternshipEntity internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
+        boolean successRequest = false;
         switch (detailsSubmitButton){
             case "company":
-                successRequest = updateCompany(request);
+                successRequest = updateCompany(request, internshipEntity);
                 break;
             case "student":
-                successRequest = updateStudent(request);
+                successRequest = updateStudent(request, internshipEntity);
                 break;
             case "internship":
-                successRequest = updateInternship(request);
+                successRequest = updateInternship(request,internshipEntity );
                 break;
             case "keywords":
-                successRequest = updateKeywords(request);
+                successRequest = updateKeywords(request, internshipEntity);
                 break;
             case "skills":
-                successRequest = updateSkills(request);
+                successRequest = updateSkills(request, internshipEntity);
                 break;
             default:
                 break;
         }
-        redirectToDetailsPage(request, response, internshipId);
+        redirectToDetailsPage(request, response, internshipEntity, successRequest);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.sendRedirect("Homepage");
     }
 
     /**
      * Get the information from the form and update the company and internship tables
      * @param request, servlet request
+     * @param internshipEntity
      * @return true if the database has been updated
      */
-    private boolean updateCompany(HttpServletRequest request){
+    private boolean updateCompany(HttpServletRequest request, InternshipEntity internshipEntity){
         //Get data from form
             //Company
         String companyName = request.getParameter("companyName");
@@ -116,9 +109,10 @@ public class UpdateDetails extends ServletModel{
     /**
      * Get the information from the form and update the student table
      * @param request, servlet request
+     * @param internshipEntity
      * @return true if the database has been updated
      */
-    private boolean updateStudent(HttpServletRequest request){
+    private boolean updateStudent(HttpServletRequest request, InternshipEntity internshipEntity){
         UUID studentId = UUID.fromString(request.getParameter("studentId"));
         String group = request.getParameter("group");
         String firstName =  request.getParameter("firstName");
@@ -146,9 +140,10 @@ public class UpdateDetails extends ServletModel{
     /**
      * Get the information from the form and update the student, comments and internship table
      * @param request, servlet request
+     * @param internshipEntity
      * @return true if the database has been updated
      */
-    private boolean updateInternship(HttpServletRequest request){
+    private boolean updateInternship(HttpServletRequest request, InternshipEntity internshipEntity){
         String description = request.getParameter("description");
         String tutorComments = request.getParameter("tutorComments");
         String studentComments = request.getParameter("studentComments");
@@ -178,9 +173,10 @@ public class UpdateDetails extends ServletModel{
     /**
      * Get the information from the form and update the skill and student_to_skills table
      * @param request, servlet request
+     * @param internshipEntity
      * @return true if the database has been updated
      */
-    private boolean updateSkills(HttpServletRequest request)  {
+    private boolean updateSkills(HttpServletRequest request, InternshipEntity internshipEntity)  {
         //Get the skill from the form
         String skill = request.getParameter("skill");
 
@@ -219,9 +215,10 @@ public class UpdateDetails extends ServletModel{
     /**
      * Get the information from the form and update the keyword and internship_to_keywords table
      * @param request, servlet request
+     * @param internshipEntity
      * @return true if the database has been updated
      */
-    private boolean updateKeywords(HttpServletRequest request){
+    private boolean updateKeywords(HttpServletRequest request, InternshipEntity internshipEntity){
         //Get the skill from the form
         String keyword = request.getParameter("keyword");
 
@@ -258,13 +255,14 @@ public class UpdateDetails extends ServletModel{
 
     /**
      * Redirect to details jsp
-     * @param request, the request
-     * @param response, response
-     * @param internshipId, the ID of the concerned internship
+     * @param request the request
+     * @param response response
+     * @param internshipEntity Concerned internship
+     * @param successRequest Success of request
      * @throws ServletException ServletException
      * @throws IOException IOException
      */
-    private void redirectToDetailsPage(HttpServletRequest request, HttpServletResponse response, String internshipId) throws ServletException, IOException {
+    private void redirectToDetailsPage(HttpServletRequest request, HttpServletResponse response, InternshipEntity internshipEntity, boolean successRequest) throws ServletException, IOException {
         if (successRequest){
             request.setAttribute("message", SUCCESS_BD);
         }else{

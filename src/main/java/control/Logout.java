@@ -13,7 +13,6 @@ import java.io.IOException;
  */
 @WebServlet(name = "Logout")
 public class Logout extends HttpServlet {
-    private HttpSession session;
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,7 +31,7 @@ public class Logout extends HttpServlet {
      * @throws IOException IOException
      */
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        session = request.getSession();
+        HttpSession session = request.getSession();
         session.removeAttribute("tutor");
         response.sendRedirect("Login");
     }
