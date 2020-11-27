@@ -70,7 +70,7 @@ public class UpdateDetails extends ServletModel{
     /**
      * Get the information from the form and update the company and internship tables
      * @param request, servlet request
-     * @param internshipEntity
+     * @param internshipEntity internship
      * @return true if the database has been updated
      */
     private boolean updateCompany(HttpServletRequest request, InternshipEntity internshipEntity){
@@ -112,7 +112,7 @@ public class UpdateDetails extends ServletModel{
     /**
      * Get the information from the form and update the student table
      * @param request, servlet request
-     * @param internshipEntity
+     * @param internshipEntity internship
      * @return true if the database has been updated
      */
     private boolean updateStudent(HttpServletRequest request, InternshipEntity internshipEntity){
@@ -143,7 +143,7 @@ public class UpdateDetails extends ServletModel{
     /**
      * Get the information from the form and update the student, comments and internship table
      * @param request, servlet request
-     * @param internshipEntity
+     * @param internshipEntity internship
      * @return true if the database has been updated
      */
     private boolean updateInternship(HttpServletRequest request, InternshipEntity internshipEntity){
@@ -176,7 +176,7 @@ public class UpdateDetails extends ServletModel{
     /**
      * Get the information from the form and update the skill and student_to_skills table
      * @param request, servlet request
-     * @param internshipEntity
+     * @param internshipEntity Internship entity
      * @return true if the database has been updated
      */
     private boolean updateSkills(HttpServletRequest request, InternshipEntity internshipEntity)  {
@@ -218,7 +218,7 @@ public class UpdateDetails extends ServletModel{
     /**
      * Get the information from the form and update the keyword and internship_to_keywords table
      * @param request, servlet request
-     * @param internshipEntity
+     * @param internshipEntity Internship
      * @return true if the database has been updated
      */
     private boolean updateKeywords(HttpServletRequest request, InternshipEntity internshipEntity){

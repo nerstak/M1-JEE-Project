@@ -27,14 +27,6 @@ public class Details extends ServletModel {
     private KeywordsSessionBean keywordsSB;
     @EJB
     private SkillsSessionBean skillsSB;
-    @EJB
-    private StudentSessionBean studentSB;
-    @EJB
-    private MarksSessionBean marksSB;
-    @EJB
-    private VisitSessionBean visitSB;
-    @EJB
-    private FinalReportSessionBean finalReportSB;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -148,7 +140,7 @@ public class Details extends ServletModel {
         MarksEntity marks = internshipEntity.getMarks();
         marks.setCommunication(Integer.valueOf(commMark));
         marks.setTech(Integer.valueOf(techMark));
-        //marksSB.save(marks);
+
         internshipEntity.setMarks(marks);
 
         return true;
@@ -167,7 +159,7 @@ public class Details extends ServletModel {
 
         visit.setDone(visitDone);
         visit.setPlanned(visitPlanned);
-        //visitSB.save(visit);
+
         internshipEntity.setVisit(visit);
     }
 
@@ -200,7 +192,6 @@ public class Details extends ServletModel {
         internshipEntity.setInternSupervisor(supervisor);
         internshipEntity.setBeginning(Date.valueOf(beginningDate));
         internshipEntity.setEnding(Date.valueOf(endDate));
-        //internshipsSB.save(internshipEntity);
 
         return true;
     }
@@ -216,7 +207,7 @@ public class Details extends ServletModel {
 
         FinalReportEntity finalReport = internshipEntity.getFinalReport();
         finalReport.setReport(report);
-        //finalReportSB.save(finalReport);
+
         internshipEntity.setFinalReport(finalReport);
     }
 }
