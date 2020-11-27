@@ -226,4 +226,23 @@ public class UpdateDetailsTest {
         then(keywordsList).should().add(keywordsEntity);
         then(internshipsSB).should().save(internshipEntity);
     }
+
+    @Test
+    public void redirectToDetailsPageSuccessTest() throws ServletException, IOException {
+        //Given
+        UUID internshipId = UUID.fromString("38400000-8cf0-11bd-b23e-10b96e4ef00d");
+        given(internshipEntity.getInternshipId()).willReturn(internshipId);
+        given(internshipsSB.find(internshipId)).willReturn(internshipEntity);
+        given(request.getRequestDispatcher(MISSION_PAGE)).willReturn(requestDispatcher);
+
+        //When
+        updateDetails.redirectToDetailsPage(request, response, internshipEntity, true);
+
+        //Then
+        then(request).should().setAttribute("message", SUCCESS_BD);
+        then(request).should().setAttribute("internshipData", internshipEntity);
+        then(request).should().setAttribute("listOfSkills", skillsSB.getSkills());
+        then(request).should().setAttribute("listOfKeywords",keywordsSB.getKeywords());
+        then(requestDispatcher).should().forward(request, response);
+    }
 }
