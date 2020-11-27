@@ -177,5 +177,24 @@ public class DetailsTest {
         then(studentSB).should().save(studentEntity);
         assertThat(result, is(true));
     }
+
+    @Test
+    public void updateMarksSuccessTest() {
+        //Given
+        String commMark = "16";
+        String techMark = "20";
+        given(request.getParameter("commMark")).willReturn(commMark);
+        given(request.getParameter("techMark")).willReturn(techMark);
+        given(internshipEntity.getMarks()).willReturn(marksEntity);
+
+        //When
+        boolean result = details.updateMarks(request, internshipEntity);
+
+        //Then
+        then(marksEntity).should().setCommunication(Integer.valueOf(commMark));
+        then(marksEntity).should().setTech(Integer.valueOf(techMark));
+        then(marksSB).should().save(marksEntity);
+        assertThat(result, is(true));
+    }
     }
 }
