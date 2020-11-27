@@ -83,7 +83,10 @@ He can :
 
 #### Version 1
 
-Use the branch `version1`. You are able to run a deployed version using `docker-compose up -d` once the project is built using Maven. You don't need to setup the database or the server.
+Use the branch `version1`. You are able to run a deployed version using `docker-compose up -d` once the project is built using Maven.
+Before building it, comment the first line of the [db.properties](https://github.com/nerstak/M1-JEE-Project/blob/main/src/main/webapp/WEB-INF/db.properties) file, and uncomment the second.
+You don't need to setup the database or the server.
+However, it may be a bit unstable, as it was not the application server used during development.
 
 If you wish to use Glassfish, follow the instructions below.
 
