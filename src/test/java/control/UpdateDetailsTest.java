@@ -98,6 +98,41 @@ public class UpdateDetailsTest {
         then(response).should().sendRedirect(CONTROLLER_HOMEPAGE);
     }
 
+    @Test //This test is here to test the overrall flow of a doPost request when it is successful, functions are tested independently afterwards
+    public void doPostSuccessRequestTest() throws ServletException, IOException {
+        //Given
+        String updateButtonDetails = "skills";
+        given(request.getParameter("updateDetails")).willReturn(updateButtonDetails);
+        String internshipId = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
+        UUID UUIDinternshipId = UUID.fromString(internshipId);
+        given(request.getParameter("internshipId")).willReturn(internshipId);
+        given(internshipsSB.find(UUIDinternshipId)).willReturn(internshipEntity);
+
+        String skill = "Mockito master"; //This must be in this format: "Xxxxx xxx xx"
+        given(request.getParameter("skill")).willReturn(skill);
+        given(skillsSB.getSkillByName(skill)).willReturn(skillsEntity);
+        given(internshipEntity.getStudent()).willReturn(studentEntity);
+        given(studentEntity.getSkills()).willReturn(skillsList);
+
+        given(internshipEntity.getInternshipId()).willReturn(UUIDinternshipId);
+        given(internshipsSB.find(UUIDinternshipId)).willReturn(internshipEntity);
+        given(request.getRequestDispatcher(MISSION_PAGE)).willReturn(requestDispatcher);
+
+        //When
+        updateDetails.doPost(request, response);
+
+        //Then
+        then(skillsList).should().contains(skillsEntity);
+        then(skillsList).should().add(skillsEntity);
+        then(studentSB).should().save(studentEntity);
+
+        then(request).should().setAttribute("message", SUCCESS_BD);
+        then(request).should().setAttribute("internshipData", internshipEntity);
+        then(request).should().setAttribute("listOfSkills", skillsSB.getSkills());
+        then(request).should().setAttribute("listOfKeywords",keywordsSB.getKeywords());
+        then(requestDispatcher).should().forward(request, response);
+    }
+
     @Test
     public void updateCompanySuccessTest() {
         //Given
