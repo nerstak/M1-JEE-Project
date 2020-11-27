@@ -18,14 +18,12 @@ public class InternshipSessionBean extends ModelBean<InternshipEntity> {
         return q.getResultList();
     }
 
-    // TODO: Delete this if never used
     public List getInternship(UUID internshipId) {
         Query q = em.createNamedQuery("Internship.SelectSingle");
         q.setParameter("internshipId", internshipId);
         return q.getResultList();
     }
 
-    @Override
     public InternshipEntity find(UUID id) {
         return em.find(InternshipEntity.class, id);
     }

@@ -13,6 +13,7 @@ public class CommentsSessionBean extends ModelBean<CommentsEntity> {
         return em.find(CommentsEntity.class, id);
     }
 
+    @Override
     public void save(CommentsEntity e) {
         em.merge(e);
     }
