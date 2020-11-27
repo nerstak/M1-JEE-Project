@@ -40,4 +40,25 @@ public class ProcessStringTest {
         //Then
         //It will throw a NullPointerException
     }
+
+    @Test
+    public void capitalizeAndLowerCaseTest() {
+        //Given
+        String emptyString = "";
+        String lowercaseString = "lowercase";
+        String uppercaseString = "UPPERCASE";
+        String oneLetterString = "l";
+
+        //When
+        String emptyStringResult = ProcessString.capitalizeAndLowerCase(emptyString);
+        String lowercaseStringResult = ProcessString.capitalizeAndLowerCase(lowercaseString);
+        String uppercaseStringResult = ProcessString.capitalizeAndLowerCase(uppercaseString);
+        String oneLetterStringResult = ProcessString.capitalizeAndLowerCase(oneLetterString);
+
+        //Then
+        assertThat(emptyStringResult, is(""));
+        assertThat(lowercaseStringResult, is("Lowercase"));
+        assertThat(uppercaseStringResult, is("Uppercase"));
+        assertThat(oneLetterStringResult, is("L"));
+    }
 }
