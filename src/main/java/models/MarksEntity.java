@@ -28,7 +28,7 @@ public class MarksEntity implements InterfaceEntity, Serializable {
     private Integer communication;
 
     // Relations
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn( name="internship_id", nullable=true )
     private InternshipEntity internship;
 

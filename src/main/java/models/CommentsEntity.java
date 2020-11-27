@@ -27,7 +27,7 @@ public class CommentsEntity implements InterfaceEntity, Serializable {
     private String supervisorComm;
 
     // Relations
-    @OneToOne
+    @OneToOne (cascade = CascadeType.MERGE)
     @JoinColumn( name="internship_id", nullable=true )
     private InternshipEntity internship;
 

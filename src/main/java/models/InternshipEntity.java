@@ -54,25 +54,27 @@ public class InternshipEntity implements InterfaceEntity, Serializable {
     private String internSupervisor;
 
     // Relations
-    @OneToOne( mappedBy = "internship" )
+    @OneToOne( mappedBy = "internship", cascade = CascadeType.MERGE )
     private MarksEntity marks;
 
-    @OneToOne( mappedBy = "internship" )
+    @OneToOne( mappedBy = "internship", cascade = CascadeType.MERGE )
     private CommentsEntity comments;
 
-    @OneToOne( mappedBy = "internship" )
+    @OneToOne( mappedBy = "internship", cascade = CascadeType.MERGE )
     private FinalReportEntity finalReport;
 
-    @OneToOne( mappedBy = "internship" )
+    @OneToOne( mappedBy = "internship", cascade = CascadeType.MERGE )
     private VisitEntity visit;
 
-    @ManyToOne  @JoinColumn( name="company_id" )
+    @ManyToOne (cascade = CascadeType.MERGE)
+    @JoinColumn( name="company_id" )
     private CompanyEntity company;
 
-    @ManyToOne  @JoinColumn( name="student_id" )
+    @ManyToOne   (cascade = CascadeType.MERGE)
+    @JoinColumn( name="student_id" )
     private StudentEntity student;
 
-    @ManyToMany
+    @ManyToMany (cascade = CascadeType.MERGE)
     @JoinTable( name = "internship_to_keywords",
             joinColumns = @JoinColumn( name = "internship_id" ),
             inverseJoinColumns = @JoinColumn( name = "keyword_id" ) )

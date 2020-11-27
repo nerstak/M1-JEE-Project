@@ -27,14 +27,6 @@ public class Details extends ServletModel {
     private KeywordsSessionBean keywordsSB;
     @EJB
     private SkillsSessionBean skillsSB;
-    @EJB
-    private StudentSessionBean studentSB;
-    @EJB
-    private MarksSessionBean marksSB;
-    @EJB
-    private VisitSessionBean visitSB;
-    @EJB
-    private FinalReportSessionBean finalReportSB;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -55,7 +47,9 @@ public class Details extends ServletModel {
         } else if (internshipSubmit.equals("modify")) {
             internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
 
-            updateAllData(request, internshipEntity);
+            if(updateAllData(request, internshipEntity)) {
+                internshipsSB.save(internshipEntity);
+            }
             redirect(response,CONTROLLER_HOMEPAGE);
         } else {
             redirect(response,CONTROLLER_HOMEPAGE);
@@ -114,7 +108,8 @@ public class Details extends ServletModel {
         student.setStudentGroup(studentGroup);
         student.setFirstname(studentFirstname);
         student.setName(studentName);
-        studentSB.save(student);
+        //studentSB.save(student);
+        internshipEntity.setStudent(student);
 
         return true;
     }
@@ -145,7 +140,8 @@ public class Details extends ServletModel {
         MarksEntity marks = internshipEntity.getMarks();
         marks.setCommunication(Integer.valueOf(commMark));
         marks.setTech(Integer.valueOf(techMark));
-        marksSB.save(marks);
+
+        internshipEntity.setMarks(marks);
 
         return true;
     }
@@ -163,7 +159,8 @@ public class Details extends ServletModel {
 
         visit.setDone(visitDone);
         visit.setPlanned(visitPlanned);
-        visitSB.save(visit);
+
+        internshipEntity.setVisit(visit);
     }
 
     /**
@@ -195,7 +192,6 @@ public class Details extends ServletModel {
         internshipEntity.setInternSupervisor(supervisor);
         internshipEntity.setBeginning(Date.valueOf(beginningDate));
         internshipEntity.setEnding(Date.valueOf(endDate));
-        internshipsSB.save(internshipEntity);
 
         return true;
     }
@@ -211,6 +207,7 @@ public class Details extends ServletModel {
 
         FinalReportEntity finalReport = internshipEntity.getFinalReport();
         finalReport.setReport(report);
-        finalReportSB.save(finalReport);
+
+        internshipEntity.setFinalReport(finalReport);
     }
 }

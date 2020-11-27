@@ -39,11 +39,11 @@ public class StudentEntity implements InterfaceEntity, Serializable {
     private String linkedinProfile;
 
     // Relations
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn( name="tutor_id" )
     private TutorEntity tutorEntity;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable( name = "student_to_skills",
             joinColumns = @JoinColumn( name = "student_id" ),
             inverseJoinColumns = @JoinColumn( name = "skill_id" ) )

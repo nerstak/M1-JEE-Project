@@ -27,7 +27,7 @@ public class KeywordsEntity implements InterfaceEntity, Serializable {
     private String keyword;
 
     // Relations
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable( name = "internship_to_keywords",
             joinColumns = @JoinColumn( name = "keyword_id" ),
             inverseJoinColumns = @JoinColumn( name = "internship_id" ) )
