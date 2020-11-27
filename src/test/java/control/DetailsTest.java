@@ -108,20 +108,99 @@ public class DetailsTest {
         then(requestDispatcher).should().forward(request, response);
     }
 
-    @Test(expected=NullPointerException.class) //We just want to test if the method calls updateAllData and forwards the user
-    public void doPostModifyTest() throws ServletException, IOException {
+    @Test
+    public void doPostElseTest() throws ServletException, IOException {
+        //Given
+        String internshipSubmit = "else";
+        String internshipId = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
+        given(request.getParameter("internshipSubmit")).willReturn(internshipSubmit);
+        given(request.getParameter("internshipId")).willReturn(internshipId);
+
+        //When
+        details.doPost(request, response);
+
+        //Then
+        then(response).should().sendRedirect(CONTROLLER_HOMEPAGE);
+    }
+
+    @Test //This is to verify that everything is called as expected, individual functions are tested afterwards
+    public void doPostModifySuccessTest() throws ServletException, IOException {
         //Given
         String internshipSubmit = "modify";
         String internshipId = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
         given(request.getParameter("internshipSubmit")).willReturn(internshipSubmit);
         given(request.getParameter("internshipId")).willReturn(internshipId);
         given(internshipsSB.find(UUID.fromString(internshipId))).willReturn(internshipEntity);
-        given(request.getRequestDispatcher(MISSION_PAGE)).willReturn(requestDispatcher);
+
+        String beginningDate = "2020-10-10";
+        String endDate = "2020-11-11";
+        String supervisor = "jean pierre";
+        Boolean defense = true;
+        Boolean webSurvey = true;
+        Boolean companyEval = true;
+        Boolean cdc = true;
+        given(request.getParameter("beginningDate")).willReturn(beginningDate);
+        given(request.getParameter("endDate")).willReturn(endDate);
+        given(request.getParameter("supervisor")).willReturn(supervisor);
+        given(request.getParameter("defense")).willReturn(defense.toString());
+        given(request.getParameter("webSurvey")).willReturn(webSurvey.toString());
+        given(request.getParameter("companyEval")).willReturn(companyEval.toString());
+        given(request.getParameter("cdc")).willReturn(cdc.toString());
+
+        String studentGroup = "M1";
+        String studentFirstname = "Elon";
+        String studentName = "Musk";
+        given(request.getParameter("studentGroup")).willReturn(studentGroup);
+        given(request.getParameter("studentFirstname")).willReturn(studentFirstname);
+        given(request.getParameter("studentName")).willReturn(studentName);
+        given(internshipEntity.getStudent()).willReturn(studentEntity);
+
+        String commMark = "16";
+        String techMark = "20";
+        given(request.getParameter("commMark")).willReturn(commMark);
+        given(request.getParameter("techMark")).willReturn(techMark);
+        given(internshipEntity.getMarks()).willReturn(marksEntity);
+
+        Boolean visitPlanned = true;
+        Boolean visitDone = true;
+        given(request.getParameter("visitPlanned")).willReturn(visitPlanned.toString());
+        given(request.getParameter("visitDone")).willReturn(visitDone.toString());
+        given(internshipEntity.getVisit()).willReturn(visitEntity);
+
+        Boolean releasedReport = true;
+        given(request.getParameter("releasedReport")).willReturn(releasedReport.toString());
+        given(internshipEntity.getFinalReport()).willReturn(finalReportEntity);
 
         //When
         details.doPost(request, response);
 
         //Then
+        then(internshipEntity).should().setDefense(defense);
+        then(internshipEntity).should().setCompanyEval(companyEval);
+        then(internshipEntity).should().setWebSurvey(webSurvey);
+        then(internshipEntity).should().setCdc(cdc);
+        then(internshipEntity).should().setInternSupervisor(supervisor);
+        then(internshipEntity).should().setBeginning(Date.valueOf(beginningDate));
+        then(internshipEntity).should().setEnding(Date.valueOf(endDate));
+        then(internshipsSB).should().save(internshipEntity);
+
+        then(studentEntity).should().setStudentGroup(studentGroup);
+        then(studentEntity).should().setFirstname(studentFirstname);
+        then(studentEntity).should().setName(studentName);
+        then(studentSB).should().save(studentEntity);
+        
+        then(marksEntity).should().setCommunication(Integer.valueOf(commMark));
+        then(marksEntity).should().setTech(Integer.valueOf(techMark));
+        then(marksSB).should().save(marksEntity);
+
+        then(visitEntity).should().setDone(visitDone);
+        then(visitEntity).should().setPlanned(visitPlanned);
+        then(visitSB).should().save(visitEntity);
+
+        then(finalReportEntity).should().setReport(releasedReport);
+        then(finalReportSB).should().save(finalReportEntity);
+
+        then(response).should().sendRedirect(CONTROLLER_HOMEPAGE);
     }
 
     @Test
