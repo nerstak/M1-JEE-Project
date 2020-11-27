@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -14,7 +15,7 @@ import java.util.UUID;
         @NamedQuery(name = "FinalReportEntity.updateReportBool", query = "update FinalReportEntity set report = :report Where finalReportId = :finalReportId")
     }
 )
-public class FinalReportEntity implements InterfaceEntity {
+public class FinalReportEntity implements InterfaceEntity, Serializable {
     // Attributes
     @Id
     @Column(name = "final_report_id", nullable = false, columnDefinition="uuid")
