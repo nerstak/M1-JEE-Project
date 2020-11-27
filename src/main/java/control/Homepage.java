@@ -39,7 +39,7 @@ public class Homepage extends ServletModel {
         processRequest(request, response);
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         session = request.getSession();
         tutor = (TutorEntity) session.getAttribute("tutor");
         if (tutor != null) {
