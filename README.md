@@ -128,13 +128,13 @@ Every information related to these tests will be displayed in the terminal.
 
 ### Static testing
 
-SonarQube has been set up to provide some static testing on the software. It provides informations on potential bugs, security risks and mistakes. Thanks to this tool, we have been able to reduce errors. To use it, please see this [documentation](https://github.com/nerstak/M1-JEE-Project/blob/main/doc/Setup%of%sonarqube.md).
+SonarQube has been set up to provide some static testing on the software. It provides informations on potential bugs, security risks and mistakes. Thanks to this tool, we have been able to reduce errors. To use it, please see this [documentation](https://github.com/nerstak/M1-JEE-Project/blob/main/doc/Setup%20of%20sonarqube.md).
 
 ![Sonarqube_review](./Screenshot/sonarqube_review.png)
 
 ### JMeter testing
 
-JMeter has been used to have some performance tests. However, while you have JMeter file located inside the `jmeter` folder that is working, you may not be able to use it: it has been built with different UUIDs for the data. Some screenshots have been placed inside the report.
+JMeter has been used to have some performance tests. However, while you have JMeter file located inside the `jmeter` folder that is working, you may not be able to use it: it has been built with different UUIDs for the data. Some screenshots have been placed inside the report. To use it, please see this [documentation](https://github.com/nerstak/M1-JEE-Project/blob/main/doc/Using%20JMeter.md)
 
 ![jmeter_table](./Screenshot/jmeter_table.png)
 
