@@ -74,6 +74,9 @@ public class UpdateDetailsTest {
     @Mock
     KeywordsEntity keywordsEntity;
 
+    @Mock
+    FinalReportEntity finalReportEntity;
+
     @InjectMocks
     UpdateDetails updateDetails;
 
@@ -148,5 +151,37 @@ public class UpdateDetailsTest {
         then(studentEntity).should().setName(lastName);
         then(studentEntity).should().setEmail(email);
         then(studentSB).should().save(studentEntity);
+    }
+
+    @Test
+    public void updateInternshipSuccessTest() {
+        //Given
+        String description = "this is a description";
+        given(request.getParameter("description")).willReturn(description);
+        String tutorComments = "this a the tutor's comments";
+        given(request.getParameter("tutorComments")).willReturn(tutorComments);
+        String studentComments = "this a the student's comments";
+        given(request.getParameter("studentComments")).willReturn(studentComments);
+        String commentsId = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
+        given(request.getParameter("commentsId")).willReturn(commentsId);
+        String internshipId = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
+        given(request.getParameter("internshipId")).willReturn(internshipId);
+        String titleId = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
+        given(request.getParameter("titleId")).willReturn(titleId);
+        String reportTitle = "Title";
+        given(request.getParameter("reportTitle")).willReturn(reportTitle);
+        given(internshipEntity.getComments()).willReturn(commentsEntity);
+        given(internshipEntity.getFinalReport()).willReturn(finalReportEntity);
+
+        //When
+        boolean result = updateDetails.updateInternship(request, internshipEntity);
+
+        //Then
+        then(internshipEntity).should().setDescription(description);
+        then(finalReportEntity).should().setTitle(reportTitle);
+        then(commentsEntity).should().setStudentComm(studentComments);
+        then(commentsEntity).should().setSupervisorComm(tutorComments);
+        then(commentsSB).should().save(commentsEntity);
+        then(internshipsSB).should().save(internshipEntity);
     }
 }
