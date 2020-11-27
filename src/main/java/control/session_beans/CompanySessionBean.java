@@ -1,7 +1,6 @@
-package control.sessionBeans;
+package control.session_beans;
 
 import models.CompanyEntity;
-import models.FinalReportEntity;
 
 import javax.ejb.Stateless;
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package control;
 
-import control.sessionBeans.*;
+import control.session_beans.*;
 import models.*;
 import utils.ProcessString;
 
@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.UUID;
 
+import static utils.Constants.CONTROLLER_HOMEPAGE;
 import static utils.Constants.MISSION_PAGE;
 
 /**
@@ -35,6 +36,7 @@ public class Details extends ServletModel {
     @EJB
     private FinalReportSessionBean finalReportSB;
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Check from which submit button the request come from
         String internshipSubmit = request.getParameter("internshipSubmit");
@@ -49,19 +51,20 @@ public class Details extends ServletModel {
             request.setAttribute("listOfSkills", skillsSB.getSkills());
             request.setAttribute("listOfKeywords",keywordsSB.getKeywords());
 
-            request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
+            forward(request,response,MISSION_PAGE);
         } else if (internshipSubmit.equals("modify")) {
             internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
 
             updateAllData(request, internshipEntity);
-            response.sendRedirect("Homepage");
+            redirect(response,CONTROLLER_HOMEPAGE);
         } else {
-            response.sendRedirect("Homepage");
+            redirect(response,CONTROLLER_HOMEPAGE);
         }
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("Homepage");
+        redirect(response,CONTROLLER_HOMEPAGE);
     }
 
     /**

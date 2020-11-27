@@ -5,12 +5,9 @@ import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import control.sessionBeans.TutorSessionBean;
+import control.session_beans.TutorSessionBean;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 import static org.mockito.BDDMockito.*;
-import static org.hamcrest.CoreMatchers.*;
 
 import javax.servlet.http.*;
 import javax.servlet.RequestDispatcher;

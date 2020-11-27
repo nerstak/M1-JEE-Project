@@ -1,10 +1,8 @@
-package control.sessionBeans;
+package control.session_beans;
 
 import models.CommentsEntity;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.UUID;
 
 @Stateless(name = "CommentsSessionEJB")

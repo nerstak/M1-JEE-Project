@@ -1,7 +1,7 @@
 package control;
 
 
-import control.sessionBeans.*;
+import control.session_beans.*;
 import models.*;
 import utils.ProcessString;
 
@@ -10,7 +10,6 @@ import javax.persistence.EntityExistsException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.UUID;
@@ -31,7 +30,7 @@ public class UpdateDetails extends ServletModel{
     @EJB
     private CompanySessionBean companySB;
 
-
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Get the name of the button that call the servlet
         String detailsSubmitButton = request.getParameter("updateDetails");
@@ -60,8 +59,9 @@ public class UpdateDetails extends ServletModel{
         redirectToDetailsPage(request, response, internshipEntity, successRequest);
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("Homepage");
+        redirect(response,CONTROLLER_HOMEPAGE);
     }
 
     /**
@@ -262,7 +262,7 @@ public class UpdateDetails extends ServletModel{
      * @throws ServletException ServletException
      * @throws IOException IOException
      */
-    private void redirectToDetailsPage(HttpServletRequest request, HttpServletResponse response, InternshipEntity internshipEntity, boolean successRequest) throws ServletException, IOException {
+    private void redirectToDetailsPage(HttpServletRequest request, HttpServletResponse response, InternshipEntity internshipEntity, boolean successRequest) {
         if (successRequest){
             request.setAttribute("message", SUCCESS_BD);
         }else{
@@ -279,6 +279,6 @@ public class UpdateDetails extends ServletModel{
         request.setAttribute("listOfSkills", skillsSB.getSkills());
         request.setAttribute("listOfKeywords",keywordsSB.getKeywords());
 
-        request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
+        forward(request,response,MISSION_PAGE);
     }
 }

@@ -104,4 +104,6 @@ public class TutorEntity implements InterfaceEntity, Serializable {
     public int hashCode() {
         return Objects.hash(tutorId, name, firstname, pwd, email);
     }
+
+
 }
