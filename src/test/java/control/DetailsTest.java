@@ -5,15 +5,8 @@ import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import control.session_beans.FinalReportSessionBean;
-import control.session_beans.InternshipSessionBean;
-import control.session_beans.KeywordsSessionBean;
-import control.session_beans.MarksSessionBean;
-import control.session_beans.SkillsSessionBean;
-import control.session_beans.StudentSessionBean;
-import control.session_beans.TutorSessionBean;
-import control.session_beans.VisitSessionBean;
-import models.TutorEntity;
+import control.session_beans.*;
+import models.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

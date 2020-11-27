@@ -5,8 +5,8 @@ import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import control.session_beans.TutorSessionBean;
-import models.TutorEntity;
+import control.session_beans.*;
+import models.*;
 
 import static org.mockito.BDDMockito.*;
 
