@@ -5,8 +5,8 @@ import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import control.session_beans.TutorSessionBean;
-import models.TutorEntity;
+import control.session_beans.*;
+import models.*;
 
 import static org.mockito.BDDMockito.*;
 
@@ -46,13 +46,13 @@ public class LoginTest {
     public void doGetNonNullTutorTest() throws ServletException, IOException {
         //Given
         given(request.getSession()).willReturn(session);
-        given(session.getAttribute("tutor")).willReturn("non null");
+        given(session.getAttribute("tutor")).willReturn(tutor);
 
         //When
         login.doGet(request, response);
 
         //Then
-        then(response).should().sendRedirect("Homepage");
+        then(response).should().sendRedirect(CONTROLLER_HOMEPAGE);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class LoginTest {
         login.doPost(request, response);
 
         //Then
-        then(response).should().sendRedirect("Homepage");
+        then(response).should().sendRedirect(CONTROLLER_HOMEPAGE);
     }
 
     @Test
@@ -152,6 +152,6 @@ public class LoginTest {
 
         //Then
         then(session).should().setAttribute("tutor", arrayList.get(0));
-        then(response).should().sendRedirect("Homepage");
+        then(response).should().sendRedirect(CONTROLLER_HOMEPAGE);
     }
 }
