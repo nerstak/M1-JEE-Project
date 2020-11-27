@@ -87,13 +87,8 @@ public class Details extends ServletModel {
             return false;
         }
 
-        if (!updateVisit(request, internshipEntity)){
-            return false;
-        }
-
-        if (!updateFinalReport(request, internshipEntity)){
-            return false;
-        }
+        updateVisit(request, internshipEntity);
+        updateFinalReport(request, internshipEntity);
 
         return true;
     }
@@ -159,9 +154,8 @@ public class Details extends ServletModel {
      * Update the visit
      * @param request, http request object
      * @param internshipEntity internship
-     * @return true if the db is updated
      */
-    private boolean updateVisit(HttpServletRequest request, InternshipEntity internshipEntity){
+    private void updateVisit(HttpServletRequest request, InternshipEntity internshipEntity){
         //Visit
         boolean visitPlanned = request.getParameter("visitPlanned") != null;
         boolean visitDone = request.getParameter("visitDone") != null;
@@ -170,8 +164,6 @@ public class Details extends ServletModel {
         visit.setDone(visitDone);
         visit.setPlanned(visitPlanned);
         visitSB.save(visit);
-
-        return true;
     }
 
     /**
@@ -212,16 +204,13 @@ public class Details extends ServletModel {
      * Update the report table
      * @param request, http request
      * @param internshipEntity internship
-     * @return true if the database has been updated
      */
-    private boolean updateFinalReport(HttpServletRequest request, InternshipEntity internshipEntity){
+    private void updateFinalReport(HttpServletRequest request, InternshipEntity internshipEntity){
         //Report
         boolean report = request.getParameter("releasedReport") != null;
 
         FinalReportEntity finalReport = internshipEntity.getFinalReport();
         finalReport.setReport(report);
         finalReportSB.save(finalReport);
-
-        return true;
     }
 }

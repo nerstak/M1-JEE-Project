@@ -22,7 +22,7 @@ public class Login extends ServletModel {
     @EJB
     private TutorSessionBean tutorSB;
 
-    private final String tutorAttribute = "tutor";
+    private final static String tutorAttribute = "tutor";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

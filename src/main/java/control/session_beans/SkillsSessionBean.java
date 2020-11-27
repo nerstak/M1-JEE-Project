@@ -3,7 +3,6 @@ package control.session_beans;
 import models.SkillsEntity;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class SkillsSessionBean extends ModelBean<SkillsEntity> {
     }
 
     @Override
-    public void save(SkillsEntity e) throws EntityExistsException {
+    public void save(SkillsEntity e) {
         em.persist(e);
     }
 }

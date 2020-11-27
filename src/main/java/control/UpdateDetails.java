@@ -30,8 +30,8 @@ public class UpdateDetails extends ServletModel{
     @EJB
     private CompanySessionBean companySB;
     
-    private final String messageAttribute = "message";
-    private final String internshipAttribute = "internshipId";
+    private final static String messageAttribute = "message";
+    private final static String internshipAttribute = "internshipId";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

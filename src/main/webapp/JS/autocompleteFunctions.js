@@ -45,7 +45,7 @@ function autocomplete(inp, arr) {
                 b.appendChild(input);
 
                 // Function when we click
-                b.addEventListener("click", function (e) {
+                b.addEventListener("click", function (f) {
                     // Adding value for autocomplete field
                     inp.value = this.getElementsByTagName("input")[0].value;
                     closeAllLists();
