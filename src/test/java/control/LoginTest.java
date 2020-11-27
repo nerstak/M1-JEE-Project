@@ -80,4 +80,77 @@ public class LoginTest {
         //Then
         then(response).should().sendRedirect("Homepage");
     }
+
+    @Test
+    public void doPostEmptyLoginTest() throws ServletException, IOException {
+        //Given
+        given(request.getSession()).willReturn(session);
+        given(session.getAttribute("tutor")).willReturn(null);
+        given(request.getParameter("login")).willReturn("");
+        given(request.getParameter("pwd")).willReturn("password");
+        given(request.getRequestDispatcher(LOGIN_PAGE)).willReturn(requestDispatcher);
+
+        //When
+        login.doPost(request, response);
+
+        //Then
+        then(request).should().setAttribute("errorMessage", ERR_MISSING_FIELD);
+        then(requestDispatcher).should().forward(request, response);
+    }
+
+    @Test
+    public void doPostEmptyPwdTest() throws ServletException, IOException {
+        //Given
+        given(request.getSession()).willReturn(session);
+        given(session.getAttribute("tutor")).willReturn(null);
+        given(request.getParameter("login")).willReturn("jean.pierre@efrei.net");
+        given(request.getParameter("pwd")).willReturn("");
+        given(request.getRequestDispatcher(LOGIN_PAGE)).willReturn(requestDispatcher);
+
+        //When
+        login.doPost(request, response);
+
+        //Then
+        then(request).should().setAttribute("errorMessage", ERR_MISSING_FIELD);
+        then(requestDispatcher).should().forward(request, response);
+    }
+
+    @Test
+    public void doPostInvalidCredentialsTest() throws ServletException, IOException {
+        //Given
+        given(request.getSession()).willReturn(session);
+        given(session.getAttribute("tutor")).willReturn(null);
+        given(request.getParameter("login")).willReturn("jean.pierre@efrei.net");
+        given(request.getParameter("pwd")).willReturn("wrongPassword");
+        given(request.getRequestDispatcher(LOGIN_PAGE)).willReturn(requestDispatcher);
+        ArrayList arrayList = new ArrayList();
+        given(tutorSB.getTutors("jean.pierre@efrei.net", "wrongPassword")).willReturn(arrayList);
+
+        //When
+        login.doPost(request, response);
+
+        //Then
+        then(request).should().setAttribute("errorMessage", ERR_INV_CRED_MESS);
+        then(requestDispatcher).should().forward(request, response);
+    }
+
+    @Test
+    public void doPostValidCredentialsTest() throws ServletException, IOException {
+        //Given
+        given(request.getSession()).willReturn(session);
+        given(session.getAttribute("tutor")).willReturn(null);
+        given(request.getParameter("login")).willReturn("jean.pierre@efrei.net");
+        given(request.getParameter("pwd")).willReturn("password");
+        given(request.getRequestDispatcher(LOGIN_PAGE)).willReturn(requestDispatcher);
+        ArrayList<String> arrayList = new ArrayList();
+        arrayList.add("non empty list");
+        given(tutorSB.getTutors("jean.pierre@efrei.net", "password")).willReturn(arrayList);
+
+        //When
+        login.doPost(request, response);
+
+        //Then
+        then(session).should().setAttribute("tutor", arrayList.get(0));
+        then(response).should().sendRedirect("Homepage");
+    }
 }
