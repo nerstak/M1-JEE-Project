@@ -73,4 +73,59 @@ public class ProcessStringTest {
         //Then
         //It will throw a NullPointerException
     }
+
+    @Test
+    public void isDateBeforeTest() {
+        //Given
+        String firstGoodFormatDate = "2020-10-10";
+        String secondGoodFormatDate = "2020-11-11";
+
+        //When
+        boolean sameDates = ProcessString.isDateBefore(firstGoodFormatDate, firstGoodFormatDate);
+        boolean firstThenSecondDate = ProcessString.isDateBefore(firstGoodFormatDate, secondGoodFormatDate);
+        boolean secondThenFirstDate = ProcessString.isDateBefore(secondGoodFormatDate, firstGoodFormatDate);
+
+        //Then
+        assertThat(sameDates, is(false));
+        assertThat(firstThenSecondDate, is(true));
+        assertThat(secondThenFirstDate, is(false));
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void isDateBeforeNullTest() {
+        //Given
+        String nullDate = null;
+        String goodFormatDate = "2020-10-10";
+
+        //When
+        ProcessString.isDateBefore(nullDate, goodFormatDate);
+
+        //Then
+        //It will throw an IllegalArgumentException
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void isDateBeforeEmptyTest() {
+        //Given
+        String emptyDate = "";
+        String goodFormatDate = "2020-10-10";
+
+        //When
+        ProcessString.isDateBefore(emptyDate, goodFormatDate);
+
+        //Then
+        //It will throw an IllegalArgumentException
+    }
+    @Test(expected=IllegalArgumentException.class)
+    public void isDateBeforeWrongFormatTest() {
+        //Given
+        String wrongFormatDate = "Wrong Format";
+        String goodFormatDate = "2020-10-10";
+
+        //When
+        ProcessString.isDateBefore(wrongFormatDate, goodFormatDate);
+
+        //Then
+        //It will throw an IllegalArgumentException
+    }
 }
