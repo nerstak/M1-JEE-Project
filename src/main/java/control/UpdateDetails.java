@@ -29,12 +29,15 @@ public class UpdateDetails extends ServletModel{
     private CommentsSessionBean commentsSB;
     @EJB
     private CompanySessionBean companySB;
+    
+    private final String messageAttribute = "message";
+    private final String internshipAttribute = "internshipId";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Get the name of the button that call the servlet
         String detailsSubmitButton = request.getParameter("updateDetails");
-        String internshipId = request.getParameter("internshipId");
+        String internshipId = request.getParameter(internshipAttribute);
         InternshipEntity internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
         boolean successRequest = false;
         switch (detailsSubmitButton){
@@ -77,20 +80,20 @@ public class UpdateDetails extends ServletModel{
         String companyId = request.getParameter("companyId");
         String companyAddress = request.getParameter("companyAddress");
             //Internship
-        String internshipId = request.getParameter("internshipId");
+        String internshipId = request.getParameter(internshipAttribute);
         String begin = request.getParameter("begin");
         String end = request.getParameter("end");
         String mds = request.getParameter("mds");
 
         //Check if all data are not empty
         if (ProcessString.areStringEmpty(companyId, internshipId, begin, end, mds, companyAddress, companyName)){
-            request.setAttribute("message", ERR_EMPTY_FIELDS);
+            request.setAttribute(messageAttribute, ERR_EMPTY_FIELDS);
             return false;
         }
 
         //Check if all data are not empty
         if (ProcessString.isDateBefore(end, begin)){
-            request.setAttribute("message", ERR_DATE_AFTER);
+            request.setAttribute(messageAttribute, ERR_DATE_AFTER);
             return false;
         }
 
@@ -129,7 +132,7 @@ public class UpdateDetails extends ServletModel{
 
         //Check if data are empty (expect linkedin url)
         if(ProcessString.areStringEmpty(studentId.toString(), firstName, lastName, email, group)){
-            request.setAttribute("message", ERR_EMPTY_FIELDS);
+            request.setAttribute(messageAttribute, ERR_EMPTY_FIELDS);
             return false;
         }
         studentSB.save(student);
@@ -148,14 +151,14 @@ public class UpdateDetails extends ServletModel{
         String tutorComments = request.getParameter("tutorComments");
         String studentComments = request.getParameter("studentComments");
         String commentsId = request.getParameter("commentsId");
-        String internshipId = request.getParameter("internshipId");
+        String internshipId = request.getParameter(internshipAttribute);
         String titleId = request.getParameter("titleId");
         String title = request.getParameter("reportTitle");
 
 
         //Check if data(IDs) are empty
         if(ProcessString.areStringEmpty(titleId, commentsId, internshipId)){
-            request.setAttribute("message", ERR_EMPTY_FIELDS);
+            request.setAttribute(messageAttribute, ERR_EMPTY_FIELDS);
             return false;
         }
 
@@ -182,7 +185,7 @@ public class UpdateDetails extends ServletModel{
 
         //Check if skill is empty
         if (skill.isEmpty()){
-            request.setAttribute("message", ERR_EMPTY_FIELDS);
+            request.setAttribute(messageAttribute, ERR_EMPTY_FIELDS);
             return false;
         }
 
@@ -224,7 +227,7 @@ public class UpdateDetails extends ServletModel{
 
         //Check if skill is empty
         if (keyword.isEmpty()){
-            request.setAttribute("message", ERR_EMPTY_FIELDS);
+            request.setAttribute(messageAttribute, ERR_EMPTY_FIELDS);
             return false;
         }
 
@@ -264,10 +267,10 @@ public class UpdateDetails extends ServletModel{
      */
     private void redirectToDetailsPage(HttpServletRequest request, HttpServletResponse response, InternshipEntity internshipEntity, boolean successRequest) {
         if (successRequest){
-            request.setAttribute("message", SUCCESS_BD);
+            request.setAttribute(messageAttribute, SUCCESS_BD);
         }else{
-            if(request.getAttribute("message") == null){
-                request.setAttribute("message", ERR_FAILED_UPDATE_DB);
+            if(request.getAttribute(messageAttribute) == null){
+                request.setAttribute(messageAttribute, ERR_FAILED_UPDATE_DB);
             }
         }
 
