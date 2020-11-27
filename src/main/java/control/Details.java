@@ -1,6 +1,6 @@
 package control;
 
-import control.sessionBeans.*;
+import control.session_beans.*;
 import models.*;
 import utils.ProcessString;
 
@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.UUID;
 
+import static utils.Constants.CONTROLLER_HOMEPAGE;
 import static utils.Constants.MISSION_PAGE;
 
 /**
@@ -35,12 +36,13 @@ public class Details extends ServletModel {
     @EJB
     private FinalReportSessionBean finalReportSB;
 
-    private InternshipEntity internshipEntity;
-
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Check from which submit button the request come from
         String internshipSubmit = request.getParameter("internshipSubmit");
         String internshipId = request.getParameter("internshipId");
+        InternshipEntity internshipEntity;
+
         if (internshipSubmit.equals("details")) {
             internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
 
@@ -49,47 +51,44 @@ public class Details extends ServletModel {
             request.setAttribute("listOfSkills", skillsSB.getSkills());
             request.setAttribute("listOfKeywords",keywordsSB.getKeywords());
 
-            request.getRequestDispatcher(MISSION_PAGE).forward(request, response);
+            forward(request,response,MISSION_PAGE);
         } else if (internshipSubmit.equals("modify")) {
             internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
 
-            updateAllData(request);
-            response.sendRedirect("Homepage");
+            updateAllData(request, internshipEntity);
+            redirect(response,CONTROLLER_HOMEPAGE);
         } else {
-            response.sendRedirect("Homepage");
+            redirect(response,CONTROLLER_HOMEPAGE);
         }
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("Homepage");
+        redirect(response,CONTROLLER_HOMEPAGE);
     }
 
     /**
      * Update all data for one internship
      * @param request, http request object
+     * @param internshipEntity internship
      * @return true if the db is updated
      */
-    private boolean updateAllData(HttpServletRequest request){
+    private boolean updateAllData(HttpServletRequest request, InternshipEntity internshipEntity){
         //Check if update is done, if it not return false
-        if (!updateInternship(request)){
+        if (!updateInternship(request, internshipEntity)){
             return false;
         }
 
-        if (!updateStudent(request)){
+        if (!updateStudent(request, internshipEntity)){
             return false;
         }
 
-        if (!updateMarks(request)){
+        if (!updateMarks(request, internshipEntity)){
             return false;
         }
 
-        if (!updateVisit(request)){
-            return false;
-        }
-
-        if (!updateFinalReport(request)){
-            return false;
-        }
+        updateVisit(request, internshipEntity);
+        updateFinalReport(request, internshipEntity);
 
         return true;
     }
@@ -97,9 +96,10 @@ public class Details extends ServletModel {
     /**
      * Update the student
      * @param request, http request object
+     * @param internshipEntity internship
      * @return true if the db is updated
      */
-    private boolean updateStudent(HttpServletRequest request){
+    private boolean updateStudent(HttpServletRequest request, InternshipEntity internshipEntity){
         //Student
         String studentGroup = request.getParameter("studentGroup");
         String studentFirstname = request.getParameter("studentFirstname");
@@ -122,9 +122,10 @@ public class Details extends ServletModel {
     /**
      * Update the marks
      * @param request, http request object
+     * @param internshipEntity internship
      * @return true if the db is updated
      */
-    private boolean updateMarks(HttpServletRequest request){
+    private boolean updateMarks(HttpServletRequest request, InternshipEntity internshipEntity){
         //Marks
         String commMark = request.getParameter("commMark");
         String techMark = request.getParameter("techMark");
@@ -152,61 +153,45 @@ public class Details extends ServletModel {
     /**
      * Update the visit
      * @param request, http request object
-     * @return true if the db is updated
+     * @param internshipEntity internship
      */
-    private boolean updateVisit(HttpServletRequest request){
+    private void updateVisit(HttpServletRequest request, InternshipEntity internshipEntity){
         //Visit
-        String visitPlanned = request.getParameter("visitPlanned")== null
-                ? "false"
-                : "true";
-        String visitDone = request.getParameter("visitDone")== null
-                ? "false"
-                : "true";
+        boolean visitPlanned = request.getParameter("visitPlanned") != null;
+        boolean visitDone = request.getParameter("visitDone") != null;
         VisitEntity visit = internshipEntity.getVisit();
 
-        if(ProcessString.areStringEmpty(visitDone, visitPlanned)){
-            return false;
-        }
-        visit.setDone(Boolean.valueOf(visitDone));
-        visit.setPlanned(Boolean.valueOf(visitPlanned));
+        visit.setDone(visitDone);
+        visit.setPlanned(visitPlanned);
         visitSB.save(visit);
-
-        return true;
     }
 
     /**
      * Update the internship
      * @param request, http request object
+     * @param internshipEntity internship
      * @return true if the db is updated
      */
-    private boolean updateInternship(HttpServletRequest request){
+    private boolean updateInternship(HttpServletRequest request, InternshipEntity internshipEntity){
         //Internship
         String beginningDate = request.getParameter("beginningDate");
         String endDate = request.getParameter("endDate");
         String supervisor = request.getParameter("supervisor");
-        String defense = request.getParameter("defense")== null
-                ? "false"
-                : "true";
-        String webSurvey = request.getParameter("webSurvey")== null
-                ? "false"
-                : "true";
-        String companyEval = request.getParameter("companyEval")== null
-                ? "false"
-                : "true";
-        String cdc = request.getParameter("cdc") == null
-                ? "false"
-                : "true";
+        boolean defense = request.getParameter("defense") != null;
+        boolean webSurvey = request.getParameter("webSurvey") != null;
+        boolean companyEval = request.getParameter("companyEval") != null;
+        boolean cdc = request.getParameter("cdc") != null;
         String internshipId = request.getParameter("internshipId");
 
         //Check if all data are not empty and begin date is before end date
-        if((ProcessString.areStringEmpty(beginningDate, endDate, supervisor, defense, webSurvey, companyEval, cdc, internshipId)) || (ProcessString.isDateBefore(endDate, beginningDate))) {
+        if((ProcessString.areStringEmpty(beginningDate, endDate, supervisor, internshipId)) || (ProcessString.isDateBefore(endDate, beginningDate))) {
             return false;
         }
 
-        internshipEntity.setDefense(Boolean.valueOf(defense));
-        internshipEntity.setCompanyEval(Boolean.valueOf(companyEval));
-        internshipEntity.setWebSurvey(Boolean.valueOf(webSurvey));
-        internshipEntity.setCdc(Boolean.valueOf(cdc));
+        internshipEntity.setDefense(defense);
+        internshipEntity.setCompanyEval(companyEval);
+        internshipEntity.setWebSurvey(webSurvey);
+        internshipEntity.setCdc(cdc);
         internshipEntity.setInternSupervisor(supervisor);
         internshipEntity.setBeginning(Date.valueOf(beginningDate));
         internshipEntity.setEnding(Date.valueOf(endDate));
@@ -218,21 +203,14 @@ public class Details extends ServletModel {
     /**
      * Update the report table
      * @param request, http request
-     * @return true if the database has been updated
+     * @param internshipEntity internship
      */
-    private boolean updateFinalReport(HttpServletRequest request){
+    private void updateFinalReport(HttpServletRequest request, InternshipEntity internshipEntity){
         //Report
-        String report = request.getParameter("releasedReport") == null
-                ? "false"
-                : "true";
+        boolean report = request.getParameter("releasedReport") != null;
 
-        if (ProcessString.areStringEmpty(report)){
-            return false;
-        }
         FinalReportEntity finalReport = internshipEntity.getFinalReport();
-        finalReport.setReport(Boolean.valueOf(report));
+        finalReport.setReport(report);
         finalReportSB.save(finalReport);
-
-        return true;
     }
 }

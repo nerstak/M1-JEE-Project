@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.UUID;
                                                                 " ORDER BY i.beginning DESC"),
         @NamedQuery(name = "Internship.SelectSingle", query = "SELECT i FROM InternshipEntity i WHERE i.internshipId = :internshipId")
 })
-public class InternshipEntity implements InterfaceEntity {
+public class InternshipEntity implements InterfaceEntity, Serializable {
     // Attributes
     @Id    @Column(name = "internship_id", nullable = false, columnDefinition="uuid") @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID internshipId;

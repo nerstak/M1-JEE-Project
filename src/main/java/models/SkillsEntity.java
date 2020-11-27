@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,7 +16,7 @@ import java.util.UUID;
         @NamedQuery(name = "Skills.SelectAll", query = "SELECT s FROM SkillsEntity s"),
         @NamedQuery(name = "Skills.SelectByName", query = "SELECT s FROM SkillsEntity s WHERE s.skill = :skill")
 })
-public class SkillsEntity implements InterfaceEntity {
+public class SkillsEntity implements InterfaceEntity, Serializable {
     // Attributes
     @Id
     @Column(name = "skill_id", nullable = false, columnDefinition="uuid")

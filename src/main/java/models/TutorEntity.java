@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @NamedQueries(
         @NamedQuery(name = "Tutor.SelectSingleTutor", query = "SELECT t FROM TutorEntity t WHERE t.email  = :email AND t.pwd = :pwd")
 )
-public class TutorEntity implements InterfaceEntity {
+public class TutorEntity implements InterfaceEntity, Serializable {
     // Attributes
     @Id
     @Column(name = "tutor_id", nullable = false, columnDefinition="uuid") @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -103,4 +104,6 @@ public class TutorEntity implements InterfaceEntity {
     public int hashCode() {
         return Objects.hash(tutorId, name, firstname, pwd, email);
     }
+
+
 }

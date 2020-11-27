@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +12,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "student", schema = "public", catalog = "st2eedb")
-public class StudentEntity implements InterfaceEntity {
+public class StudentEntity implements InterfaceEntity, Serializable {
     // Attributes
     @Id
     @Column(name = "student_id", nullable = false, columnDefinition="uuid")

@@ -159,13 +159,3 @@ button[type="submit"]:hover{
     width: 50px;
     margin-right: 16px;
 }
-
-@media (min-width: 0px) and (max-width: 480px) {
-}
-
-@media (min-width: 481px) and (max-width: 1024px) {
-}
-
-@media (min-width: 1025px) {
-
-}
