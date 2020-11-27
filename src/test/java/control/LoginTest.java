@@ -68,4 +68,16 @@ public class LoginTest {
         then(requestDispatcher).should().forward(request, response);
     }
 
+    @Test
+    public void doPostNonNullTutorTest() throws ServletException, IOException {
+        //Given
+        given(request.getSession()).willReturn(session);
+        given(session.getAttribute("tutor")).willReturn("non null");
+
+        //When
+        login.doPost(request, response);
+
+        //Then
+        then(response).should().sendRedirect("Homepage");
+    }
 }

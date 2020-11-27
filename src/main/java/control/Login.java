@@ -44,6 +44,7 @@ public class Login extends ServletModel {
 
         if(session.getAttribute("tutor") != null) {
             response.sendRedirect("Homepage");
+            return;
         }
 
         String email = request.getParameter("login");
@@ -53,7 +54,8 @@ public class Login extends ServletModel {
 
         if (email.isEmpty() || pwd.isEmpty()) {
             request.setAttribute("errorMessage", ERR_MISSING_FIELD);
-            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); //redirect to welcome if ok
+            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); //redirect to welcome if error
+            return;
         }
 
         tutors = new ArrayList<>();
@@ -64,7 +66,7 @@ public class Login extends ServletModel {
             response.sendRedirect("Homepage");
         } else {
             request.setAttribute("errorMessage", ERR_INV_CRED_MESS);
-            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
+            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); //redirect to welcome if error
         }
     }
 }
