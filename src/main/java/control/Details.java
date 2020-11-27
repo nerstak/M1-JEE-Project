@@ -189,10 +189,9 @@ public class Details extends ServletModel {
         boolean webSurvey = request.getParameter("webSurvey") != null;
         boolean companyEval = request.getParameter("companyEval") != null;
         boolean cdc = request.getParameter("cdc") != null;
-        String internshipId = request.getParameter("internshipId");
 
         //Check if all data are not empty and begin date is before end date
-        if((ProcessString.areStringEmpty(beginningDate, endDate, supervisor, internshipId)) || (ProcessString.isDateBefore(endDate, beginningDate))) {
+        if((ProcessString.areStringEmpty(beginningDate, endDate, supervisor)) || (ProcessString.isDateBefore(endDate, beginningDate))) {
             return false;
         }
 
