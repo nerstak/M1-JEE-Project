@@ -94,4 +94,22 @@ public class DetailsTest {
         then(request).should().setAttribute("listOfKeywords", keywordsSB.getKeywords());
         then(requestDispatcher).should().forward(request, response);
     }
+
+    @Test(expected=NullPointerException.class) //We just want to test if the method calls updateAllData and forwards the user
+    public void doPostModifyTest() throws ServletException, IOException {
+        //Given
+        String internshipSubmit = "modify";
+        String internshipId = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
+        given(request.getParameter("internshipSubmit")).willReturn(internshipSubmit);
+        given(request.getParameter("internshipId")).willReturn(internshipId);
+        given(internshipsSB.find(UUID.fromString(internshipId))).willReturn(internshipEntity);
+        given(request.getRequestDispatcher(MISSION_PAGE)).willReturn(requestDispatcher);
+
+        //When
+        details.doPost(request, response);
+
+        //Then
+        then(details).should().updateAllData(request, internshipEntity);
+        then(requestDispatcher).should().forward(request, response);
+    }
 }
