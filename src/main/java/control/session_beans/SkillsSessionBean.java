@@ -1,9 +1,8 @@
-package control.sessionBeans;
+package control.session_beans;
 
 import models.SkillsEntity;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +30,12 @@ public class SkillsSessionBean extends ModelBean<SkillsEntity> {
         return null;
     }
 
-    @Override
     public SkillsEntity find(UUID id) {
         return em.find(SkillsEntity.class,id);
     }
 
     @Override
-    public void save(SkillsEntity e) throws EntityExistsException {
+    public void save(SkillsEntity e) {
         em.persist(e);
     }
 }

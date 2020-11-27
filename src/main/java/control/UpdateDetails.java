@@ -1,7 +1,7 @@
 package control;
 
 
-import control.sessionBeans.*;
+import control.session_beans.*;
 import models.*;
 import utils.ProcessString;
 
@@ -10,7 +10,6 @@ import javax.persistence.EntityExistsException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.UUID;
@@ -30,74 +29,71 @@ public class UpdateDetails extends ServletModel{
     private CommentsSessionBean commentsSB;
     @EJB
     private CompanySessionBean companySB;
+    
+    private static final String MESSAGE_ATTRIBUTE = "message";
+    private static final String INTERNSHIP_ATTRIBUTE = "internshipId";
 
-    private InternshipEntity internshipEntity;
-    private TutorEntity tutorEntity;
-
-    private HttpSession session;
-
-    private boolean successRequest;
-
-
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Get the name of the button that call the servlet
-        session = request.getSession();
-        tutorEntity = (TutorEntity) session.getAttribute("tutor");
-
         String detailsSubmitButton = request.getParameter("updateDetails");
-        String internshipId = request.getParameter("internshipId");
-        internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
+        String internshipId = request.getParameter(INTERNSHIP_ATTRIBUTE);
+        InternshipEntity internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
+        boolean successRequest = false;
         switch (detailsSubmitButton){
             case "company":
-                successRequest = updateCompany(request);
+                successRequest = updateCompany(request, internshipEntity);
                 break;
             case "student":
-                successRequest = updateStudent(request);
+                successRequest = updateStudent(request, internshipEntity);
                 break;
             case "internship":
-                successRequest = updateInternship(request);
+                successRequest = updateInternship(request,internshipEntity );
                 break;
             case "keywords":
-                successRequest = updateKeywords(request);
+                successRequest = updateKeywords(request, internshipEntity);
                 break;
             case "skills":
-                successRequest = updateSkills(request);
+                successRequest = updateSkills(request, internshipEntity);
                 break;
             default:
                 break;
         }
-        redirectToDetailsPage(request, response, internshipId);
+        redirectToDetailsPage(request, response, internshipEntity, successRequest);
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        redirect(response,CONTROLLER_HOMEPAGE);
     }
 
     /**
      * Get the information from the form and update the company and internship tables
      * @param request, servlet request
+     * @param internshipEntity internship
      * @return true if the database has been updated
      */
-    private boolean updateCompany(HttpServletRequest request){
+    private boolean updateCompany(HttpServletRequest request, InternshipEntity internshipEntity){
         //Get data from form
             //Company
         String companyName = request.getParameter("companyName");
         String companyId = request.getParameter("companyId");
         String companyAddress = request.getParameter("companyAddress");
             //Internship
-        String internshipId = request.getParameter("internshipId");
+        String internshipId = request.getParameter(INTERNSHIP_ATTRIBUTE);
         String begin = request.getParameter("begin");
         String end = request.getParameter("end");
         String mds = request.getParameter("mds");
 
         //Check if all data are not empty
         if (ProcessString.areStringEmpty(companyId, internshipId, begin, end, mds, companyAddress, companyName)){
-            request.setAttribute("message", ERR_EMPTY_FIELDS);
+            request.setAttribute(MESSAGE_ATTRIBUTE, ERR_EMPTY_FIELDS);
             return false;
         }
 
         //Check if all data are not empty
         if (ProcessString.isDateBefore(end, begin)){
-            request.setAttribute("message", ERR_DATE_AFTER);
+            request.setAttribute(MESSAGE_ATTRIBUTE, ERR_DATE_AFTER);
             return false;
         }
 
@@ -116,9 +112,10 @@ public class UpdateDetails extends ServletModel{
     /**
      * Get the information from the form and update the student table
      * @param request, servlet request
+     * @param internshipEntity internship
      * @return true if the database has been updated
      */
-    private boolean updateStudent(HttpServletRequest request){
+    private boolean updateStudent(HttpServletRequest request, InternshipEntity internshipEntity){
         UUID studentId = UUID.fromString(request.getParameter("studentId"));
         String group = request.getParameter("group");
         String firstName =  request.getParameter("firstName");
@@ -135,7 +132,7 @@ public class UpdateDetails extends ServletModel{
 
         //Check if data are empty (expect linkedin url)
         if(ProcessString.areStringEmpty(studentId.toString(), firstName, lastName, email, group)){
-            request.setAttribute("message", ERR_EMPTY_FIELDS);
+            request.setAttribute(MESSAGE_ATTRIBUTE, ERR_EMPTY_FIELDS);
             return false;
         }
         studentSB.save(student);
@@ -146,21 +143,22 @@ public class UpdateDetails extends ServletModel{
     /**
      * Get the information from the form and update the student, comments and internship table
      * @param request, servlet request
+     * @param internshipEntity internship
      * @return true if the database has been updated
      */
-    private boolean updateInternship(HttpServletRequest request){
+    private boolean updateInternship(HttpServletRequest request, InternshipEntity internshipEntity){
         String description = request.getParameter("description");
         String tutorComments = request.getParameter("tutorComments");
         String studentComments = request.getParameter("studentComments");
         String commentsId = request.getParameter("commentsId");
-        String internshipId = request.getParameter("internshipId");
+        String internshipId = request.getParameter(INTERNSHIP_ATTRIBUTE);
         String titleId = request.getParameter("titleId");
         String title = request.getParameter("reportTitle");
 
 
         //Check if data(IDs) are empty
         if(ProcessString.areStringEmpty(titleId, commentsId, internshipId)){
-            request.setAttribute("message", ERR_EMPTY_FIELDS);
+            request.setAttribute(MESSAGE_ATTRIBUTE, ERR_EMPTY_FIELDS);
             return false;
         }
 
@@ -178,15 +176,16 @@ public class UpdateDetails extends ServletModel{
     /**
      * Get the information from the form and update the skill and student_to_skills table
      * @param request, servlet request
+     * @param internshipEntity Internship entity
      * @return true if the database has been updated
      */
-    private boolean updateSkills(HttpServletRequest request)  {
+    private boolean updateSkills(HttpServletRequest request, InternshipEntity internshipEntity)  {
         //Get the skill from the form
         String skill = request.getParameter("skill");
 
         //Check if skill is empty
         if (skill.isEmpty()){
-            request.setAttribute("message", ERR_EMPTY_FIELDS);
+            request.setAttribute(MESSAGE_ATTRIBUTE, ERR_EMPTY_FIELDS);
             return false;
         }
 
@@ -219,15 +218,16 @@ public class UpdateDetails extends ServletModel{
     /**
      * Get the information from the form and update the keyword and internship_to_keywords table
      * @param request, servlet request
+     * @param internshipEntity Internship
      * @return true if the database has been updated
      */
-    private boolean updateKeywords(HttpServletRequest request){
+    private boolean updateKeywords(HttpServletRequest request, InternshipEntity internshipEntity){
         //Get the skill from the form
         String keyword = request.getParameter("keyword");
 
         //Check if skill is empty
         if (keyword.isEmpty()){
-            request.setAttribute("message", ERR_EMPTY_FIELDS);
+            request.setAttribute(MESSAGE_ATTRIBUTE, ERR_EMPTY_FIELDS);
             return false;
         }
 
@@ -258,18 +258,19 @@ public class UpdateDetails extends ServletModel{
 
     /**
      * Redirect to details jsp
-     * @param request, the request
-     * @param response, response
-     * @param internshipId, the ID of the concerned internship
+     * @param request the request
+     * @param response response
+     * @param internshipEntity Concerned internship
+     * @param successRequest Success of request
      * @throws ServletException ServletException
      * @throws IOException IOException
      */
-    private void redirectToDetailsPage(HttpServletRequest request, HttpServletResponse response, String internshipId) throws ServletException, IOException {
+    private void redirectToDetailsPage(HttpServletRequest request, HttpServletResponse response, InternshipEntity internshipEntity, boolean successRequest) {
         if (successRequest){
-            request.setAttribute("message", SUCCESS_BD);
+            request.setAttribute(MESSAGE_ATTRIBUTE, SUCCESS_BD);
         }else{
-            if(request.getAttribute("message") == null){
-                request.setAttribute("message", ERR_FAILED_UPDATE_DB);
+            if(request.getAttribute(MESSAGE_ATTRIBUTE) == null){
+                request.setAttribute(MESSAGE_ATTRIBUTE, ERR_FAILED_UPDATE_DB);
             }
         }
 
@@ -281,6 +282,6 @@ public class UpdateDetails extends ServletModel{
         request.setAttribute("listOfSkills", skillsSB.getSkills());
         request.setAttribute("listOfKeywords",keywordsSB.getKeywords());
 
-        request.getRequestDispatcher(MISSION_PAGE).forward(request,response);
+        forward(request,response,MISSION_PAGE);
     }
 }

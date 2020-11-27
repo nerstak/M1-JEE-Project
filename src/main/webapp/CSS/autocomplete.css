@@ -10,6 +10,10 @@
 .autocomplete-items div{
     font-family: "Open Sans", sans-serif;
     color: var(--color-textmain-lighttheme);
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid #d4d4d4;
 }
 
 input {
@@ -40,13 +44,6 @@ input[type=submit] {
     top: 100%;
     left: 0;
     right: 0;
-}
-
-.autocomplete-items div {
-    padding: 10px;
-    cursor: pointer;
-    background-color: #fff;
-    border-bottom: 1px solid #d4d4d4;
 }
 
 .autocomplete-items div:hover {

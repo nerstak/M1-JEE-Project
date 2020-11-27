@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -12,7 +13,7 @@ import java.util.UUID;
 @NamedQueries(
         @NamedQuery(name = "CompanyEntity.updateCompany", query = "update CompanyEntity set name = :name, address = :address Where companyId = :companyId")
 )
-public class CompanyEntity implements InterfaceEntity {
+public class CompanyEntity implements InterfaceEntity, Serializable {
     // Attributes
     @Id
     @Column(name = "company_id", nullable = false, columnDefinition="uuid")
