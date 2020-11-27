@@ -48,7 +48,7 @@ public class UpdateDetails extends ServletModel{
                 successRequest = updateStudent(request, internshipEntity);
                 break;
             case "internship":
-                successRequest = updateInternship(request,internshipEntity );
+                successRequest = updateInternship(request,internshipEntity);
                 break;
             case "keywords":
                 successRequest = updateKeywords(request, internshipEntity);
@@ -73,7 +73,7 @@ public class UpdateDetails extends ServletModel{
      * @param internshipEntity
      * @return true if the database has been updated
      */
-    private boolean updateCompany(HttpServletRequest request, InternshipEntity internshipEntity){
+    protected boolean updateCompany(HttpServletRequest request, InternshipEntity internshipEntity){
         //Get data from form
             //Company
         String companyName = request.getParameter("companyName");
@@ -115,7 +115,7 @@ public class UpdateDetails extends ServletModel{
      * @param internshipEntity
      * @return true if the database has been updated
      */
-    private boolean updateStudent(HttpServletRequest request, InternshipEntity internshipEntity){
+    protected boolean updateStudent(HttpServletRequest request, InternshipEntity internshipEntity){
         UUID studentId = UUID.fromString(request.getParameter("studentId"));
         String group = request.getParameter("group");
         String firstName =  request.getParameter("firstName");
@@ -146,7 +146,7 @@ public class UpdateDetails extends ServletModel{
      * @param internshipEntity
      * @return true if the database has been updated
      */
-    private boolean updateInternship(HttpServletRequest request, InternshipEntity internshipEntity){
+    protected boolean updateInternship(HttpServletRequest request, InternshipEntity internshipEntity){
         String description = request.getParameter("description");
         String tutorComments = request.getParameter("tutorComments");
         String studentComments = request.getParameter("studentComments");
@@ -179,7 +179,7 @@ public class UpdateDetails extends ServletModel{
      * @param internshipEntity
      * @return true if the database has been updated
      */
-    private boolean updateSkills(HttpServletRequest request, InternshipEntity internshipEntity)  {
+    protected boolean updateSkills(HttpServletRequest request, InternshipEntity internshipEntity)  {
         //Get the skill from the form
         String skill = request.getParameter("skill");
 
@@ -221,7 +221,7 @@ public class UpdateDetails extends ServletModel{
      * @param internshipEntity
      * @return true if the database has been updated
      */
-    private boolean updateKeywords(HttpServletRequest request, InternshipEntity internshipEntity){
+    protected boolean updateKeywords(HttpServletRequest request, InternshipEntity internshipEntity){
         //Get the skill from the form
         String keyword = request.getParameter("keyword");
 
@@ -265,7 +265,7 @@ public class UpdateDetails extends ServletModel{
      * @throws ServletException ServletException
      * @throws IOException IOException
      */
-    private void redirectToDetailsPage(HttpServletRequest request, HttpServletResponse response, InternshipEntity internshipEntity, boolean successRequest) {
+    protected void redirectToDetailsPage(HttpServletRequest request, HttpServletResponse response, InternshipEntity internshipEntity, boolean successRequest) {
         if (successRequest){
             request.setAttribute(messageAttribute, SUCCESS_BD);
         }else{
