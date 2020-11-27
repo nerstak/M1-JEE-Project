@@ -1,6 +1,6 @@
 # Use Postgress with Glassfish
 
-1.  Once Postgress is installed, downlaod the JDBC 4.2 (for Java8) at this [address](https://jdbc.postgresql.org/) 
+1. Once Postgress is installed, downlaod the JDBC 4.2 (for Java8) at this [address](https://jdbc.postgresql.org/) 
 
 2. Put the downloaded file in `[glassfish_home]/glassfish/domains/domain1/lib/`
 
@@ -22,6 +22,4 @@
 
 11. THEN edit the __default one, and select postgresql pool.
 
-12. If this does not work, you may perform suicide.
-
-
+12. If this does not work, we invite you to contact us.
