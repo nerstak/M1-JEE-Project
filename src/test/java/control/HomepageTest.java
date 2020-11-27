@@ -86,7 +86,7 @@ public class HomepageTest {
     @Test
     public void processRequestNullParametersTest() throws ServletException, IOException {
         //Given
-        Integer year = 2020;
+        String year = "%";
         String name = "";
         String keyword = "-";
         given(request.getSession()).willReturn(session);
@@ -123,8 +123,8 @@ public class HomepageTest {
 
         //Then
         then(request).should().setAttribute("listOfKeywords", keywordsSB.getKeywords());
-        then(request).should().setAttribute("listOfInternship",internshipsSB.getInternshipData(tutor.getTutorId(), year, name, keyword));
-        then(request).should().setAttribute("searchedYear", year);
+        then(request).should().setAttribute("listOfInternship",internshipsSB.getInternshipData(tutor.getTutorId(), year.toString(), name, keyword));
+        then(request).should().setAttribute("searchedYear", year.toString());
         then(request).should().setAttribute("searchedKeyword", keyword);
         then(request).should().setAttribute("searchedName", name);
         then(requestDispatcher).should().forward(request, response);

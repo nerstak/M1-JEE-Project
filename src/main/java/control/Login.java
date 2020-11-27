@@ -22,13 +22,13 @@ public class Login extends ServletModel {
     @EJB
     private TutorSessionBean tutorSB;
 
-    private final String tutorAttribute = "tutor";
+    private static final String TUTOR_ATTRIBUTE = "tutor";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-        if(session.getAttribute(tutorAttribute) != null) {
+        if(session.getAttribute(TUTOR_ATTRIBUTE) != null) {
             redirect(response,CONTROLLER_HOMEPAGE);
         } else {
             forward(request,response,LOGIN_PAGE);
@@ -40,7 +40,7 @@ public class Login extends ServletModel {
         // Only for post request
         HttpSession session = request.getSession();
 
-        if(session.getAttribute(tutorAttribute) != null) {
+        if(session.getAttribute(TUTOR_ATTRIBUTE) != null) {
             redirect(response,CONTROLLER_HOMEPAGE);
             return;
         }
@@ -58,7 +58,7 @@ public class Login extends ServletModel {
         tutors.addAll(tutorSB.getTutors(email, pwd));
 
         if (!tutors.isEmpty()) {
-            session.setAttribute(tutorAttribute, tutors.get(0));
+            session.setAttribute(TUTOR_ATTRIBUTE, tutors.get(0));
 
             redirect(response,CONTROLLER_HOMEPAGE);
         } else {

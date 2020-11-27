@@ -182,23 +182,20 @@ public class DetailsTest {
         then(internshipEntity).should().setInternSupervisor(supervisor);
         then(internshipEntity).should().setBeginning(Date.valueOf(beginningDate));
         then(internshipEntity).should().setEnding(Date.valueOf(endDate));
-        then(internshipsSB).should().save(internshipEntity);
 
         then(studentEntity).should().setStudentGroup(studentGroup);
         then(studentEntity).should().setFirstname(studentFirstname);
         then(studentEntity).should().setName(studentName);
-        then(studentSB).should().save(studentEntity);
         
         then(marksEntity).should().setCommunication(Integer.valueOf(commMark));
         then(marksEntity).should().setTech(Integer.valueOf(techMark));
-        then(marksSB).should().save(marksEntity);
 
         then(visitEntity).should().setDone(visitDone);
         then(visitEntity).should().setPlanned(visitPlanned);
-        then(visitSB).should().save(visitEntity);
 
         then(finalReportEntity).should().setReport(releasedReport);
-        then(finalReportSB).should().save(finalReportEntity);
+
+        then(internshipsSB).should().save(internshipEntity);
 
         then(response).should().sendRedirect(CONTROLLER_HOMEPAGE);
     }
@@ -232,7 +229,6 @@ public class DetailsTest {
         then(internshipEntity).should().setInternSupervisor(supervisor);
         then(internshipEntity).should().setBeginning(Date.valueOf(beginningDate));
         then(internshipEntity).should().setEnding(Date.valueOf(endDate));
-        then(internshipsSB).should().save(internshipEntity);
         assertThat(result, is(true));
     }
 
@@ -254,7 +250,6 @@ public class DetailsTest {
         then(studentEntity).should().setStudentGroup(studentGroup);
         then(studentEntity).should().setFirstname(studentFirstname);
         then(studentEntity).should().setName(studentName);
-        then(studentSB).should().save(studentEntity);
         assertThat(result, is(true));
     }
 
@@ -273,7 +268,7 @@ public class DetailsTest {
         //Then
         then(marksEntity).should().setCommunication(Integer.valueOf(commMark));
         then(marksEntity).should().setTech(Integer.valueOf(techMark));
-        then(marksSB).should().save(marksEntity);
+        then(internshipEntity).should().setMarks(marksEntity);
         assertThat(result, is(true));
     }
 
@@ -287,13 +282,12 @@ public class DetailsTest {
         given(internshipEntity.getVisit()).willReturn(visitEntity);
 
         //When
-        boolean result = details.updateVisit(request, internshipEntity);
+        details.updateVisit(request, internshipEntity);
 
         //Then
         then(visitEntity).should().setDone(visitDone);
         then(visitEntity).should().setPlanned(visitPlanned);
-        then(visitSB).should().save(visitEntity);
-        assertThat(result, is(true));
+        then(internshipEntity).should().setVisit(visitEntity);
     }
 
     @Test
@@ -304,11 +298,10 @@ public class DetailsTest {
         given(internshipEntity.getFinalReport()).willReturn(finalReportEntity);
 
         //When
-        boolean result = details.updateFinalReport(request, internshipEntity);
+        details.updateFinalReport(request, internshipEntity);
 
         //Then
         then(finalReportEntity).should().setReport(releasedReport);
-        then(finalReportSB).should().save(finalReportEntity);
-        assertThat(result, is(true));
+        then(internshipEntity).should().setFinalReport(finalReportEntity);
     }
 }

@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +14,14 @@ import java.util.UUID;
 @Entity
 @Table(name = "internship", schema = "public", catalog = "st2eedb")
 @NamedQueries({
-        @NamedQuery(name = "Internship.SelectList", query = "SELECT i FROM InternshipEntity i JOIN FETCH i.student s WHERE s.tutorEntity.tutorId = :tutor"),
+        @NamedQuery(name = "Internship.SelectList", query = "SELECT DISTINCT i FROM InternshipEntity i LEFT JOIN i.keywords ik WHERE i.student.tutorEntity.tutorId = :tutor AND" +
+                                                                " FUNCTION('to_char', i.beginning, 'YYYY') LIKE :year AND" +
+                                                                " CONCAT(i.student.firstname, ' ', i.student.name) LIKE CONCAT('%',:name,'%') AND" +
+                                                                " :keyword IN (ik.keyword, '-')"+
+                                                                " ORDER BY i.beginning DESC"),
         @NamedQuery(name = "Internship.SelectSingle", query = "SELECT i FROM InternshipEntity i WHERE i.internshipId = :internshipId")
 })
-public class InternshipEntity implements InterfaceEntity {
+public class InternshipEntity implements InterfaceEntity, Serializable {
     // Attributes
     @Id    @Column(name = "internship_id", nullable = false, columnDefinition="uuid") @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID internshipId;
@@ -49,25 +54,27 @@ public class InternshipEntity implements InterfaceEntity {
     private String internSupervisor;
 
     // Relations
-    @OneToOne( mappedBy = "internship" )
+    @OneToOne( mappedBy = "internship", cascade = CascadeType.MERGE )
     private MarksEntity marks;
 
-    @OneToOne( mappedBy = "internship" )
+    @OneToOne( mappedBy = "internship", cascade = CascadeType.MERGE )
     private CommentsEntity comments;
 
-    @OneToOne( mappedBy = "internship" )
+    @OneToOne( mappedBy = "internship", cascade = CascadeType.MERGE )
     private FinalReportEntity finalReport;
 
-    @OneToOne( mappedBy = "internship" )
+    @OneToOne( mappedBy = "internship", cascade = CascadeType.MERGE )
     private VisitEntity visit;
 
-    @ManyToOne  @JoinColumn( name="company_id" )
+    @ManyToOne (cascade = CascadeType.MERGE)
+    @JoinColumn( name="company_id" )
     private CompanyEntity company;
 
-    @ManyToOne  @JoinColumn( name="student_id" )
+    @ManyToOne   (cascade = CascadeType.MERGE)
+    @JoinColumn( name="student_id" )
     private StudentEntity student;
 
-    @ManyToMany
+    @ManyToMany (cascade = CascadeType.MERGE)
     @JoinTable( name = "internship_to_keywords",
             joinColumns = @JoinColumn( name = "internship_id" ),
             inverseJoinColumns = @JoinColumn( name = "keyword_id" ) )

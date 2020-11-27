@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-
+# As you can see, we should have been able to deploy the website. However, because Wildfly is too much different from Glassfish, it is not possible for the Version 2
   wildfly:
     image: jboss/wildfly:21.0.0.Final.Postgres
     build: ./wildfly

@@ -27,14 +27,6 @@ public class Details extends ServletModel {
     private KeywordsSessionBean keywordsSB;
     @EJB
     private SkillsSessionBean skillsSB;
-    @EJB
-    private StudentSessionBean studentSB;
-    @EJB
-    private MarksSessionBean marksSB;
-    @EJB
-    private VisitSessionBean visitSB;
-    @EJB
-    private FinalReportSessionBean finalReportSB;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -55,7 +47,9 @@ public class Details extends ServletModel {
         } else if (internshipSubmit.equals("modify")) {
             internshipEntity = internshipsSB.find(UUID.fromString(internshipId));
 
-            updateAllData(request, internshipEntity);
+            if(updateAllData(request, internshipEntity)) {
+                internshipsSB.save(internshipEntity);
+            }
             redirect(response,CONTROLLER_HOMEPAGE);
         } else {
             redirect(response,CONTROLLER_HOMEPAGE);
@@ -87,13 +81,8 @@ public class Details extends ServletModel {
             return false;
         }
 
-        if (!updateVisit(request, internshipEntity)){
-            return false;
-        }
-
-        if (!updateFinalReport(request, internshipEntity)){
-            return false;
-        }
+        updateVisit(request, internshipEntity);
+        updateFinalReport(request, internshipEntity);
 
         return true;
     }
@@ -119,7 +108,8 @@ public class Details extends ServletModel {
         student.setStudentGroup(studentGroup);
         student.setFirstname(studentFirstname);
         student.setName(studentName);
-        studentSB.save(student);
+        //studentSB.save(student);
+        internshipEntity.setStudent(student);
 
         return true;
     }
@@ -150,7 +140,8 @@ public class Details extends ServletModel {
         MarksEntity marks = internshipEntity.getMarks();
         marks.setCommunication(Integer.valueOf(commMark));
         marks.setTech(Integer.valueOf(techMark));
-        marksSB.save(marks);
+
+        internshipEntity.setMarks(marks);
 
         return true;
     }
@@ -159,9 +150,8 @@ public class Details extends ServletModel {
      * Update the visit
      * @param request, http request object
      * @param internshipEntity internship
-     * @return true if the db is updated
      */
-    protected boolean updateVisit(HttpServletRequest request, InternshipEntity internshipEntity){
+    protected void updateVisit(HttpServletRequest request, InternshipEntity internshipEntity){
         //Visit
         boolean visitPlanned = request.getParameter("visitPlanned") != null;
         boolean visitDone = request.getParameter("visitDone") != null;
@@ -169,9 +159,8 @@ public class Details extends ServletModel {
 
         visit.setDone(visitDone);
         visit.setPlanned(visitPlanned);
-        visitSB.save(visit);
 
-        return true;
+        internshipEntity.setVisit(visit);
     }
 
     /**
@@ -202,7 +191,6 @@ public class Details extends ServletModel {
         internshipEntity.setInternSupervisor(supervisor);
         internshipEntity.setBeginning(Date.valueOf(beginningDate));
         internshipEntity.setEnding(Date.valueOf(endDate));
-        internshipsSB.save(internshipEntity);
 
         return true;
     }
@@ -211,16 +199,14 @@ public class Details extends ServletModel {
      * Update the report table
      * @param request, http request
      * @param internshipEntity internship
-     * @return true if the database has been updated
      */
-    protected boolean updateFinalReport(HttpServletRequest request, InternshipEntity internshipEntity){
+    protected void updateFinalReport(HttpServletRequest request, InternshipEntity internshipEntity){
         //Report
         boolean report = request.getParameter("releasedReport") != null;
 
         FinalReportEntity finalReport = internshipEntity.getFinalReport();
         finalReport.setReport(report);
-        finalReportSB.save(finalReport);
 
-        return true;
+        internshipEntity.setFinalReport(finalReport);
     }
 }

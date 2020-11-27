@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,7 +16,7 @@ import java.util.UUID;
         @NamedQuery(name = "Keywords.SelectAll", query = "SELECT k FROM KeywordsEntity k"),
         @NamedQuery(name = "Keywords.SelectByName", query = "SELECT k FROM KeywordsEntity k WHERE k.keyword = :keyword")
 })
-public class KeywordsEntity implements InterfaceEntity {
+public class KeywordsEntity implements InterfaceEntity, Serializable {
     // Attributes
     @Id
     @Column(name = "keyword_id", nullable = false, columnDefinition="uuid")
@@ -26,7 +27,7 @@ public class KeywordsEntity implements InterfaceEntity {
     private String keyword;
 
     // Relations
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable( name = "internship_to_keywords",
             joinColumns = @JoinColumn( name = "keyword_id" ),
             inverseJoinColumns = @JoinColumn( name = "internship_id" ) )
