@@ -30,7 +30,7 @@ public class FinalReportEntity implements InterfaceEntity, Serializable {
     private Boolean report;
 
     // Relations
-    @OneToOne
+    @OneToOne (cascade = CascadeType.MERGE)
     @JoinColumn( name="internship_id", nullable=true )
     InternshipEntity internship;
 

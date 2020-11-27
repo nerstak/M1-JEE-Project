@@ -38,7 +38,7 @@ public class TutorEntity implements InterfaceEntity, Serializable {
     private String email;
 
     // Relations
-    @OneToMany(mappedBy="tutorEntity")
+    @OneToMany(mappedBy="tutorEntity",cascade = CascadeType.MERGE)
     private List<StudentEntity> students = new ArrayList<>();
 
     // Getters and Setters

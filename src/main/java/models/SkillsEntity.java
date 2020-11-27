@@ -27,7 +27,7 @@ public class SkillsEntity implements InterfaceEntity, Serializable {
     private String skill;
 
     // Relations
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable( name = "student_to_skills",
             joinColumns = @JoinColumn( name = "skill_id" ),
             inverseJoinColumns = @JoinColumn( name = "student_id" ) )

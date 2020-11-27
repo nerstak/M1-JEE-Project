@@ -32,7 +32,7 @@ public class VisitEntity implements InterfaceEntity, Serializable {
     private Boolean visitReport;
 
     // Relations
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn( name="internship_id", nullable=true )
     private InternshipEntity internship;
 
