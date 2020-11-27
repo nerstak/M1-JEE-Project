@@ -61,4 +61,16 @@ public class ProcessStringTest {
         assertThat(uppercaseStringResult, is("Uppercase"));
         assertThat(oneLetterStringResult, is("L"));
     }
+
+    @Test(expected=NullPointerException.class)
+    public void capitalizeAndLowerCaseNullTest() {
+        //Given
+        String nullString = null;
+
+        //When
+        ProcessString.capitalizeAndLowerCase(nullString);
+
+        //Then
+        //It will throw a NullPointerException
+    }
 }
