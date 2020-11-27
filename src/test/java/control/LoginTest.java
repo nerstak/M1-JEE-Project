@@ -52,7 +52,7 @@ public class LoginTest {
         login.doGet(request, response);
 
         //Then
-        then(response).should().sendRedirect("Homepage");
+        then(response).should().sendRedirect(CONTROLLER_HOMEPAGE);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class LoginTest {
         login.doPost(request, response);
 
         //Then
-        then(response).should().sendRedirect("Homepage");
+        then(response).should().sendRedirect(CONTROLLER_HOMEPAGE);
     }
 
     @Test
@@ -152,6 +152,6 @@ public class LoginTest {
 
         //Then
         then(session).should().setAttribute("tutor", arrayList.get(0));
-        then(response).should().sendRedirect("Homepage");
+        then(response).should().sendRedirect(CONTROLLER_HOMEPAGE);
     }
 }

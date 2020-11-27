@@ -70,6 +70,6 @@ public class LogoutTest {
 
         //Then
         then(session).should().removeAttribute("tutor");
-        then(response).should().sendRedirect("Login");
+        then(response).should().sendRedirect(CONTROLLER_LOGIN);
     }
 }

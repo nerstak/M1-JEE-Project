@@ -82,7 +82,7 @@ public class HomepageTest {
         homepage.doGet(request, response);
 
         //Then
-        then(response).should().sendRedirect("Login");
+        then(response).should().sendRedirect(CONTROLLER_LOGIN);
     }
 
     @Test
