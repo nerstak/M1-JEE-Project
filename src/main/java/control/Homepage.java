@@ -39,18 +39,19 @@ public class Homepage extends ServletModel {
         HttpSession session = request.getSession();
         TutorEntity tutor = (TutorEntity) session.getAttribute("tutor");
 
-        int year;
+        String year;
         String name;
         String keyword;
 
         if (tutor != null) {
             request.setAttribute("listOfKeywords", keywordsSB.getKeywords());
 
-            try {
-                year = Integer.parseInt(request.getParameter("year"));
-            } catch (NumberFormatException e) {
-                year = 2020;
+
+            year = request.getParameter("year");
+            if (year == null) {
+                year = "%";
             }
+
             name = request.getParameter("search-name");
             if (name == null) {
                 name = "";
