@@ -81,6 +81,9 @@ public class UpdateDetailsTest {
     @Mock
     List<SkillsEntity> skillsList;
 
+    @Mock
+    List<KeywordsEntity> keywordsList;
+
     @InjectMocks
     UpdateDetails updateDetails;
 
@@ -205,5 +208,22 @@ public class UpdateDetailsTest {
         then(skillsList).should().contains(skillsEntity);
         then(skillsList).should().add(skillsEntity);
         then(studentSB).should().save(studentEntity);
+    }
+
+    @Test
+    public void updateKeywordsSuccessTest() {
+        //Given
+        String keyword = "Jee"; //This must be in this format: "Xxxxx xxx xx"
+        given(request.getParameter("keyword")).willReturn(keyword);
+        given(keywordsSB.getKeywordByName(keyword)).willReturn(keywordsEntity);
+        given(internshipEntity.getListKeywords()).willReturn(keywordsList);
+
+        //When
+        boolean result = updateDetails.updateKeywords(request, internshipEntity);
+
+        //Then
+        then(keywordsList).should().contains(keywordsEntity);
+        then(keywordsList).should().add(keywordsEntity);
+        then(internshipsSB).should().save(internshipEntity);
     }
 }
