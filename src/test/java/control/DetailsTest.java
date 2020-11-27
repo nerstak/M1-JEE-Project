@@ -17,6 +17,7 @@ import javax.servlet.http.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -60,6 +61,18 @@ public class DetailsTest {
 
     @Mock
     InternshipEntity internshipEntity;
+
+    @Mock
+    StudentEntity studentEntity;
+
+    @Mock
+    MarksEntity marksEntity;
+
+    @Mock
+    VisitEntity visitEntity;
+
+    @Mock
+    FinalReportEntity finalReportEntity;
 
     @InjectMocks
     Details details;
@@ -109,7 +122,38 @@ public class DetailsTest {
         details.doPost(request, response);
 
         //Then
-        then(details).should().updateAllData(request, internshipEntity);
-        then(requestDispatcher).should().forward(request, response);
+
+    @Test
+    public void updateInternshipSuccessTest() {
+        //Given
+        String beginningDate = "2020-10-10";
+        String endDate = "2020-11-11";
+        String supervisor = "jean pierre";
+        Boolean defense = true;
+        Boolean webSurvey = true;
+        Boolean companyEval = true;
+        Boolean cdc = true;
+        given(request.getParameter("beginningDate")).willReturn(beginningDate);
+        given(request.getParameter("endDate")).willReturn(endDate);
+        given(request.getParameter("supervisor")).willReturn(supervisor);
+        given(request.getParameter("defense")).willReturn(defense.toString());
+        given(request.getParameter("webSurvey")).willReturn(webSurvey.toString());
+        given(request.getParameter("companyEval")).willReturn(companyEval.toString());
+        given(request.getParameter("cdc")).willReturn(cdc.toString());
+
+        //When
+        boolean result = details.updateInternship(request, internshipEntity);
+
+        //Then
+        then(internshipEntity).should().setDefense(defense);
+        then(internshipEntity).should().setCompanyEval(companyEval);
+        then(internshipEntity).should().setWebSurvey(webSurvey);
+        then(internshipEntity).should().setCdc(cdc);
+        then(internshipEntity).should().setInternSupervisor(supervisor);
+        then(internshipEntity).should().setBeginning(Date.valueOf(beginningDate));
+        then(internshipEntity).should().setEnding(Date.valueOf(endDate));
+        then(internshipsSB).should().save(internshipEntity);
+        assertThat(result, is(true));
+    }
     }
 }
