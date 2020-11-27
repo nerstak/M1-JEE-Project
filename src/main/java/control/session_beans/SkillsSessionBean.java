@@ -1,4 +1,4 @@
-package control.sessionBeans;
+package control.session_beans;
 
 import models.SkillsEntity;
 
@@ -31,7 +31,6 @@ public class SkillsSessionBean extends ModelBean<SkillsEntity> {
         return null;
     }
 
-    @Override
     public SkillsEntity find(UUID id) {
         return em.find(SkillsEntity.class,id);
     }

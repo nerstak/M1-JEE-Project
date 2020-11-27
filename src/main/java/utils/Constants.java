@@ -6,6 +6,10 @@ public class Constants {
     public static final String HOME_PAGE = "./WEB-INF/homepage.jsp";
     public static final String MISSION_PAGE = "./WEB-INF/mission-details.jsp";
 
+    public static final String CONTROLLER_LOGIN = "Login";
+    public static final String CONTROLLER_HOMEPAGE = "Homepage";
+    public static final String CONTROLLER_LOGOUT = "Logout";
+    public static final String CONTROLLER_DETAILS = "Details";
 
     /* Errors */
     public static final String ERR_INV_CRED_MESS = "Invalid credentials!";
@@ -16,4 +20,5 @@ public class Constants {
 
     /*Information*/
     public static final String SUCCESS_BD = "The database has been updated";
+
 }

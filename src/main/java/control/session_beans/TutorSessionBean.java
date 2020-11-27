@@ -1,4 +1,4 @@
-package control.sessionBeans;
+package control.session_beans;
 
 import models.TutorEntity;
 

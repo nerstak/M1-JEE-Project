@@ -5,9 +5,9 @@ import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import control.sessionBeans.InternshipSessionBean;
-import control.sessionBeans.KeywordsSessionBean;
-import control.sessionBeans.TutorSessionBean;
+import control.session_beans.InternshipSessionBean;
+import control.session_beans.KeywordsSessionBean;
+import control.session_beans.TutorSessionBean;
 import models.TutorEntity;
 
 import static org.junit.Assert.*;

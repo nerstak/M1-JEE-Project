@@ -1,4 +1,4 @@
-package control.sessionBeans;
+package control.session_beans;
 
 import models.FinalReportEntity;
 
@@ -7,7 +7,6 @@ import java.util.UUID;
 
 @Stateless(name = "FinalReportSessionEJB")
 public class FinalReportSessionBean extends ModelBean<FinalReportEntity> {
-    @Override
     public FinalReportEntity find(UUID id) {
         return em.find(FinalReportEntity.class, id);
     }

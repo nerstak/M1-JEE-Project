@@ -1,4 +1,4 @@
-package control.sessionBeans;
+package control.session_beans;
 
 import models.CompanyEntity;
 
@@ -7,8 +7,7 @@ import java.util.UUID;
 
 @Stateless(name = "CompanySessionEJB")
 public class CompanySessionBean extends ModelBean<CompanyEntity> {
-    @Override
     public CompanyEntity find(UUID id) {
-        return null;
+        return em.find(CompanyEntity.class, id);
     }
 }

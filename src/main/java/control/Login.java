@@ -1,6 +1,6 @@
 package control;
 
-import control.sessionBeans.TutorSessionBean;
+import control.session_beans.TutorSessionBean;
 import models.TutorEntity;
 
 import javax.ejb.EJB;
@@ -19,54 +19,51 @@ import static utils.Constants.*;
  */
 @WebServlet(name = "Login")
 public class Login extends ServletModel {
-    private HttpSession session;
-
     @EJB
     private TutorSessionBean tutorSB;
 
-    ArrayList<TutorEntity> tutors;
-
+    private final String tutorAttribute = "tutor";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        session = request.getSession();
+        HttpSession session = request.getSession();
 
-        if(session.getAttribute("tutor") != null) {
-            response.sendRedirect("Homepage");
+        if(session.getAttribute(tutorAttribute) != null) {
+            redirect(response,CONTROLLER_HOMEPAGE);
         } else {
-            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
+            forward(request,response,LOGIN_PAGE);
         }
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Only for post request
-        session = request.getSession();
+        HttpSession session = request.getSession();
 
-        if(session.getAttribute("tutor") != null) {
-            response.sendRedirect("Homepage");
+        if(session.getAttribute(tutorAttribute) != null) {
+            redirect(response,CONTROLLER_HOMEPAGE);
             return;
         }
 
         String email = request.getParameter("login");
         String pwd = request.getParameter("pwd");
 
-
-
         if (email.isEmpty() || pwd.isEmpty()) {
             request.setAttribute("errorMessage", ERR_MISSING_FIELD);
-            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); //redirect to welcome if error
+            forward(request,response,LOGIN_PAGE); //redirect to welcome if error
             return;
         }
 
-        tutors = new ArrayList<>();
+        ArrayList<TutorEntity> tutors = new ArrayList<>();
         tutors.addAll(tutorSB.getTutors(email, pwd));
 
         if (!tutors.isEmpty()) {
-            session.setAttribute("tutor", tutors.get(0));
-            response.sendRedirect("Homepage");
+            session.setAttribute(tutorAttribute, tutors.get(0));
+
+            redirect(response,CONTROLLER_HOMEPAGE);
         } else {
             request.setAttribute("errorMessage", ERR_INV_CRED_MESS);
-            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response); //redirect to welcome if error
+            forward(request,response,LOGIN_PAGE);
         }
     }
 }
