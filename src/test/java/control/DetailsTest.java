@@ -155,5 +155,27 @@ public class DetailsTest {
         then(internshipsSB).should().save(internshipEntity);
         assertThat(result, is(true));
     }
+
+    @Test
+    public void updateStudentSuccessTest() {
+        //Given
+        String studentGroup = "M1";
+        String studentFirstname = "Elon";
+        String studentName = "Musk";
+        given(request.getParameter("studentGroup")).willReturn(studentGroup);
+        given(request.getParameter("studentFirstname")).willReturn(studentFirstname);
+        given(request.getParameter("studentName")).willReturn(studentName);
+        given(internshipEntity.getStudent()).willReturn(studentEntity);
+
+        //When
+        boolean result = details.updateStudent(request, internshipEntity);
+
+        //Then
+        then(studentEntity).should().setStudentGroup(studentGroup);
+        then(studentEntity).should().setFirstname(studentFirstname);
+        then(studentEntity).should().setName(studentName);
+        then(studentSB).should().save(studentEntity);
+        assertThat(result, is(true));
+    }
     }
 }
