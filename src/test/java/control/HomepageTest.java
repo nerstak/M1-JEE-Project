@@ -5,6 +5,8 @@ import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import control.sessionBeans.InternshipSessionBean;
+import control.sessionBeans.KeywordsSessionBean;
 import control.sessionBeans.TutorSessionBean;
 import models.TutorEntity;
 
@@ -37,7 +39,10 @@ public class HomepageTest {
     RequestDispatcher requestDispatcher;
 
     @Mock
-    TutorSessionBean tutorSB;
+    KeywordsSessionBean keywordsSB;
+
+    @Mock
+    InternshipSessionBean internshipsSB;
 
     @Mock
     TutorEntity tutor;
@@ -78,5 +83,27 @@ public class HomepageTest {
 
         //Then
         then(response).should().sendRedirect("Login");
+    }
+
+    @Test
+    public void processRequestNullParametersTest() throws ServletException, IOException {
+        //Given
+        int year = 2020;
+        String name = "";
+        String keyword = "-";
+        given(request.getSession()).willReturn(session);
+        given(session.getAttribute("tutor")).willReturn(tutor);
+        given(request.getRequestDispatcher(HOME_PAGE)).willReturn(requestDispatcher);
+
+        //When
+        homepage.processRequest(request, response);
+
+        //Then
+        then(request).should().setAttribute("listOfKeywords", keywordsSB.getKeywords());
+        then(request).should().setAttribute("listOfInternship",internshipsSB.getInternshipData(tutor.getTutorId(), year, name, keyword));
+        then(request).should().setAttribute("searchedYear", year);
+        then(request).should().setAttribute("searchedKeyword", keyword);
+        then(request).should().setAttribute("searchedName", name);
+        then(requestDispatcher).should().forward(request, response);
     }
 }
