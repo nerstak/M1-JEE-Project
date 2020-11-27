@@ -88,12 +88,37 @@ public class HomepageTest {
     @Test
     public void processRequestNullParametersTest() throws ServletException, IOException {
         //Given
-        int year = 2020;
+        Integer year = 2020;
         String name = "";
         String keyword = "-";
         given(request.getSession()).willReturn(session);
         given(session.getAttribute("tutor")).willReturn(tutor);
         given(request.getRequestDispatcher(HOME_PAGE)).willReturn(requestDispatcher);
+
+        //When
+        homepage.processRequest(request, response);
+
+        //Then
+        then(request).should().setAttribute("listOfKeywords", keywordsSB.getKeywords());
+        then(request).should().setAttribute("listOfInternship",internshipsSB.getInternshipData(tutor.getTutorId(), year, name, keyword));
+        then(request).should().setAttribute("searchedYear", year);
+        then(request).should().setAttribute("searchedKeyword", keyword);
+        then(request).should().setAttribute("searchedName", name);
+        then(requestDispatcher).should().forward(request, response);
+    }
+
+    @Test
+    public void processRequestParametersTest() throws ServletException, IOException {
+        //Given
+        Integer year = 2019;
+        String name = "Paul";
+        String keyword = "Long";
+        given(request.getSession()).willReturn(session);
+        given(session.getAttribute("tutor")).willReturn(tutor);
+        given(request.getRequestDispatcher(HOME_PAGE)).willReturn(requestDispatcher);
+        given(request.getParameter("year")).willReturn(year.toString());
+        given(request.getParameter("search-name")).willReturn(name);
+        given(request.getParameter("keywords")).willReturn(keyword);
 
         //When
         homepage.processRequest(request, response);
