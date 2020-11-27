@@ -119,4 +119,34 @@ public class UpdateDetailsTest {
         then(companySB).should().save(companyEntity);
         then(internshipsSB).should().save(internshipEntity);
     }
+
+    @Test
+    public void updateStudentSuccessTest() {
+        //Given
+        String studentId = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
+        given(request.getParameter("studentId")).willReturn(studentId);
+        String group = "M1";
+        given(request.getParameter("group")).willReturn(group);
+        String firstName = "Elon";
+        given(request.getParameter("firstName")).willReturn(firstName);
+        String lastName = "Musk";
+        given(request.getParameter("lastName")).willReturn(lastName);
+        String linkedin = "ElonMusk";
+        given(request.getParameter("linkedin")).willReturn(linkedin);
+        String email = "elon@musk.com";
+        given(request.getParameter("email")).willReturn(email);
+
+        given(internshipEntity.getStudent()).willReturn(studentEntity);
+
+        //When
+        boolean result = updateDetails.updateStudent(request, internshipEntity);
+
+        //Then
+        then(studentEntity).should().setStudentGroup(group);
+        then(studentEntity).should().setLinkedinProfile(linkedin);
+        then(studentEntity).should().setFirstname(firstName);
+        then(studentEntity).should().setName(lastName);
+        then(studentEntity).should().setEmail(email);
+        then(studentSB).should().save(studentEntity);
+    }
 }
