@@ -122,6 +122,7 @@ public class DetailsTest {
         details.doPost(request, response);
 
         //Then
+    }
 
     @Test
     public void updateInternshipSuccessTest() {
@@ -215,5 +216,20 @@ public class DetailsTest {
         then(visitSB).should().save(visitEntity);
         assertThat(result, is(true));
     }
+
+    @Test
+    public void updateFinalReportSuccessTest() {
+        //Given
+        Boolean releasedReport = true;
+        given(request.getParameter("releasedReport")).willReturn(releasedReport.toString());
+        given(internshipEntity.getFinalReport()).willReturn(finalReportEntity);
+
+        //When
+        boolean result = details.updateFinalReport(request, internshipEntity);
+
+        //Then
+        then(finalReportEntity).should().setReport(releasedReport);
+        then(finalReportSB).should().save(finalReportEntity);
+        assertThat(result, is(true));
     }
 }
