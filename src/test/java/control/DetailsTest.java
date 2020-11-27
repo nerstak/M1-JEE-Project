@@ -196,5 +196,24 @@ public class DetailsTest {
         then(marksSB).should().save(marksEntity);
         assertThat(result, is(true));
     }
+
+    @Test
+    public void updateVisitSuccessTest() {
+        //Given
+        Boolean visitPlanned = true;
+        Boolean visitDone = true;
+        given(request.getParameter("visitPlanned")).willReturn(visitPlanned.toString());
+        given(request.getParameter("visitDone")).willReturn(visitDone.toString());
+        given(internshipEntity.getVisit()).willReturn(visitEntity);
+
+        //When
+        boolean result = details.updateVisit(request, internshipEntity);
+
+        //Then
+        then(visitEntity).should().setDone(visitDone);
+        then(visitEntity).should().setPlanned(visitPlanned);
+        then(visitSB).should().save(visitEntity);
+        assertThat(result, is(true));
+    }
     }
 }
