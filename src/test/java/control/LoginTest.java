@@ -46,7 +46,7 @@ public class LoginTest {
     public void doGetNonNullTutorTest() throws ServletException, IOException {
         //Given
         given(request.getSession()).willReturn(session);
-        given(session.getAttribute("tutor")).willReturn("non null");
+        given(session.getAttribute("tutor")).willReturn(tutor);
 
         //When
         login.doGet(request, response);
