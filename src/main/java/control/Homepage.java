@@ -35,7 +35,7 @@ public class Homepage extends ServletModel {
         processRequest(request, response);
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         TutorEntity tutor = (TutorEntity) session.getAttribute("tutor");
 

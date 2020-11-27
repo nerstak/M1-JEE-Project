@@ -32,7 +32,7 @@ public class Logout extends ServletModel {
      * @throws ServletException ServletException
      * @throws IOException IOException
      */
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.removeAttribute("tutor");
 

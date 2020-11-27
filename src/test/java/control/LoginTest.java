@@ -6,6 +6,7 @@ import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import control.session_beans.TutorSessionBean;
+import models.TutorEntity;
 
 import static org.mockito.BDDMockito.*;
 
@@ -34,6 +35,9 @@ public class LoginTest {
 
     @Mock
     TutorSessionBean tutorSB;
+
+    @Mock
+    TutorEntity tutor;
 
     @InjectMocks
     Login login;
@@ -69,7 +73,7 @@ public class LoginTest {
     public void doPostNonNullTutorTest() throws ServletException, IOException {
         //Given
         given(request.getSession()).willReturn(session);
-        given(session.getAttribute("tutor")).willReturn("non null");
+        given(session.getAttribute("tutor")).willReturn(tutor);
 
         //When
         login.doPost(request, response);
@@ -120,7 +124,7 @@ public class LoginTest {
         given(request.getParameter("login")).willReturn("jean.pierre@efrei.net");
         given(request.getParameter("pwd")).willReturn("wrongPassword");
         given(request.getRequestDispatcher(LOGIN_PAGE)).willReturn(requestDispatcher);
-        ArrayList arrayList = new ArrayList();
+        ArrayList<TutorEntity> arrayList = new ArrayList();
         given(tutorSB.getTutors("jean.pierre@efrei.net", "wrongPassword")).willReturn(arrayList);
 
         //When
@@ -139,8 +143,8 @@ public class LoginTest {
         given(request.getParameter("login")).willReturn("jean.pierre@efrei.net");
         given(request.getParameter("pwd")).willReturn("password");
         given(request.getRequestDispatcher(LOGIN_PAGE)).willReturn(requestDispatcher);
-        ArrayList<String> arrayList = new ArrayList();
-        arrayList.add("non empty list");
+        ArrayList<TutorEntity> arrayList = new ArrayList();
+        arrayList.add(tutor);
         given(tutorSB.getTutors("jean.pierre@efrei.net", "password")).willReturn(arrayList);
 
         //When
