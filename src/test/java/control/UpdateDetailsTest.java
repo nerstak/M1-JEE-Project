@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static utils.Constants.*;
@@ -76,6 +77,9 @@ public class UpdateDetailsTest {
 
     @Mock
     FinalReportEntity finalReportEntity;
+
+    @Mock
+    List<SkillsEntity> skillsList;
 
     @InjectMocks
     UpdateDetails updateDetails;
@@ -183,5 +187,23 @@ public class UpdateDetailsTest {
         then(commentsEntity).should().setSupervisorComm(tutorComments);
         then(commentsSB).should().save(commentsEntity);
         then(internshipsSB).should().save(internshipEntity);
+    }
+
+    @Test
+    public void updateSkillsSuccessTest() {
+        //Given
+        String skill = "Mockito master"; //This must be in this format: "Xxxxx xxx xx"
+        given(request.getParameter("skill")).willReturn(skill);
+        given(skillsSB.getSkillByName(skill)).willReturn(skillsEntity);
+        given(internshipEntity.getStudent()).willReturn(studentEntity);
+        given(studentEntity.getSkills()).willReturn(skillsList);
+
+        //When
+        boolean result = updateDetails.updateSkills(request, internshipEntity);
+
+        //Then
+        then(skillsList).should().contains(skillsEntity);
+        then(skillsList).should().add(skillsEntity);
+        then(studentSB).should().save(studentEntity);
     }
 }
